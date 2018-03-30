@@ -30,15 +30,20 @@
   <ItemGroup>
     <EmbeddedResource Include="App.xaml" />
     <EmbeddedResource Include="GuapPage.xaml" />
+    <EmbeddedResource Include="Views\PhoneNumberPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomRender\BottomBorderEntry.cs" />
     <Compile Include="GuapPage.xaml.cs">
       <DependentUpon>GuapPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\PhoneNumberPage.xaml.cs">
+      <DependentUpon>PhoneNumberPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

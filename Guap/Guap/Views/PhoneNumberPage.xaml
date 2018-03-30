@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
+             x:Class="Guap.Views.PhoneNumberPage">
+    <ContentPage.Content>
+        <StackLayout
+            Orientation="Vertical"
+            BackgroundColor="#000"
+            Padding="50,70,50,0">
+            <Label
+                Text="Welcome to Guapcoin"
+                TextColor="#fff"
+                FontSize="20"
+                FontAttributes="Bold"/>
+            
+            <Label
+                Text="Please enter your phone number below to recieve a secure verification code to begin setting up your account."
+                TextColor="#fff"
+                FontSize="16"
+                Margin="0,4,0,0"/>
+            
+            <StackLayout
+                HorizontalOptions="FillAndExpand"
+                Orientation="Horizontal"
+                Margin="0,16,0,0">
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Vertical">
+                    <Label Text="Country"
+                           TextColor="#fff"
+                           FontSize="18"/>
+                    
+                    <customRender:BottomBorderEntry
+                        HorizontalOptions="Start"
+                        WidthRequest="50"
+                        TextColor="#fff"
+                        Keyboard="Telephone"/>
+                </StackLayout>
+            
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Vertical">
+                    <Label Text="Phone Number"
+                           TextColor="#fff"
+                           FontSize="18"/>
+                    
+                    <customRender:BottomBorderEntry
+                        TextColor="#fff"
+                        Keyboard="Telephone"/>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

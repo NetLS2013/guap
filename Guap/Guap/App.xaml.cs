@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Guap.Views;
+using Xamarin.Forms;
 
 namespace Guap
 {
@@ -8,7 +9,7 @@ namespace Guap
         {
             InitializeComponent();
 
-            MainPage = new GuapPage();
+            MainPage = new PhoneNumberPage();
         }
 
         protected override void OnStart()
