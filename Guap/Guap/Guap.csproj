@@ -61,6 +61,8 @@
     </Compile>
     <Compile Include="Views\PhoneNumberPage.xaml.cs">
       <DependentUpon>PhoneNumberPage.xaml</DependentUpon>
+    <Compile Include="Views\SuccessSignup.xaml.cs">
+      <DependentUpon>SuccessSignup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PhoneVerificationPage.xaml.cs">
       <DependentUpon>PhoneVerificationPage.xaml</DependentUpon>
@@ -154,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\InputMnemonicPhrasePagePage.xaml">
+    <EmbeddedResource Include="Views\SuccessSignup.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
