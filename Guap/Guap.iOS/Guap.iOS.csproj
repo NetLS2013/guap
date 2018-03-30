@@ -109,9 +109,7 @@
       <InProject>false</InProject>
     </ImageAsset>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
   </ItemGroup>
@@ -119,6 +117,7 @@
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
+    <BundleResource Include="Resources\ProximaNovaExCn-LightIt.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\UICustomColor.cs" />
