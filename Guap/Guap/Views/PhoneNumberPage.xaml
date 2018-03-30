@@ -19,8 +19,8 @@
                 TextColor="#fff"
                 FontSize="18"
                 Margin="0,4,0,0"/>
-            
-            <StackLayout
+
+                <StackLayout
                 HorizontalOptions="FillAndExpand"
                 Orientation="Horizontal"
                 Margin="0,16,0,0">

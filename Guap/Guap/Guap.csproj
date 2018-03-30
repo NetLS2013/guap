@@ -49,6 +49,8 @@
       <DependentUpon>SuccessSignup.xaml</DependentUpon>
     <Compile Include="Views\Terms.xaml.cs">
       <DependentUpon>Terms.xaml</DependentUpon>
+    <Compile Include="Views\PhoneNumberPage.xaml.cs">
+      <DependentUpon>PhoneNumberPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PhoneVerificationPage.xaml.cs">
       <DependentUpon>PhoneVerificationPage.xaml</DependentUpon>
