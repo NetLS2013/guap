@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Guap.Views.SuccessSignup">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Black">
+           
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" >
+                <Image Source="logo.png" Margin="0, 0, 0, 60" />
+                <Label Text="Your identity has been verified" TextColor="White" HorizontalOptions="Center" />
+                <Label Text="You can create your wallet" TextColor="White" HorizontalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="EndAndExpand" Padding="16,0,16,0">
+                <Button Text="Continue" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20"></Button>
+            </StackLayout>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>
