@@ -1,12 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guap", "Guap\Guap\Guap.csproj", "{5E0524B9-E7F7-4C95-9B9D-545AC4C6DD1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guap.Droid", "Guap\Guap.Droid\Guap.Droid.csproj", "{965614A2-1814-4177-A280-2A22725F8D45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guap.iOS", "Guap\Guap.iOS\Guap.iOS.csproj", "{2DD274AF-6D73-4A8C-BA20-DA21C51DB4E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guap.Server", "Guap\Guap.Server\Guap.Server.csproj", "{3AD68231-01D7-48E7-8EB5-38A7FC82F26F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guap.Server", "Guap\Guap.Server\Guap.Server.csproj", "{3AD68231-01D7-48E7-8EB5-38A7FC82F26F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +35,7 @@ Global
 		{5E0524B9-E7F7-4C95-9B9D-545AC4C6DD1A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{965614A2-1814-4177-A280-2A22725F8D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{965614A2-1814-4177-A280-2A22725F8D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{965614A2-1814-4177-A280-2A22725F8D45}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{965614A2-1814-4177-A280-2A22725F8D45}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{965614A2-1814-4177-A280-2A22725F8D45}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{965614A2-1814-4177-A280-2A22725F8D45}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
@@ -72,5 +76,11 @@ Global
 		{3AD68231-01D7-48E7-8EB5-38A7FC82F26F}.Release|iPhone.Build.0 = Release|Any CPU
 		{3AD68231-01D7-48E7-8EB5-38A7FC82F26F}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{3AD68231-01D7-48E7-8EB5-38A7FC82F26F}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {79060518-4763-48D1-818F-25BB0CA8D225}
 	EndGlobalSection
 EndGlobal
