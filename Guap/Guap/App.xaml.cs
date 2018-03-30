@@ -9,7 +9,7 @@ namespace Guap
         {
             InitializeComponent();
 
-            MainPage = new PhoneNumberPage();
+            MainPage = new GuapPage();
         }
 
         protected override void OnStart()

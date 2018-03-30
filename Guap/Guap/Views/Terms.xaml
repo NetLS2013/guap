@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Guap.Views.Terms">
+    <ContentPage.Content> 
+        <StackLayout BackgroundColor="#ffffff">
+            <StackLayout Margin="30">
+                <Label FontSize="24" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,10">Terms of use</Label>
+                <ScrollView VerticalOptions="CenterAndExpand" >
+                    <StackLayout>
+                        <Label FontSize="16" LineBreakMode="CharacterWrap" TextColor="Black" Margin="0,0,0,5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Label>
+                        <Label FontSize="16" LineBreakMode="CharacterWrap" TextColor="Black" Margin="0,0,0,5">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Label>
+                        <Label FontSize="16" LineBreakMode="CharacterWrap" TextColor="Black" Margin="0,0,0,5">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Label>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="EndAndExpand" Padding="16,0,16,0">
+                <Button Text="Decline" BackgroundColor="#e0bc0c" TextColor="#ffffff" FontSize="20"></Button>
+                <Button Text="Accept" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20"></Button>
+            </StackLayout>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>
