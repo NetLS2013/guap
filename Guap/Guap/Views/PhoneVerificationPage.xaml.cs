@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace Guap.Views
 {
@@ -7,6 +8,11 @@ namespace Guap.Views
         public PhoneVerificationPage()
         {
             InitializeComponent();
+        }
+
+        private async void OpenPageNextClick(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SuccessSignup());
         }
     }
 }

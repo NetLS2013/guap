@@ -5,51 +5,67 @@
              x:Class="Guap.Views.PhoneNumberPage">
     <ContentPage.Content>
         <StackLayout
-            Orientation="Vertical"
-            BackgroundColor="#000"
-            Padding="50,70,50,0">
-            <Label
-                Text="Welcome to Guapcoin"
-                TextColor="#fff"
-                FontSize="20"
-                FontAttributes="Bold"/>
-            
-            <customRender:LineHeightLabel
-                Text="Please enter your phone number below to recieve a secure verification code to begin setting up your account."
-                TextColor="#fff"
-                FontSize="18"
-                Margin="0,4,0,0"/>
-
+            BackgroundColor="#000">
+            <StackLayout
+                Padding="50,70,50,0"
+                VerticalOptions="FillAndExpand">
+                <Label
+                    Text="Welcome to Guapcoin"
+                    TextColor="#fff"
+                    FontSize="20"
+                    FontAttributes="Bold"/>
+                
+                <customRender:LineHeightLabel
+                    Text="Please enter your phone number below to recieve a secure verification code to begin setting up your account."
+                    TextColor="#fff"
+                    FontSize="18"
+                    Margin="0,4,0,0"/>
+    
                 <StackLayout
-                HorizontalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Horizontal"
+                    Margin="0,16,0,0">
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Vertical">
+                        <Label Text="Country"
+                               TextColor="#fff"
+                               FontSize="18"/>
+                        
+                        <customRender:BottomBorderEntry
+                            HorizontalOptions="Start"
+                            WidthRequest="50"
+                            TextColor="#fff"
+                            Keyboard="Telephone"
+                            HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Vertical">
+                        <Label Text="Phone Number"
+                               TextColor="#fff"
+                               FontSize="18"/>
+                        
+                        <customRender:BottomBorderEntry
+                            TextColor="#fff"
+                            Keyboard="Telephone"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            
+            <StackLayout
                 Orientation="Horizontal"
-                Margin="0,16,0,0">
-                <StackLayout
-                    HorizontalOptions="FillAndExpand"
-                    Orientation="Vertical">
-                    <Label Text="Country"
-                           TextColor="#fff"
-                           FontSize="18"/>
-                    
-                    <customRender:BottomBorderEntry
-                        HorizontalOptions="Start"
-                        WidthRequest="50"
-                        TextColor="#fff"
-                        Keyboard="Telephone"
-                        HorizontalTextAlignment="Center"/>
-                </StackLayout>
-            
-                <StackLayout
-                    HorizontalOptions="FillAndExpand"
-                    Orientation="Vertical">
-                    <Label Text="Phone Number"
-                           TextColor="#fff"
-                           FontSize="18"/>
-                    
-                    <customRender:BottomBorderEntry
-                        TextColor="#fff"
-                        Keyboard="Telephone"/>
-                </StackLayout>
+                BackgroundColor="#e0bc0c"
+                VerticalOptions="End"
+                Padding="16,0,16,0">
+                <Button
+                    Clicked="OpenPageNextClick"
+                    Text="Accept"
+                    BackgroundColor="#e0bc0c"
+                    TextColor="#ffffff"
+                    HorizontalOptions="EndAndExpand"
+                    FontSize="20"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
