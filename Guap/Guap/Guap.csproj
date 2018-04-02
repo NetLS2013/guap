@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="Views\Terms.xaml.cs">
       <DependentUpon>Terms.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InputMnemonicPhrasePagePage.xaml.cs">
       <DependentUpon>InputMnemonicPhrasePagePage.xaml</DependentUpon>
     </Compile>
@@ -61,12 +62,6 @@
     </Compile>
     <Compile Include="Views\PhoneNumberPage.xaml.cs">
       <DependentUpon>PhoneNumberPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SuccessSignup.xaml.cs">
-      <DependentUpon>SuccessSignup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Terms.xaml.cs">
-      <DependentUpon>Terms.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PhoneVerificationPage.xaml.cs">
       <DependentUpon>PhoneVerificationPage.xaml</DependentUpon>
@@ -93,7 +88,7 @@
     <Reference Include="Nethereum.Contracts, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Nethereum.Contracts.2.4.0\lib\netstandard1.1\Nethereum.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Nethereum.HdWallet, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nethereum.HdWallet, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Nethereum.HdWallet.2.4.0\lib\netstandard1.1\Nethereum.HdWallet.dll</HintPath>
     </Reference>
     <Reference Include="Nethereum.Hex, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -153,21 +148,14 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Terms.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MnemonicPhrasePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\InputMnemonicPhrasePagePage.xaml">
-        <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-        <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SuccessSignup.xaml">
-        <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-        <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Terms.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
