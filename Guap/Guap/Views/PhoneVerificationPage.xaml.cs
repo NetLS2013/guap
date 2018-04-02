@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Guap.ViewModels;
 using Xamarin.Forms;
 
