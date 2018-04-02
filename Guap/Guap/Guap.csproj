@@ -43,8 +43,6 @@
       <DependentUpon>GuapPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\PhoneNumberPage.xaml.cs">
-      <DependentUpon>PhoneNumberPage.xaml</DependentUpon>
     <Compile Include="Views\SuccessSignup.xaml.cs">
       <DependentUpon>SuccessSignup.xaml</DependentUpon>
     </Compile>
