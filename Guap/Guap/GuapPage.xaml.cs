@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Guap.Views;
+using Xamarin.Forms;
 
 namespace Guap
 {
@@ -7,6 +9,11 @@ namespace Guap
         public GuapPage()
         {
             InitializeComponent();
+        }
+
+        private async void OpenPageTermsClick(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Terms());
         }
     }
 }

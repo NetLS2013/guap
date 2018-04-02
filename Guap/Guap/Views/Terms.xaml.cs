@@ -16,5 +16,15 @@ namespace Guap.Views
         {
             InitializeComponent();
         }
+
+        private async void OpenPageDeclineClick(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
+
+        private async void OpenPageAcceptClick(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new PhoneNumberPage());
+        }
     }
 }

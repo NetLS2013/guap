@@ -5,7 +5,7 @@
     <ContentPage.Content> 
         <StackLayout BackgroundColor="#ffffff">
             <StackLayout Margin="30">
-                <Label FontSize="24" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,10">Terms of use</Label>
+                <Label FontSize="24" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,10">Terms of Use</Label>
                 <ScrollView VerticalOptions="CenterAndExpand" >
                     <StackLayout>
                         <Label FontSize="16" LineBreakMode="CharacterWrap" TextColor="Black" Margin="0,0,0,5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Label>
@@ -15,10 +15,9 @@
                 </ScrollView>
             </StackLayout>
             <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="EndAndExpand" Padding="16,0,16,0">
-                <Button Text="Decline" BackgroundColor="#e0bc0c" TextColor="#ffffff" FontSize="20"></Button>
-                <Button Text="Accept" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20"></Button>
+                <Button Clicked="OpenPageDeclineClick" Text="Decline" BackgroundColor="#e0bc0c" TextColor="#ffffff" FontSize="20"/>
+                <Button Clicked="OpenPageAcceptClick" Text="Accept" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20"/>
             </StackLayout>
         </StackLayout>
-
     </ContentPage.Content>
 </ContentPage>
