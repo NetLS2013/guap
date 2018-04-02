@@ -37,6 +37,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomRender\BorderEditor.cs" />
     <Compile Include="CustomRender\BottomBorderEntry.cs" />
     <Compile Include="CustomRender\LineHeightLabel.cs" />
     <Compile Include="GlobalSetting.cs" />
@@ -52,6 +53,11 @@
     </Compile>
     <Compile Include="Views\Terms.xaml.cs">
       <DependentUpon>Terms.xaml</DependentUpon>
+    <Compile Include="Views\InputMnemonicPhrasePagePage.xaml.cs">
+      <DependentUpon>InputMnemonicPhrasePagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MnemonicPhrasePage.xaml.cs">
+      <DependentUpon>MnemonicPhrasePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PhoneNumberPage.xaml.cs">
       <DependentUpon>PhoneNumberPage.xaml</DependentUpon>
@@ -141,6 +147,13 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Terms.xaml">
+    <EmbeddedResource Include="Views\MnemonicPhrasePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\InputMnemonicPhrasePagePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

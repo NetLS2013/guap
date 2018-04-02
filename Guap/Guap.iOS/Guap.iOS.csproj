@@ -178,6 +178,7 @@
     <Compile Include="Helpers\UICustomColor.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderer\BorderedEditorRenderer.cs" />
     <Compile Include="Renderer\BottomBorderEntryRenderer.cs" />
     <Compile Include="Renderer\LineSpacingLabelRenderer.cs" />
   </ItemGroup>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Guap.Views.MnemonicPhrasePage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#ffffff">
+            <StackLayout Margin="30">
+                <Label FontSize="24" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,10">Mnemonic phrase</Label>
+                <Grid BackgroundColor="Black" x:Name="Grid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="10" />
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"  />
+                        <ColumnDefinition Width="*"  />
+                        <ColumnDefinition Width="*"  />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Label Text="This mnemonic phrase is lorem ipsum dolor asit"></Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="EndAndExpand" Padding="16,0,16,0">
+                <Button Text="Decline" BackgroundColor="#e0bc0c" TextColor="#ffffff" FontSize="20"></Button>
+                <Button Text="Accept" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
