@@ -16,7 +16,6 @@ namespace Guap.Droid.Renderer
             if (Control != null)
             {
                 Control.SetBackgroundResource(Resource.Drawable.EntryBorderBottom);
-                Control.Gravity = GravityFlags.CenterHorizontal;
             }
         }
     }

@@ -14,10 +14,10 @@
                 FontSize="20"
                 FontAttributes="Bold"/>
             
-            <Label
+            <customRender:LineHeightLabel
                 Text="Please enter your phone number below to recieve a secure verification code to begin setting up your account."
                 TextColor="#fff"
-                FontSize="16"
+                FontSize="18"
                 Margin="0,4,0,0"/>
             
             <StackLayout
@@ -35,7 +35,8 @@
                         HorizontalOptions="Start"
                         WidthRequest="50"
                         TextColor="#fff"
-                        Keyboard="Telephone"/>
+                        Keyboard="Telephone"
+                        HorizontalTextAlignment="Center"/>
                 </StackLayout>
             
                 <StackLayout

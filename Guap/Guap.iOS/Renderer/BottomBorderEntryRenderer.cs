@@ -1,6 +1,4 @@
-﻿using System;
-using CoreAnimation;
-using CoreGraphics;
+﻿using CoreGraphics;
 using Guap.CustomRender;
 using Guap.iOS.Helpers;
 using Guap.iOS.Renderer;
@@ -9,7 +7,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(BottomBorderEntry), typeof(BottomBorderEntryRenderer))]
-[assembly: ExportRenderer(typeof(Entry), typeof(BottomBorderEntryRenderer))]
 namespace Guap.iOS.Renderer
 {
     public class BottomBorderEntryRenderer : EntryRenderer
@@ -21,7 +18,6 @@ namespace Guap.iOS.Renderer
             if (Control != null)
             {
                 Control.BorderStyle = UITextBorderStyle.None;
-                Control.TextAlignment = UITextAlignment.Center;
                 
                 Control.Layer.BackgroundColor = UIColor.Black.CGColor;
                 Control.Layer.MasksToBounds = false;
