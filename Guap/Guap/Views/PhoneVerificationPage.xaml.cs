@@ -1,18 +1,16 @@
 ﻿using System;
+using Guap.ViewModels;
 using Xamarin.Forms;
 
 namespace Guap.Views
 {
     public partial class PhoneVerificationPage : ContentPage
     {
-        public PhoneVerificationPage()
+        public PhoneVerificationPage(PhoneViewModel viewModels)
         {
             InitializeComponent();
-        }
-
-        private async void OpenPageNextClick(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SuccessSignup());
+            
+            BindingContext = viewModels;
         }
     }
 }

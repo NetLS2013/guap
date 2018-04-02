@@ -18,17 +18,8 @@
                 <customRender:LineHeightLabel
                     FontSize="18"
                     TextColor="#fff"
-                    Margin="0,4,0,0">
-                    <customRender:LineHeightLabel.FormattedText>
-                        <FormattedString>
-                            <Span
-                                Text="We sent your secure verification code to: "/>
-                            <Span
-                                FontSize="20"
-                                FontAttributes="Bold"
-                                Text="404 555 1234"/>
-                        </FormattedString>
-                    </customRender:LineHeightLabel.FormattedText>
+                    Margin="0,4,0,0"
+                    FormattedText="{Binding SendToNumber}">
                 </customRender:LineHeightLabel>
                 
                 <StackLayout
@@ -53,7 +44,7 @@
                 VerticalOptions="End"
                 Padding="16,0,16,0">
                 <Button
-                    Clicked="OpenPageNextClick"
+                    Command="{Binding PageSuccessSignupCommand}"
                     Text="Accept"
                     BackgroundColor="#e0bc0c"
                     TextColor="#ffffff"

@@ -1,4 +1,5 @@
 ﻿using System;
+using Guap.ViewModels;
 using Xamarin.Forms;
 
 namespace Guap.Views
@@ -8,11 +9,8 @@ namespace Guap.Views
         public PhoneNumberPage()
         {
             InitializeComponent();
-        }
 
-        private async void OpenPageNextClick(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new PhoneVerificationPage());
+            BindingContext = new PhoneViewModel(this);
         }
     }
 }

@@ -37,7 +37,8 @@
                             WidthRequest="50"
                             TextColor="#fff"
                             Keyboard="Telephone"
-                            HorizontalTextAlignment="Center"/>
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Country, Mode=TwoWay}"/>
                     </StackLayout>
                 
                     <StackLayout
@@ -49,7 +50,8 @@
                         
                         <customRender:BottomBorderEntry
                             TextColor="#fff"
-                            Keyboard="Telephone"/>
+                            Keyboard="Telephone"
+                            Text="{Binding PhoneNumber, Mode=TwoWay}"/>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
@@ -60,7 +62,7 @@
                 VerticalOptions="End"
                 Padding="16,0,16,0">
                 <Button
-                    Clicked="OpenPageNextClick"
+                    Command="{Binding PagePhoneNumberCommand}"
                     Text="Accept"
                     BackgroundColor="#e0bc0c"
                     TextColor="#ffffff"
