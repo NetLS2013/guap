@@ -10,6 +10,8 @@ namespace Guap.Views
         {
             InitializeComponent();
             
+            NavigationPage.SetHasNavigationBar(this, false);
+            
             BindingContext = viewModels;
         }
     }

@@ -7,22 +7,6 @@
         <StackLayout
             BackgroundColor="#000">
             <StackLayout
-                VerticalOptions="Start"
-                Orientation="Horizontal"
-                HorizontalOptions="CenterAndExpand"
-                Padding="0,40,0,0">
-                <Image
-                    Source="logo.png"
-                    WidthRequest="36"
-                    HeightRequest="36"/>
-
-                <Label
-                    Text="Guap"
-                    TextColor="#ffffff"
-                    FontSize="24"/>
-            </StackLayout>
-            
-            <StackLayout
                 Padding="50,70,50,0"
                 VerticalOptions="FillAndExpand">
                 <Label

@@ -3,10 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Guap.Views.Terms">
     <ContentPage.Content> 
-        <StackLayout BackgroundColor="#ffffff">
-            <StackLayout Margin="30">
+        <StackLayout BackgroundColor="#000" Spacing="0">
+            <StackLayout
+                VerticalOptions="Start"
+                Orientation="Horizontal"
+                HorizontalOptions="CenterAndExpand"
+                Padding="16,40,16,16">
+                <Image
+                    Source="logo.png"
+                    WidthRequest="36"
+                    HeightRequest="36"/>
+
+                <Label
+                    VerticalOptions="Center"
+                    Text="Guapcoin"
+                    TextColor="#fff"
+                    FontSize="24"
+                    FontAttributes="Bold"/>
+            </StackLayout>
+            
+            <StackLayout Padding="30" BackgroundColor="#fff" VerticalOptions="FillAndExpand">
                 <Label FontSize="24" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,10">Terms of Use</Label>
-                <ScrollView VerticalOptions="CenterAndExpand" >
+                <ScrollView VerticalOptions="FillAndExpand" >
                     <StackLayout>
                         <Label FontSize="16" LineBreakMode="CharacterWrap" TextColor="Black" Margin="0,0,0,5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Label>
                         <Label FontSize="16" LineBreakMode="CharacterWrap" TextColor="Black" Margin="0,0,0,5">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Label>
@@ -14,7 +32,8 @@
                     </StackLayout>
                 </ScrollView>
             </StackLayout>
-            <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="EndAndExpand" Padding="16,0,16,0">
+            
+            <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="End" Padding="16,0,16,0">
                 <Button Clicked="OpenPageDeclineClick" Text="Decline" BackgroundColor="#e0bc0c" TextColor="#ffffff" FontSize="20"/>
                 <Button Clicked="OpenPageAcceptClick" Text="Accept" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20"/>
             </StackLayout>

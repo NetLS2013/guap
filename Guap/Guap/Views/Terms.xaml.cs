@@ -15,6 +15,8 @@ namespace Guap.Views
         public Terms()
         {
             InitializeComponent();
+            
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         private async void OpenPageDeclineClick(object sender, EventArgs e)

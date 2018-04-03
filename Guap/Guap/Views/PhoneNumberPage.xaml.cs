@@ -10,7 +10,7 @@ namespace Guap.Views
         {
             InitializeComponent();
 
-            NavigationPage.SetHasBackButton(this, false);
+            NavigationPage.SetHasNavigationBar(this, false);
 
             BindingContext = new PhoneViewModel(this);
         }
