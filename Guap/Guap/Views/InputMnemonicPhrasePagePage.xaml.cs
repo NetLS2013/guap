@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace Guap.Views
 {
-	public partial class InputMnemonicPhrasePagePage : ContentPage
+    using Guap.ViewModels;
+
+    public partial class InputMnemonicPhrasePagePage : ContentPage
 	{
-		public InputMnemonicPhrasePagePage ()
+		public InputMnemonicPhrasePagePage(MnemonicPhraseViewModel viewModel)
 		{
 			InitializeComponent ();
+		    BindingContext = new InputMnemonicViewModel(this, viewModel);
 		}
 	}
 }

@@ -6,14 +6,15 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="#ffffff">
             <StackLayout Margin="30" VerticalOptions="FillAndExpand">
-                <Label FontSize="24" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,10">Mnemonic phrase</Label>
-                <Label Text="Enter your mnenonic phrase below to create your wallet."></Label>
-                <customRender:BorderEditor VerticalOptions="FillAndExpand"/>
-               
+                <Label Text="Mnemonic phrase" FontSize="24" FontAttributes="Bold"  TextColor="#4a4a4a" Margin="0,0,0,10"></Label>
+                <Label Text="Enter your mnenonic phrase below to create your wallet." FontSize="18" TextColor="#4a4a4a"></Label>
+                <Label Text="{Binding Error}" FontSize="10" TextColor="#db0029" Margin="0,10,0,10" IsVisible="{Binding IsInvalid}"></Label>
+                <customRender:BorderEditor VerticalOptions="FillAndExpand" TextColor="#4a4a4a" Text="{Binding InputMnemonic, Mode=TwoWay}"/>
+
             </StackLayout>
             <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="EndAndExpand" Padding="16,0,16,0">
-                <Button Text="Decline" BackgroundColor="#e0bc0c" TextColor="#ffffff" FontSize="20"></Button>
-                <Button Text="Accept" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20"></Button>
+                <Button Text="Back" BackgroundColor="#e0bc0c" TextColor="#ffffff" FontSize="20" Command="{Binding BackToMnemonicPhraseCommand}"></Button>
+                <Button Text="Continue" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20" Command="{Binding CompleteMnemonicPhraseCommand}"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
