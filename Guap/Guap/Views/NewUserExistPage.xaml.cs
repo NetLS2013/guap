@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace Guap.Views
 {
@@ -9,6 +10,11 @@ namespace Guap.Views
             InitializeComponent();
             
             NavigationPage.SetHasNavigationBar(this, false);
+        }
+
+        private async void OpenPageCreateWallet(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new CreateWallet());
         }
     }
 }

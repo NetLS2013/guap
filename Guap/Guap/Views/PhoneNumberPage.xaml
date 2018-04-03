@@ -61,7 +61,7 @@
                     ItemsSource="{Binding Errors}"
                     SeparatorVisibility="None"
                     IsEnabled="false"
-                    Margin="16,24,0,0">
+                    Margin="8,24,0,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

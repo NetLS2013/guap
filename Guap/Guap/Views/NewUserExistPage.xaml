@@ -51,7 +51,8 @@
                     BackgroundColor="#e0bc0c"
                     TextColor="#fff"
                     HorizontalOptions="EndAndExpand"
-                    FontSize="20"/>
+                    FontSize="20"
+                    Clicked="OpenPageCreateWallet"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
