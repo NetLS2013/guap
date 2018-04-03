@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
+             xmlns:sharedView="clr-namespace:Guap.Views.Shared;assembly=Guap"
+             x:Class="Guap.Views.CreateWallet">
+    <ContentPage.Content>
+        <StackLayout
+            BackgroundColor="#fff"
+            Spacing="0">
+            <sharedView:Header/>
+            
+            <StackLayout
+                Padding="30"
+                VerticalOptions="FillAndExpand">
+                <Label
+                    Text="Welcome"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    TextColor="#000"/>
+                
+                <customRender:LineHeightLabel
+                    FontSize="16"
+                    Margin="0,8,0,0"
+                    TextColor="#000">
+                    <customRender:LineHeightLabel.FormattedText>
+                        <FormattedString>
+                            <Span Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
+                            <Span Text="&#x0a;"/>
+                            <Span Text="&#x0a;"/>
+                            <Span Text="Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+                        </FormattedString>
+                    </customRender:LineHeightLabel.FormattedText>
+                </customRender:LineHeightLabel>
+            </StackLayout>
+            
+            <StackLayout
+                Orientation="Horizontal"
+                BackgroundColor="#e0bc0c"
+                VerticalOptions="End"
+                Padding="16,0,16,0">
+                <Button
+                    Text="Restore Wallet"
+                    BackgroundColor="#e0bc0c"
+                    TextColor="#fff"
+                    HorizontalOptions="StartAndExpand"
+                    FontSize="20"/>
+                
+                <Button
+                    Text="Create Account"
+                    BackgroundColor="#e0bc0c"
+                    TextColor="#fff"
+                    HorizontalOptions="EndAndExpand"
+                    FontSize="20"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

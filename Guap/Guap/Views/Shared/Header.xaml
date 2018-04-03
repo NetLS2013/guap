@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Guap.Views.Shared.Header">
+    <StackLayout
+        BackgroundColor="#000">
+        <StackLayout
+            Orientation="Horizontal"
+            HorizontalOptions="CenterAndExpand"
+            Padding="16,40,16,16">
+            <Image
+                Source="logo.png"
+                WidthRequest="36"
+                HeightRequest="36"/>
+    
+            <Label
+                VerticalOptions="Center"
+                Text="Guapcoin"
+                TextColor="#fff"
+                FontSize="24"
+                FontAttributes="Bold"/>
+        </StackLayout>
+    </StackLayout>
+</StackLayout>
