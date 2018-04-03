@@ -15,6 +15,13 @@ namespace Guap.Views
         public SuccessSignup()
         {
             InitializeComponent();
+            
+            NavigationPage.SetHasNavigationBar(this, false);
+        }
+
+        private async void OpenPageNewUserClick(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new NewUserExistPage());
         }
     }
 }
