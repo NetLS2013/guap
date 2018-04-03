@@ -9,7 +9,13 @@ namespace Guap
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new GuapPage());
+            var navigationPage = new NavigationPage(new GuapPage())
+            {
+                BarTextColor = Color.White,
+                BarBackgroundColor = Color.Black
+            };
+
+            MainPage = navigationPage;
         }
 
         protected override void OnStart()

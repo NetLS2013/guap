@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
@@ -6,6 +6,22 @@
     <ContentPage.Content>
         <StackLayout
             BackgroundColor="#000">
+            <StackLayout
+                VerticalOptions="Start"
+                Orientation="Horizontal"
+                HorizontalOptions="CenterAndExpand"
+                Padding="0,40,0,0">
+                <Image
+                    Source="logo.png"
+                    WidthRequest="36"
+                    HeightRequest="36"/>
+
+                <Label
+                    Text="Guap"
+                    TextColor="#ffffff"
+                    FontSize="24"/>
+            </StackLayout>
+            
             <StackLayout
                 Padding="50,70,50,0"
                 VerticalOptions="FillAndExpand">
@@ -54,6 +70,22 @@
                             Text="{Binding PhoneNumber, Mode=TwoWay}"/>
                     </StackLayout>
                 </StackLayout>
+                
+                <ListView
+                    HasUnevenRows="True"
+                    BackgroundColor="#000"
+                    ItemsSource="{Binding Errors}"
+                    SeparatorVisibility="None"
+                    IsEnabled="false"
+                    Margin="16,24,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding .}" TextColor="#db0029" FontSize="14"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackLayout>
             
             <StackLayout
