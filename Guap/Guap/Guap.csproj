@@ -37,6 +37,8 @@
     <EmbeddedResource Include="Views\Shared\Header.xaml" />
     <EmbeddedResource Include="Views\Profile\ReceivePage.xaml" />
     <EmbeddedResource Include="Views\Modal\ResumeModalPage.xaml" />
+    <EmbeddedResource Include="Views\CreateWallet.xaml" />
+    <EmbeddedResource Include="Views\Shared\Header.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -93,6 +95,8 @@
     </Compile>
     <Compile Include="Views\CreateWalletPage.xaml.cs">
       <DependentUpon>CreateWalletPage.xaml</DependentUpon>
+    <Compile Include="Views\CreateWallet.xaml.cs">
+      <DependentUpon>CreateWallet.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\Header.cs">
       <DependentUpon>Header.xaml</DependentUpon>
