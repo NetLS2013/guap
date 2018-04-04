@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:Guap.Views;assembly=Guap"
+             x:Class="Guap.Views.PinAuthPage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="White">
+            <StackLayout Margin="30">
+                <Label FontSize="16" FontAttributes="Bold" Text="{Binding Header}" TextColor="#4a4a4a" Margin="0,10,0,10" HorizontalOptions="Center"/>
+                <views:PinView
+                Margin="0,0,0,10"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="FillAndExpand"
+                BindingContext="{Binding PinViewModel}" />
+                <Label Text="{Binding Error}" IsVisible="{Binding IsInvalid}" FontSize="14" TextColor="#be1209" HorizontalOptions="Center"></Label>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

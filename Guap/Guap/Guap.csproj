@@ -44,6 +44,8 @@
     <Compile Include="CustomRender\BorderEditor.cs" />
     <Compile Include="CustomRender\BottomBorderEntry.cs" />
     <Compile Include="CustomRender\LineHeightLabel.cs" />
+    <Compile Include="CustomRender\Pin\PinItemView.cs" />
+    <Compile Include="CustomRender\Pin\PinViewModel.cs" />
     <Compile Include="GlobalSetting.cs" />
     <Compile Include="GuapPage.xaml.cs">
       <DependentUpon>GuapPage.xaml</DependentUpon>
@@ -52,8 +54,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\PhoneViewModel.cs" />
     <Compile Include="Service\EthereumService.cs" />
+    <Compile Include="ViewModels\PinAuthViewModel.cs" />
     <Compile Include="Views\NewUserExistPage.xaml.cs">
       <DependentUpon>NewUserExistPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PinAuthPage.xaml.cs">
+      <DependentUpon>PinAuthPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PinView.xaml.cs">
+      <DependentUpon>PinView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SuccessSignup.xaml.cs">
       <DependentUpon>SuccessSignup.xaml</DependentUpon>
@@ -182,6 +191,18 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\InputMnemonicPhrasePagePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\PinAuthPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\PinView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

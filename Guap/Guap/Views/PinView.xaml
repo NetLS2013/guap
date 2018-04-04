@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pin="clr-namespace:Guap.CustomRender.Pin;assembly=Guap"
+             x:Class="Guap.Views.PinView">
+  <ContentView.Content>
+        <Grid BackgroundColor="White">
+            <Grid.RowDefinitions>
+                <!-- Dots -->
+                <RowDefinition
+					Height="38" />
+                <!-- 1 2 3 -->
+                <RowDefinition
+					Height="70" />
+                <!-- 4 5 6 -->
+                <RowDefinition
+					Height="70" />
+                <!-- 7 8 9 -->
+                <RowDefinition
+					Height="70" />
+                <!--   0 <- -->
+                <RowDefinition
+					Height="70" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+					Width="78" />
+                <ColumnDefinition
+					Width="78" />
+                <ColumnDefinition
+					Width="78" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" x:Name="circlesStackLayout"
+                  Grid.ColumnSpan="3"
+                  VerticalOptions="Start"
+                  Padding="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <pin:PinItemView
+				Text="1"
+				Grid.Column="0"
+				Grid.Row="1"
+                
+				Command="{Binding KeyPressCommand}"
+                HorizontalOptions="FillAndExpand"
+				CommandParameter="1" />
+            <pin:PinItemView
+				Text="2"
+				Grid.Column="1"
+				Grid.Row="1"
+                
+				Command="{Binding KeyPressCommand}"
+				CommandParameter="2" />
+            <pin:PinItemView
+				Text="3"
+				Grid.Column="2"
+				Grid.Row="1"
+                
+				Command="{Binding KeyPressCommand}"
+				CommandParameter="3" />
+            <pin:PinItemView
+				Text="4"
+				Grid.Column="0"
+				Grid.Row="2"
+                
+				Command="{Binding KeyPressCommand}"
+				CommandParameter="4" />
+            <pin:PinItemView
+				Text="5"
+				Grid.Column="1"
+				Grid.Row="2"
+                
+				Command="{Binding KeyPressCommand}"
+				CommandParameter="5" />
+            <pin:PinItemView
+				Text="6"
+				Grid.Column="2"
+				Grid.Row="2"
+                
+				Command="{Binding KeyPressCommand}"
+				CommandParameter="6" />
+            <pin:PinItemView
+				Text="7"
+				Grid.Column="0"
+				Grid.Row="3"
+                
+				Command="{Binding KeyPressCommand}"
+				CommandParameter="7" />
+            <pin:PinItemView
+				Text="8"
+				Grid.Column="1"
+				Grid.Row="3"
+                
+				Command="{Binding KeyPressCommand}"
+				CommandParameter="8" />
+            <pin:PinItemView
+				Text="9"
+				Grid.Column="2"
+				Grid.Row="3"
+                
+				Command="{Binding KeyPressCommand}"
+				CommandParameter="9" />
+            <pin:PinItemView
+				Text="0"
+				Grid.Column="1"
+				Grid.Row="4"
+                
+				Command="{Binding KeyPressCommand}"
+				CommandParameter="0" />
+            <pin:PinItemView
+				Grid.Column="2"
+				Grid.Row="4"
+     
+				Command="{Binding KeyPressCommand}"
+				CommandParameter="Backspace">
+                <pin:PinItemView.Text>
+                    <OnPlatform
+						x:TypeArguments="x:String">
+                        <OnPlatform.iOS>DEL</OnPlatform.iOS>
+                        <OnPlatform.Android>DEL</OnPlatform.Android>
+                    </OnPlatform>
+                </pin:PinItemView.Text>
+            </pin:PinItemView>
+            <pin:PinItemView
+                Grid.Column="0"
+                Grid.Row="4"
+              
+                Command="{Binding KeyPressCommand}"
+                CommandParameter="Clear">
+                <pin:PinItemView.Text>
+                    <OnPlatform
+                        x:TypeArguments="x:String">
+                        <OnPlatform.iOS>CLR</OnPlatform.iOS>
+                        <OnPlatform.Android>CLR</OnPlatform.Android>
+                    </OnPlatform>
+                </pin:PinItemView.Text>
+            </pin:PinItemView>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>
