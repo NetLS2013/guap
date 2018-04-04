@@ -1,5 +1,6 @@
-﻿using Guap.Views;
-using Guap.Views.Profile;
+using System;
+using Guap.Helpers;
+using Guap.Views;
 using Xamarin.Forms;
 
 namespace Guap
@@ -10,7 +11,14 @@ namespace Guap
         {
             InitializeComponent();
 
-            var navigationPage = new NavigationPage(new GuapPage())
+            var startPage = typeof(GuapPage);
+
+            if ((bool) Settings.Get(Settings.Key.ResumePage))
+            {
+                startPage = typeof(CreateWalletPage);
+            }
+
+            var navigationPage = new NavigationPage((Page)Activator.CreateInstance(startPage))
             {
                 BarTextColor = Color.White,
                 BarBackgroundColor = Color.Black

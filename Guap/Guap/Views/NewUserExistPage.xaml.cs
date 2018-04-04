@@ -14,7 +14,7 @@ namespace Guap.Views
 
         private async void OpenPageCreateWallet(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CreateWallet());
+            await Navigation.PushAsync(new CreateWalletPage());
         }
     }
 }

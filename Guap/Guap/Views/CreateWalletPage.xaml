@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
              xmlns:shared="clr-namespace:Guap.Views.Shared;assembly=Guap"
-             x:Class="Guap.Views.CreateWallet">
+             x:Class="Guap.Views.CreateWalletPage">
     <ContentPage.Content>
         <StackLayout
             BackgroundColor="#fff"
@@ -39,11 +39,12 @@
                 VerticalOptions="End"
                 Padding="16,0,16,0">
                 <Button
-                    Text="Restore Wallet"
+                    Text="Pause"
                     BackgroundColor="#e0bc0c"
                     TextColor="#fff"
                     HorizontalOptions="StartAndExpand"
-                    FontSize="20"/>
+                    FontSize="20"
+                    Clicked="OpenModalResumeClick"/>
                 
                 <Button
                     Text="Create Account"
