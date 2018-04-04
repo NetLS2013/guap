@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+    x:Class="Guap.Views.Profile.ReceivePage"
+    Title="Receive">
+    <StackLayout
+        Padding="0,60"
+        BackgroundColor="White">
+        <StackLayout
+            VerticalOptions="EndAndExpand">
+            <Label
+                Text="You Account Key :"
+                HorizontalOptions="Center"
+                TextColor="#4a4a4a"
+                FontSize="14"/>
+        
+            <Label
+                Text="0x0cacdbb61ba1e9dec89fc4d8c81f15797fff9ac6"
+                HorizontalOptions="Center"
+                TextColor="#4a4a4a"
+                FontSize="14"/>
+        </StackLayout>
+        
+        <forms:ZXingBarcodeImageView
+            x:Name="QrResult"
+            BarcodeFormat="QR_CODE"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"/>
+        
+        <Button
+            BackgroundColor="Transparent"
+            TextColor="#e0bc0c"
+            Text="Request an Amount >"
+            FontSize="20"/>
+    </StackLayout>
+</ContentPage>

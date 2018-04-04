@@ -1,4 +1,5 @@
 ﻿using Guap.Views;
+using Guap.Views.Profile;
 using Xamarin.Forms;
 
 namespace Guap
