@@ -106,7 +106,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DLToolkit.Forms.Controls.FlowListView, Version=1.0.6542.36915, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DLToolkit.Forms.Controls.FlowListView, Version=1.0.6542.36915, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\DLToolkit.Forms.Controls.FlowListView.2.0.10\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+netstandard1.0\DLToolkit.Forms.Controls.FlowListView.dll</HintPath>
     </Reference>
     <Reference Include="MvvmValidation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=113792d2053ac461">
