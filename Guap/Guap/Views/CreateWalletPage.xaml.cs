@@ -15,7 +15,7 @@ namespace Guap.Views
             
             NavigationPage.SetHasNavigationBar(this, false);
             
-            if ((bool) Settings.Get(Settings.Key.ResumePage))
+            if (Equals(Settings.Get(Settings.Key.ResumePage), true))
             {
                 Device.BeginInvokeOnMainThread(async () => await Navigation.PushPopupAsync(new ResumeModalPage()));
             }

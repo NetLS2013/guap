@@ -13,7 +13,7 @@ namespace Guap
 
             var startPage = typeof(GuapPage);
 
-            if ((bool) Settings.Get(Settings.Key.ResumePage))
+            if (Equals(Settings.Get(Settings.Key.ResumePage), true))
             {
                 startPage = typeof(CreateWalletPage);
             }
