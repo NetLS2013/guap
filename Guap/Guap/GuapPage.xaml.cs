@@ -12,7 +12,7 @@ namespace Guap
         }
 
         private async void OpenPageTermsClick(object sender, EventArgs e)
-        {
+        {    
             await Navigation.PushAsync(new Terms());
         }
     }

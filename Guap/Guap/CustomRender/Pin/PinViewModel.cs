@@ -3,12 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
 
     using Xamarin.Forms;
 
     public class PinEventArgs : EventArgs
     {
-        public IList<char> EnteredPin { get; set; }
+        public string EnteredPin { get; set; }
     }
 
     public class PinViewModel : INotifyPropertyChanged
@@ -50,11 +51,11 @@
             }
         }
 
-        private Func<IList<char>, bool> _validatorFunc;
+        private Func<string, bool> _validatorFunc;
         /// <summary>
         /// Gets or sets the validator function.
         /// </summary>
-        public Func<IList<char>, bool> ValidatorFunc
+        public Func<string, bool> ValidatorFunc
         {
             get { return _validatorFunc; }
             set
@@ -112,9 +113,11 @@
                     EnteredPin.Add(arg[0]);
                     if (EnteredPin.Count == TargetPinLength)
                     {
-                        if (ValidatorFunc.Invoke(EnteredPin))
+                        var pass = new string(EnteredPin.ToArray());
+
+                        if (ValidatorFunc.Invoke(pass))
                         {
-                            Success?.Invoke(this, new PinEventArgs(){EnteredPin = EnteredPin});
+                            Success?.Invoke(this, new PinEventArgs(){EnteredPin = pass });
                             EnteredPin.Clear();
                             DisplayedTextUpdated?.Invoke(this, EventArgs.Empty);
                         }

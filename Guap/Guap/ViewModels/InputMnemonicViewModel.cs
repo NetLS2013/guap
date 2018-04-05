@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
 
+    using Guap.Helpers;
     using Guap.Views;
 
     using MvvmValidation;
@@ -25,16 +26,50 @@
 
         private bool _isInvalid;
 
+        private string _headerText;
+
+        private bool _isCustomHeader;
+
         public ICommand CompleteMnemonicPhraseCommand => new Command(async () => await OnPageCompleteMnemonic());
 
         public ICommand BackToMnemonicPhraseCommand => new Command(async () => await OnBack());
 
+        public EventHandler<EventArgs> EventHandler { get; set; }
 
-        public InputMnemonicViewModel(Page context, MnemonicPhraseViewModel model)
+        public InputMnemonicViewModel(Page context, MnemonicPhraseViewModel model, CommonPageSettings pageSettings)
         {
+            this.HeaderText = pageSettings.HeaderText;
+            this.IsCustomHeader = pageSettings.IsShowCustomHeader;
+
             this._mnemonicPhraseViewModel = model;
             this._context = context;
             IsInvalid = false;
+        }
+
+        public string HeaderText
+        {
+            get
+            {
+                return _headerText;
+            }
+            set
+            {
+                _headerText = value;
+                OnPropertyChanged(nameof(HeaderText));
+            }
+        }
+
+        public bool IsCustomHeader
+        {
+            get
+            {
+                return _isCustomHeader;
+            }
+            set
+            {
+                _isCustomHeader = value;
+                OnPropertyChanged(nameof(IsCustomHeader));
+            }
         }
 
         public string InputMnemonic

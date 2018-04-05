@@ -2,11 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:shared="clr-namespace:Guap.Views.Shared;assembly=Guap"
              x:Class="Guap.Views.MnemonicPhrasePage">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#ffffff">
+            <shared:Header IsVisible="{Binding IsCustomHeader}"/>
             <StackLayout Margin="30" VerticalOptions="Start">
-                <Label Text="Mnemonic phrase" FontSize="24" FontAttributes="Bold" TextColor="#4a4a4a" Margin="0,0,0,10"></Label>
+                <Label Text="{Binding HeaderText}" FontSize="24" FontAttributes="Bold" TextColor="#4a4a4a" Margin="0,0,0,10"></Label>
                 
                 <controls:FlowListView BackgroundColor="Black" FlowColumnCount="4" RowHeight="50" SeparatorVisibility="None" HasUnevenRows="false" FlowItemsSource="{Binding Wallet.Words}" Margin="0,0,0,10">
 

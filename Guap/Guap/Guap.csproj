@@ -52,6 +52,7 @@
     <Compile Include="GuapPage.xaml.cs">
       <DependentUpon>GuapPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CommonPageSettings.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Models\MnemonicWallet.cs" />
     <Compile Include="Properties\Annotations.cs" />

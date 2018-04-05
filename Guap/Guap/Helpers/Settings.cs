@@ -19,7 +19,9 @@ namespace Guap.Helpers
 
         public enum Key
         {
-            ResumePage
+            ResumePage,
+            PinSetupPage,
+            Pin
         }
     }
 }

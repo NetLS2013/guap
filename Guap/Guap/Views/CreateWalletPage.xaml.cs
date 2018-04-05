@@ -27,5 +27,10 @@ namespace Guap.Views
             
             Settings.Set(Settings.Key.ResumePage, true);
         }
+
+        private async void OpenMnemonicClick(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MnemonicPhrasePage(new CommonPageSettings(){HasNavigation = false, HeaderText = "Mnemonic Phrase"}));
+        }
     }
 }

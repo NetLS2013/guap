@@ -2,6 +2,7 @@
 
 namespace Guap.Views
 {
+    using Guap.Helpers;
     using Guap.ViewModels;
 
     public partial class InputMnemonicPhrasePagePage : ContentPage
@@ -9,7 +10,7 @@ namespace Guap.Views
 		public InputMnemonicPhrasePagePage(MnemonicPhraseViewModel viewModel)
 		{
 			InitializeComponent ();
-		    BindingContext = new InputMnemonicViewModel(this, viewModel);
+		    BindingContext = new InputMnemonicViewModel(this, viewModel, new CommonPageSettings());
 		}
 	}
 }

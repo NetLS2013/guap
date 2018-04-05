@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace Guap.Views
 {
     using Guap.CustomRender.Pin;
+    using Guap.Helpers;
     using Guap.ViewModels;
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -17,17 +18,20 @@ namespace Guap.Views
     {
         private PinAuthViewModel viewModel;
 
-        public PinAuthPage(EventHandler<PinEventArgs> successHandler, Func<IList<char>, bool> validatorFunc, string errorMessage, string headerText, bool hasNav = false, string title = "")
+        public PinAuthPage(EventHandler<PinEventArgs> successHandler, Func<string, bool> validatorFunc, string errorMessage, CommonPageSettings pageSettings)
         {
+            this.Title = pageSettings.Title;
+            
+            NavigationPage.SetHasNavigationBar(this, pageSettings.HasNavigation);
+            NavigationPage.SetHasBackButton(this, pageSettings.HasBack);
             InitializeComponent();
-            this.Title = title;
-            NavigationPage.SetHasNavigationBar(this, hasNav);
+            
             viewModel = new PinAuthViewModel();
             
             viewModel.PinViewModel.Success += successHandler;
             viewModel.PinViewModel.ValidatorFunc += validatorFunc;
             viewModel.Error = errorMessage;
-            viewModel.Header = headerText;
+            viewModel.Header = pageSettings.HeaderText;
             base.BindingContext = viewModel;
         }
 
