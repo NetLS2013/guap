@@ -9,8 +9,8 @@
             <shared:Header IsVisible="{Binding IsCustomHeader}"/>
             <StackLayout Margin="30" VerticalOptions="Start">
                 <Label Text="{Binding HeaderText}" FontSize="24" FontAttributes="Bold" TextColor="#4a4a4a" Margin="0,0,0,10"></Label>
-                
-                <controls:FlowListView BackgroundColor="Black" FlowColumnCount="4" RowHeight="50" SeparatorVisibility="None" HasUnevenRows="false" FlowItemsSource="{Binding Wallet.Words}" Margin="0,0,0,10">
+
+                <controls:FlowListView BackgroundColor="Black" FlowColumnCount="4" RowHeight="50" SeparatorVisibility="None" HasUnevenRows="false" FlowItemsSource="{Binding Words}" Margin="0,0,0,10">
 
                     <controls:FlowListView.FlowColumnTemplate>
                         <DataTemplate>

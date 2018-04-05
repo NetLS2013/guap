@@ -21,7 +21,8 @@ namespace Guap.Helpers
         {
             ResumePage,
             PinSetupPage,
-            Pin
+            Pin,
+            MnemonicPhrase
         }
     }
 }

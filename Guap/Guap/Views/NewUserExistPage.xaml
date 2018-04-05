@@ -53,7 +53,8 @@
                     BackgroundColor="#e0bc0c"
                     TextColor="#fff"
                     HorizontalOptions="StartAndExpand"
-                    FontSize="20"/>
+                    FontSize="20"
+                    Clicked="OpenPageRestoreWallet"/>
                 
                 <Button
                     Text="Create Account"

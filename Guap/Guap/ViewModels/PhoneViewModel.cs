@@ -12,6 +12,8 @@ using Xamarin.Forms;
 
 namespace Guap.ViewModels
 {
+    using Guap.Helpers;
+
     public class PhoneViewModel : INotifyPropertyChanged
     {
         private string _country;
@@ -144,12 +146,21 @@ namespace Guap.ViewModels
 
         private async Task OnPageSuccessSignup()
         {
-            if(!ValidateVerifyNumber())
+            if (!ValidateVerifyNumber())
             {
                 return;
             }
 
-            await _context.Navigation.PushAsync(new SuccessSignup());
+            await _context.Navigation.PushAsync(
+                new SuccessSignup(
+                    new CommonPageSettings()
+                        {
+                            HasNavigation = false,
+                            HeaderText =
+                                "Your identity has been verified." + Environment.NewLine
+                                + "You can create your wallet"
+                        },
+                    () => this._context.Navigation.PushAsync(new NewUserExistPage())));
         }
     }
 }

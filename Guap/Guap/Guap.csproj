@@ -64,6 +64,9 @@
     <Compile Include="ViewModels\PhoneViewModel.cs" />
     <Compile Include="Service\EthereumService.cs" />
     <Compile Include="ViewModels\PinAuthViewModel.cs" />
+    <Compile Include="Views\Dashboard\Dashboard.xaml.cs">
+      <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Modal\ResumeModalPage.xaml.cs">
       <DependentUpon>ResumeModalPage.xaml</DependentUpon>
     </Compile>
@@ -85,8 +88,8 @@
     <Compile Include="Views\Terms.xaml.cs">
       <DependentUpon>Terms.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\InputMnemonicPhrasePagePage.xaml.cs">
-      <DependentUpon>InputMnemonicPhrasePagePage.xaml</DependentUpon>
+    <Compile Include="Views\InputMnemonicPhrasePage.xaml.cs">
+      <DependentUpon>InputMnemonicPhrasePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MnemonicPhrasePage.xaml.cs">
       <DependentUpon>MnemonicPhrasePage.xaml</DependentUpon>
@@ -214,7 +217,7 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\InputMnemonicPhrasePagePage.xaml">
+    <EmbeddedResource Include="Views\InputMnemonicPhrasePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -227,6 +230,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\PinView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Dashboard\Dashboard.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -1,5 +1,6 @@
 ﻿namespace Guap.ViewModels
 {
+    using System;
     using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows.Input;
@@ -19,11 +20,27 @@
 
         private string _headerText;
 
+        private string[] _words;
+
         private bool _isCustomHeader;
 
-        public MnemonicWallet Wallet { get; private set; }
+        public Action Action { get; set; }
 
-        public ICommand NextCommand => new Command(async () => await OnContinue());
+        public string[] Words
+        {
+            get
+            {
+                return _words;
+            }
+            set
+            {
+                _words = value;
+                OnPropertyChanged(nameof(Words));
+            }
+        }
+
+
+        public ICommand NextCommand => new Command(async () => Action());
 
         public string HeaderText
         {
@@ -53,17 +70,11 @@
 
         public MnemonicPhraseViewModel(Page context, CommonPageSettings pageSettings)
         {
-            Wallet = new MnemonicWallet();
-            Wallet.Words = EthereumService.MnenonicPhrasegenerate();
             this.HeaderText = pageSettings.HeaderText;
             this.IsCustomHeader = pageSettings.IsShowCustomHeader;
 
             _context = context;
         }
 
-        private async Task OnContinue()
-        {
-            await _context.Navigation.PushAsync(new InputMnemonicPhrasePagePage(this));
-        }
     }
 }

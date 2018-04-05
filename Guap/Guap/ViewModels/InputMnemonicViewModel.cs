@@ -1,6 +1,7 @@
 ﻿namespace Guap.ViewModels
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
@@ -14,8 +15,7 @@
 
     public class InputMnemonicViewModel : BaseViewModel
     {
-        private readonly MnemonicPhraseViewModel _mnemonicPhraseViewModel;
-
+     
         private readonly Page _context;
 
         private ValidationErrorCollection _errors;
@@ -34,16 +34,18 @@
 
         public ICommand BackToMnemonicPhraseCommand => new Command(async () => await OnBack());
 
-        public EventHandler<EventArgs> EventHandler { get; set; }
+        public Action<string> SuccessAction { get; set; }
 
-        public InputMnemonicViewModel(Page context, MnemonicPhraseViewModel model, CommonPageSettings pageSettings)
+        public List<KeyValuePair<string, Func<string, bool>>> Validators { get; set; }
+
+        public InputMnemonicViewModel(Page context, CommonPageSettings pageSettings)
         {
             this.HeaderText = pageSettings.HeaderText;
             this.IsCustomHeader = pageSettings.IsShowCustomHeader;
 
-            this._mnemonicPhraseViewModel = model;
             this._context = context;
             IsInvalid = false;
+            Validators = new List<KeyValuePair<string,Func<string, bool>>>();
         }
 
         public string HeaderText
@@ -135,7 +137,8 @@
             IsInvalid = false;
 
             // TODO set next page, assign somewhere words list
-            await _context.Navigation.PushAsync(new SuccessSignup());
+            ///await _context.Navigation.PushAsync(new SuccessSignup());
+            this.SuccessAction(InputMnemonic);
         }
 
         private async Task OnBack()
@@ -147,12 +150,10 @@
         {
             var validator = new ValidationHelper();
             validator.AddRequiredRule(() => this.InputMnemonic, "Mnemonic phrase is required.");
-            validator.AddRule(
-                nameof(this.InputMnemonic),
-                () => RuleResult.Assert(
-                    this.InputMnemonic == string.Join(" ", this._mnemonicPhraseViewModel.Wallet.Words),
-                    "The mnemonic phrase you entered is incorrect." + Environment.NewLine + "Typos can cause this."
-                    + Environment.NewLine + "Please review your phrase and try again"));
+            foreach (var func in Validators)
+            {
+                validator.AddRule(nameof(this.InputMnemonic), () => RuleResult.Assert(func.Value(InputMnemonic), func.Key));
+            }
 
             var result = validator.ValidateAll();
 

@@ -17,8 +17,8 @@ namespace Guap.iOS.Renderer
 
             if (Control != null)
             {
-                Control.Layer.BorderColor = Color.FromHex("000000").ToCGColor();
-                Control.Layer.BorderWidth = 1;
+                Control.Layer.BorderColor = Color.FromHex("979797").ToCGColor();
+                Control.Layer.BorderWidth = 2;
             }
         }
     }

@@ -9,19 +9,30 @@ using Xamarin.Forms.Xaml;
 
 namespace Guap.Views
 {
+    using Guap.Helpers;
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SuccessSignup : ContentPage
     {
-        public SuccessSignup()
+        private Action nextAction;
+
+        public SuccessSignup(CommonPageSettings pageSettings, Action nextAction)
         {
             InitializeComponent();
-            
-            NavigationPage.SetHasNavigationBar(this, false);
+
+            // init top bar
+            NavigationPage.SetHasNavigationBar(this, pageSettings.HasNavigation);
+            NavigationPage.SetHasBackButton(this, pageSettings.HasBack);
+            this.Title = pageSettings.Title;
+
+            this.nextAction = nextAction;
+
+            Message.Text = pageSettings.HeaderText;
         }
 
         private async void OpenPageNewUserClick(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NewUserExistPage());
+            this.nextAction();
         }
     }
 }
