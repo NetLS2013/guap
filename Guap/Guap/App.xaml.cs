@@ -1,12 +1,16 @@
 using System;
 using Guap.Helpers;
 using Guap.Views;
+using Guap.Views.Profile;
 using Xamarin.Forms;
 
 namespace Guap
 {
     public partial class App : Application
     {
+        public static int ScreenHeight { get; set;}
+        public static int ScreenWidth { get; set;}
+        
         public App()
         {
             InitializeComponent();

@@ -6,33 +6,88 @@
     x:Class="Guap.Views.Profile.ReceivePage"
     Title="Receive">
     <StackLayout
-        Padding="0,60"
         BackgroundColor="White">
         <StackLayout
-            VerticalOptions="EndAndExpand">
-            <Label
-                Text="You Account Key :"
-                HorizontalOptions="Center"
-                TextColor="#4a4a4a"
-                FontSize="14"/>
-        
-            <Label
-                Text="0x0cacdbb61ba1e9dec89fc4d8c81f15797fff9ac6"
-                HorizontalOptions="Center"
-                TextColor="#4a4a4a"
-                FontSize="14"/>
+            x:Name="QrContainer"
+            VerticalOptions="CenterAndExpand"
+            Spacing="0">
+            <StackLayout>
+                <Label
+                    Text="You Account Key :"
+                    HorizontalOptions="Center"
+                    TextColor="#4a4a4a"
+                    FontSize="13"/>
+            
+                <Label
+                    Text="0x0cacdbb61ba1e9dec89fc4d8c81f15797fff9ac6"
+                    HorizontalOptions="Center"
+                    TextColor="#4a4a4a"
+                    FontSize="13"/>
+            </StackLayout>
+            
+            <StackLayout
+                x:Name="QrWrapper"
+                HeightRequest="300">
+                <forms:ZXingBarcodeImageView
+                    x:Name="QrResult"
+                    BarcodeFormat="QR_CODE"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"/>
+            </StackLayout>
+            
+            <Button
+                TextColor="#e0bc0c"
+                BackgroundColor="Transparent"
+                Text="Request an Amount >"
+                FontSize="20"/>
         </StackLayout>
         
-        <forms:ZXingBarcodeImageView
-            x:Name="QrResult"
-            BarcodeFormat="QR_CODE"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand"/>
-        
-        <Button
-            BackgroundColor="Transparent"
-            TextColor="#e0bc0c"
-            Text="Request an Amount >"
-            FontSize="20"/>
+        <StackLayout
+            Spacing="0"
+            VerticalOptions="End">
+            <BoxView
+                BackgroundColor="#979797"
+                HeightRequest="1"/>
+            
+            <StackLayout
+                Orientation="Horizontal"
+                Padding="24,4">
+                <StackLayout
+                    Orientation="Vertical"
+                    VerticalOptions="Center"
+                    Spacing="0">
+                    <Label
+                        Text="ACE Wallet"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        TextColor="#9b9b9b"/>
+                    
+                    <Label
+                        Text="Available Balance"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        TextColor="#9b9b9b"/>
+                </StackLayout>
+                
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="EndAndExpand"
+                    Spacing="0">
+                    <Label
+                        Text="0.000324 ETH"
+                        FontAttributes="Bold"
+                        VerticalOptions="Center"
+                        FontSize="18"
+                        TextColor="#9b9b9b"/>
+                    
+                    <Button
+                        WidthRequest="40"
+                        BackgroundColor="Transparent"
+                        Text="up"
+                        VerticalOptions="Center"
+                        TextColor="#9b9b9b"/>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
     </StackLayout>
 </ContentPage>
