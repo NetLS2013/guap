@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Guap.Views.Profile.EnterAmountPage"
+    Title="Enter Amount">
+    <RelativeLayout
+        BackgroundColor="AntiqueWhite">
+        <Entry
+            x:Name="InputAmount"
+            Text="{Binding InputAmmount, Mode=TwoWay}"
+            Keyboard="Numeric"/>
+        
+        <StackLayout
+            RelativeLayout.WidthConstraint=
+            "{ ConstraintExpression Type = RelativeToParent, Property = Width, Factor = 1 }"
+            RelativeLayout.HeightConstraint=
+            "{ ConstraintExpression Type = RelativeToParent, Property = Height, Factor = 1 }"
+            Orientation="Vertical"
+            Padding="30"
+            BackgroundColor="White">
+            
+            <Label
+                FontSize="18"
+                Text="Amount"
+                FontAttributes="Bold"
+                TextColor="#9b9b9b"/>
+            
+            <Label
+                Margin="0,50,0,0"
+                TextColor="#9b9b9b"
+                FormattedText="{Binding AmountTrigger}"/>
+            
+            <Label
+                FormattedText="{Binding CurrencyConverter}"
+                FontSize="24"
+                TextColor="#9b9b9b"/>
+        </StackLayout>
+        
+        <Button
+            RelativeLayout.WidthConstraint=
+                "{ ConstraintExpression Type = RelativeToParent, Property = Width, Factor = 1 }"
+            RelativeLayout.HeightConstraint=
+                "{ ConstraintExpression Type = RelativeToParent, Property = Height, Factor = 1 }"
+            Clicked="InpitTrigger"
+            BackgroundColor="Transparent"/>
+    </RelativeLayout>
+</ContentPage>

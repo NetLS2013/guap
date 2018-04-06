@@ -107,7 +107,7 @@ namespace Guap.ViewModels
             }
         }
 
-        private bool ValidateVerifyNumber()
+        private bool ValidatePhoneNumber()
         {
             var validator = new ValidationHelper();
             validator.AddRequiredRule(() => Country, "Country is required.");
@@ -120,10 +120,10 @@ namespace Guap.ViewModels
             return result.IsValid;
         }
         
-        private bool ValidatePhoneNumber()
+        private bool ValidateVerifyNumber()
         {
             var validator = new ValidationHelper();
-//            validator.AddRequiredRule(() => PhoneNumber, "Country is required.");
+//            validator.AddRequiredRule(() => PhoneNumber, "Code is required.");
 
             var result = validator.ValidateAll();
 
@@ -134,7 +134,7 @@ namespace Guap.ViewModels
 
         private async Task OnPagePhoneNumber()
         {
-            if(!ValidateVerifyNumber())
+            if(!ValidatePhoneNumber())
             {
                 return;
             }

@@ -22,12 +22,21 @@
                     <customRender:LineHeightLabel.FormattedText>
                         <FormattedString>
                             <Span Text="If you're new to Guapcoin, select "/>
-                            <Span Text="Create Account " FontAttributes="Bold"/>
+                            
+                            <Span 
+                                Text="Create Account "
+                                FontAttributes="Bold"
+                                FontSize="18"/>
+                            
                             <Span Text="below to get started."/>
-                            <Span Text="&#x0a;"/>
-                            <Span Text="&#x0a;"/>
+                            <Span Text="&#x0a;&#x0a;"/>
                             <Span Text="If you're an existing user and would like to add Guapcoin to another device or if you previous device was lost, damaged or stolen, select "/>
-                            <Span Text="Restore Account " FontAttributes="Bold"/>
+                            
+                            <Span
+                                Text="Restore Account "
+                                FontAttributes="Bold"
+                                FontSize="18"/>
+                            
                             <Span Text="to pickup where you left off."/>
                         </FormattedString>
                     </customRender:LineHeightLabel.FormattedText>

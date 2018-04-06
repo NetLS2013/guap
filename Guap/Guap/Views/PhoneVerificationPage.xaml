@@ -33,7 +33,7 @@
                     
                     <customRender:BottomBorderEntry
                         TextColor="#fff"
-                        Keyboard="Telephone"
+                        Keyboard="Numeric"
                         HorizontalTextAlignment="Center"/>
                 </StackLayout>
 

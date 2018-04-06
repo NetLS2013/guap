@@ -47,7 +47,7 @@
                     Clicked="OpenModalResumeClick"/>
                 
                 <Button
-                    Text="Create Account"
+                    Text="Continue"
                     BackgroundColor="#e0bc0c"
                     TextColor="#fff"
                     HorizontalOptions="EndAndExpand"
