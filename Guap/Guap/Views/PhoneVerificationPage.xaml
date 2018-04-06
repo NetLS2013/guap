@@ -7,7 +7,7 @@
         <StackLayout
             BackgroundColor="#000">
             <StackLayout
-                Padding="50,70,50,0"
+                Padding="40,70,40,0"
                 VerticalOptions="FillAndExpand">
                 <Label
                     Text="Great!"
