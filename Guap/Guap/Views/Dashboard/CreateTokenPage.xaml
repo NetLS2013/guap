@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
+             xmlns:helpers="clr-namespace:Guap.Helpers;assembly=Guap"
+             x:Class="Guap.Views.Dashboard.CreateTokenPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:BooleanConverter x:Key="BooleanConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout
+            BackgroundColor="#000">
+            <StackLayout
+                Padding="40,40,40,0"
+                VerticalOptions="FillAndExpand">
+
+                <!--<customRender:LineHeightLabel
+                    FontSize="18"
+                    TextColor="#fff"
+                    Margin="0,8,0,0"
+                    FormattedText="{Binding SendToNumber}">
+                </customRender:LineHeightLabel>-->
+
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Vertical"
+                    Margin="0,40,0,0">
+                    <Label Text="Token address"
+                           HorizontalOptions="Center"
+                           TextColor="#fff"
+                           FontSize="16"/>
+
+                    <customRender:BottomBorderEntry
+                        TextColor="#fff"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding ContractAddress, Mode=TwoWay}"
+                        IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
+                </StackLayout>
+
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Vertical"
+                    Margin="0,40,0,0">
+                    <Label Text="Token name"
+                           HorizontalOptions="Center"
+                           TextColor="#fff"
+                           FontSize="16"/>
+
+                    <customRender:BottomBorderEntry
+                        TextColor="#fff"
+                        Keyboard="Text"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding TokenName, Mode=TwoWay}"
+                        IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Vertical"
+                        Margin="0,40,0,0">
+                        <Label Text="Token symbol"
+                               HorizontalOptions="Center"
+                               TextColor="#fff"
+                               FontSize="16"/>
+
+                        <customRender:BottomBorderEntry
+                            TextColor="#fff"
+                            Keyboard="Text"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding TokenSymbol, Mode=TwoWay}"
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
+                    </StackLayout>
+
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Vertical"
+                        Margin="0,40,0,0">
+                        <Label Text="Decimals"
+                               HorizontalOptions="Center"
+                               TextColor="#fff"
+                               FontSize="16"/>
+
+                        <customRender:BottomBorderEntry
+                            TextColor="#fff"
+                            Keyboard="Numeric"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Decimals, Mode=TwoWay}"
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
+                    </StackLayout>
+                </StackLayout>
+                <ListView
+                    HasUnevenRows="True"
+                    BackgroundColor="#000"
+                    ItemsSource="{Binding Errors}"
+                    SeparatorVisibility="None"
+                    IsEnabled="false"
+                    Margin="8,24,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding .}" TextColor="#db0029" FontSize="14"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+               
+
+            </StackLayout>
+
+            <StackLayout
+                Orientation="Horizontal"
+                BackgroundColor="#e0bc0c"
+                VerticalOptions="End"
+                Padding="16,0,16,0">
+                <Button
+                    Command="{Binding BackCommand}"
+                    Text="Cancel"
+                    BackgroundColor="#e0bc0c"
+                    TextColor="#ffffff"
+                    HorizontalOptions="StartAndExpand"
+                    FontSize="20"/>
+                
+                <Button
+                    Command="{Binding CreateTokenCommand}"
+                    IsEnabled="{Binding IsValid}"
+                    Text="Create"
+                    BackgroundColor="#e0bc0c"
+                    TextColor="#ffffff"
+                    HorizontalOptions="EndAndExpand"
+                    FontSize="20"/>
+                
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
