@@ -26,12 +26,13 @@
                     HorizontalOptions="FillAndExpand"
                     Orientation="Vertical"
                     Margin="0,40,0,0">
-                    <Label Text="Verefication Code"
+                    <Label Text="Verification Code"
                            HorizontalOptions="Center"
                            TextColor="#fff"
                            FontSize="16"/>
                     
                     <customRender:BottomBorderEntry
+                        Text="{Binding VerificationCode}"
                         TextColor="#fff"
                         Keyboard="Numeric"
                         HorizontalTextAlignment="Center"/>

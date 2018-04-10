@@ -6,6 +6,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Guap.Models;
+using Guap.Service;
 using Guap.Views;
 using MvvmValidation;
 using Xamarin.Forms;
@@ -18,10 +20,13 @@ namespace Guap.ViewModels
     {
         private string _country;
         private string _phoneNumber;
+        private string _verificationCode;
         private ValidationErrorCollection _errors;
         
         private readonly Page _context;
         
+        private readonly RequestProvider _requestProvider;
+
         public event PropertyChangedEventHandler PropertyChanged;
         
         public ICommand PagePhoneNumberCommand => new Command(async () => await OnPagePhoneNumber());
@@ -30,6 +35,7 @@ namespace Guap.ViewModels
         public PhoneViewModel(Page context)
         {
             _context = context;
+            _requestProvider = new RequestProvider();
         }
 
         public string Country
@@ -46,6 +52,23 @@ namespace Guap.ViewModels
                 }
                 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Country)));
+            }
+        }
+        
+        public string VerificationCode
+        {
+            get
+            {
+                return _verificationCode;
+            }
+            set
+            {
+                if (_verificationCode != value && value.Length <= 6)
+                {
+                    _verificationCode = value;
+                }
+                
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerificationCode)));
             }
         }
         
@@ -122,11 +145,8 @@ namespace Guap.ViewModels
             return result.IsValid;
         }
         
-        private bool ValidateVerifyNumber()
+        private bool ValidateVerifyNumber(ValidationHelper validator)
         {
-            var validator = new ValidationHelper();
-//            validator.AddRequiredRule(() => PhoneNumber, "Code is required.");
-
             var result = validator.ValidateAll();
 
             Errors = result.ErrorList;
@@ -140,27 +160,66 @@ namespace Guap.ViewModels
             {
                 return;
             }
-            
-            await _context.Navigation.PushAsync(new PhoneVerificationPage(this));
+
+            try
+            {
+                var phoneNumber = string.Concat(_country.Trim(), new string(_phoneNumber?.Where(char.IsDigit).ToArray()));
+                var result = await _requestProvider
+                    .PostAsync<UserModel, bool>(GlobalSetting.Instance.RegisterNumberEndpoint, 
+                        new UserModel { PhoneNumber = phoneNumber });
+
+                if (result)
+                {
+                    await _context.Navigation.PushAsync(new PhoneVerificationPage(this));
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"--- Error: {e.Message}");
+            }
         }
 
         private async Task OnPageSuccessSignup()
         {
-            if (!ValidateVerifyNumber())
+            var validator = new ValidationHelper();
+            
+            validator.AddRequiredRule(() => VerificationCode, "The verification code is required.");
+            
+            if (!ValidateVerifyNumber(validator))
             {
                 return;
             }
 
-            await _context.Navigation.PushAsync(
-                new SuccessSignup(
-                    new CommonPageSettings()
+            try
+            {
+                var phoneNumber = string.Concat(_country, new string(_phoneNumber?.Where(char.IsDigit).ToArray()));
+                var result = await _requestProvider
+                    .PostAsync<UserModel, bool>(GlobalSetting.Instance.VerificationCodeEndpoint, 
+                        new UserModel { PhoneNumber = phoneNumber, VerificationCode = _verificationCode });
+
+                validator.AddRule(VerificationCode,
+                    () => RuleResult.Assert(result, "The verification code was incorrect.\nPlease try again."));
+                
+                if (!ValidateVerifyNumber(validator))
+                {
+                    return;
+                }
+                
+                await _context.Navigation.PushAsync(
+                    new SuccessSignup(
+                        new CommonPageSettings
                         {
                             HasNavigation = false,
                             HeaderText =
                                 "Your identity has been verified." + Environment.NewLine
-                                + "You can create your wallet"
+                                                                   + "You can create your wallet"
                         },
-                    () => this._context.Navigation.PushAsync(new NewUserExistPage())));
+                        () => this._context.Navigation.PushAsync(new NewUserExistPage())));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"--- Error: {e.Message}");
+            }
         }
     }
 }

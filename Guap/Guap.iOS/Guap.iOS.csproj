@@ -234,6 +234,7 @@
     <Compile Include="Renderer\PinItemViewRenderer.cs" />
     <Compile Include="Renderer\ZFRippleButton.cs" />
     <Compile Include="SQLiteIOS.cs" />
+    <Compile Include="Service\ContactService.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\logo.png" />

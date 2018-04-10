@@ -14,6 +14,7 @@ namespace Guap.Helpers
         public static async void Set(Key key, object value)
         {
             Application.Current.Properties[key.ToString()] = value;
+            
             await Application.Current.SavePropertiesAsync();
         }
 

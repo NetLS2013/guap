@@ -46,5 +46,7 @@
 	<array>
     	<string>ProximaNovaExCn-LightIt.ttf</string>
 	</array>
+    <key>NSContactsUsageDescription</key>
+    <string></string>
 </dict>
 </plist>

@@ -1,19 +1,34 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
-    <PropertyGroup>
-        <TargetFramework>netcoreapp2.0</TargetFramework>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <Folder Include="wwwroot\" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
-    </ItemGroup>
-
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\WalletController.cs" />
+    <Compile Include="Data\ApplicationDbContext.cs" />
+    <Compile Include="Data\Entities\User.cs" />
+    <Compile Include="Migrations\20180406142637_User.cs" />
+    <Compile Include="Migrations\20180406142637_User.Designer.cs" />
+    <Compile Include="Migrations\20180406154446_User_VerificationCode.cs" />
+    <Compile Include="Migrations\20180406154446_User_VerificationCode.Designer.cs" />
+    <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
+    <Compile Include="Data\Repositories\GenericRepository.cs" />
+    <Compile Include="Data\Repositories\UserRepository.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
 </Project>
