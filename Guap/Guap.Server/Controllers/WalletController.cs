@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Guap.Server.Data.Repositories;
 using Guap.Server.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +30,33 @@ namespace Guap.Server.Controllers
             var user = await _userRepository.FindUser(model.PhoneNumber);
 
             return Ok(user?.Address);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> UpdateAddress([FromBody]UserModel model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Address))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _userRepository.UpdateAddress(
+                    new UserModel
+                    {
+                        PhoneNumber = model.PhoneNumber,
+                        Address = model.Address
+                    });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"--- Error: {e.Message}");
+                
+                return BadRequest();
+            }
+
+            return Ok(true);
         }
     }
 }

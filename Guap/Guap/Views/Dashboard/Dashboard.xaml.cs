@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Guap.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,6 +18,13 @@ namespace Guap.Views.Dashboard
         {
             InitializeComponent();
             BindingContext = new DashboardViewModel(this);
+        }
+
+        private async void LogoutClicked(object sender, EventArgs e)
+        {
+            App.SetMainPage(new GuapPage());
+            
+            Settings.Set(Settings.Key.IsLogged, false);
         }
     }
 }

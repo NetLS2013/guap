@@ -23,7 +23,9 @@ namespace Guap.Helpers
             ResumePage,
             PinSetupPage,
             Pin,
-            MnemonicPhrase
+            MnemonicPhrase,
+            PhoneNumber,
+            IsLogged
         }
     }
 }

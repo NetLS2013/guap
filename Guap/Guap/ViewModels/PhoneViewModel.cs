@@ -215,6 +215,8 @@ namespace Guap.ViewModels
                                                                    + "You can create your wallet"
                         },
                         () => this._context.Navigation.PushAsync(new NewUserExistPage())));
+                
+                Settings.Set(Settings.Key.PhoneNumber, phoneNumber);
             }
             catch (Exception e)
             {

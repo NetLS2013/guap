@@ -12,6 +12,7 @@ namespace Guap.Server.Data.Repositories
         Task<bool> CheckVerificationCode(UserModel model);
         Task CinfirmPhone(UserModel model);
         Task<User> FindUser(string phoneNumber);
+        Task UpdateAddress(UserModel modelPhoneNumber);
     }
     
     public class UserRepository : GenericRepository<User>, IUserRepository
@@ -25,6 +26,15 @@ namespace Guap.Server.Data.Repositories
             var number = new string(phoneNumber.Where(char.IsDigit).ToArray());
             
             return await Get(m => m.PhoneNumber.Contains(number));
+        }
+
+        public async Task UpdateAddress(UserModel model)
+        {
+            var user = await FindUser(model.PhoneNumber);
+
+            user.Address = model.Address;
+
+            await Update(user);
         }
 
         public async Task RegisterNumber(UserModel model)

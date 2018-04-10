@@ -15,6 +15,8 @@
     <Compile Include="Migrations\20180406142637_User.Designer.cs" />
     <Compile Include="Migrations\20180406154446_User_VerificationCode.cs" />
     <Compile Include="Migrations\20180406154446_User_VerificationCode.Designer.cs" />
+    <Compile Include="Migrations\20180410110535_User_AddressMaxLength.cs" />
+    <Compile Include="Migrations\20180410110535_User_AddressMaxLength.Designer.cs" />
     <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
     <Compile Include="Data\Repositories\GenericRepository.cs" />
     <Compile Include="Data\Repositories\UserRepository.cs" />

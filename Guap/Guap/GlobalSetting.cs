@@ -55,7 +55,7 @@ namespace Guap
         {
             RegisterNumberEndpoint = $"{baseEndpoint}/api/Account/RegisterNumber";
             VerificationCodeEndpoint = $"{baseEndpoint}/api/Account/VerificationCode";
-            UpdateAddressEndpoint = $"{baseEndpoint}/api/Account/UpdateAddress";
+            UpdateAddressEndpoint = $"{baseEndpoint}/api/Wallet/UpdateAddress";
             GetAddressByNumberEndpoint = $"{baseEndpoint}/api/Wallet/GetAddressByNumber";
         }
     }

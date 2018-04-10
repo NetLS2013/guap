@@ -12,7 +12,7 @@ namespace Guap.Server.Data.Entities
         
         public bool PhoneNumberConfirmed { get; set; }
         
-        [StringLength(40)]
+        [StringLength(42)]
         public string Address { get; set; }
 
         public string VerificationCode { get; set; }

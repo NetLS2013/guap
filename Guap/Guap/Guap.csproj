@@ -76,6 +76,7 @@
     <Compile Include="Service\RequestProvider.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ContactListViewModel.cs" />
+    <Compile Include="ViewModels\CreateAccountViewModel.cs" />
     <Compile Include="ViewModels\EnterAmountViewModel.cs" />
     <Compile Include="ViewModels\InputMnemonicViewModel.cs" />
     <Compile Include="ViewModels\MnemonicPhraseViewModel.cs" />

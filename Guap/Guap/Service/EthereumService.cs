@@ -1,4 +1,6 @@
-﻿namespace Guap.Service
+﻿using System.Threading.Tasks;
+
+namespace Guap.Service
 {
     using System;
 
@@ -28,6 +30,14 @@
             }
 
             return true;
+        }
+        
+        public string GetAddress(int id, string words, string seedPassword = "")
+        {
+            var wallet = new Wallet(words, seedPassword, GlobalSetting.Instance.WalletPath);
+            var account =  wallet.GetAccount(id);
+            
+            return account.Address;
         }
     }
 }

@@ -8,5 +8,6 @@ namespace Guap.Server.Models
         public string PhoneNumber { get; set; }
 
         public string VerificationCode { get; set; }
+        public string Address { get; set; }
     }
 }

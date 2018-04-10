@@ -54,7 +54,7 @@
                     TextColor="#fff"
                     HorizontalOptions="StartAndExpand"
                     FontSize="20"
-                    Clicked="OpenPageRestoreWallet"/>
+                    Command="{Binding RestoreWalletCommand}"/>
                 
                 <Button
                     Text="Create Account"

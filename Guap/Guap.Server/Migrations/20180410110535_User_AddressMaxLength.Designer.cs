@@ -11,9 +11,10 @@ using System;
 namespace Guap.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180410110535_User_AddressMaxLength")]
+    partial class User_AddressMaxLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +30,7 @@ namespace Guap.Server.Migrations
                         .HasMaxLength(42);
 
                     b.Property<string>("PhoneNumber")
-                        .HasMaxLength(15);
+                        .HasMaxLength(115);
 
                     b.Property<bool>("PhoneNumberConfirmed");
 

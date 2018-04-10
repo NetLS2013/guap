@@ -52,7 +52,7 @@
                     TextColor="#fff"
                     HorizontalOptions="EndAndExpand"
                     FontSize="20"
-                    Clicked="OpenMnemonicClick"/>
+                    Command="{Binding CteateAccountCommand}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

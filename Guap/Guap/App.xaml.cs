@@ -16,10 +16,15 @@ namespace Guap
 
             var startPage = typeof(GuapPage);
 
-            if (Equals(Settings.Get(Settings.Key.ResumePage), true))
+            if (Equals(Settings.Get(Settings.Key.IsLogged), true))
+            {
+                startPage = typeof(Dashboard);
+            }
+            else if (Equals(Settings.Get(Settings.Key.ResumePage), true))
             {
                 startPage = typeof(CreateWalletPage);
             }
+            
             if (!Equals(Settings.Get(Settings.Key.PinSetupPage), true))
             {
                 var page = new PinAuthPage(
@@ -63,7 +68,7 @@ namespace Guap
             }
         }
 
-        private void SetMainPage(Page page)
+        public static void SetMainPage(Page page)
         {
             var navigationPage = new NavigationPage(page)
             {
@@ -71,7 +76,7 @@ namespace Guap
                 BarBackgroundColor = Color.Black
             };
             
-            MainPage = navigationPage;
+            Current.MainPage = navigationPage;
         }
 
         protected override void OnStart()
