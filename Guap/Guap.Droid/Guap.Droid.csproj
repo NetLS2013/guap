@@ -38,6 +38,9 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BottomNavigationBar, Version=1.4.0.3, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\BottomNavigationBar.1.4.0.3\lib\MonoAndroid403\BottomNavigationBar.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Common.Logging.Core.3.4.1\lib\netstandard1.0\Common.Logging.Core.dll</HintPath>
     </Reference>
@@ -218,6 +221,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Renderer\BottomTabbedPageRenderer.cs" />
     <Compile Include="Service\ContactService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderer\BorderedEditorRenderer.cs" />
@@ -228,6 +232,11 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLiteDroid.cs" />
+    <Compile Include="Utils\IPageController.cs" />
+    <Compile Include="Utils\MeasureSpecFactory.cs" />
+    <Compile Include="Utils\PageController.cs" />
+    <Compile Include="Utils\ReflectedProxy.cs" />
+    <Compile Include="Utils\ResourceManagerEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\ProximaNovaExCn-LightIt.ttf" />

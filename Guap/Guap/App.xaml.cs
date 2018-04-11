@@ -1,4 +1,5 @@
 using System;
+using Guap.CustomRender;
 using Guap.Helpers;
 using Guap.Views;
 using Xamarin.Forms;
@@ -18,7 +19,7 @@ namespace Guap
 
             if (Equals(Settings.Get(Settings.Key.IsLogged), true))
             {
-                startPage = typeof(Dashboard);
+                startPage = typeof(BottomTabbedPage);
             }
             else if (Equals(Settings.Get(Settings.Key.ResumePage), true))
             {
@@ -28,11 +29,11 @@ namespace Guap
             if (!Equals(Settings.Get(Settings.Key.PinSetupPage), true))
             {
                 var page = new PinAuthPage(
-                    (sender1, args) =>
+                    async (sender1, args) =>
                         {
                             var pin = args.EnteredPin;
                             
-                            MainPage.Navigation.PushAsync(
+                            await MainPage.Navigation.PushAsync(
                                 new PinAuthPage(
                                     (sender2, args2) =>
                                         {
@@ -43,7 +44,7 @@ namespace Guap
                                         },
                                     c => Equals(c, pin),
                                     "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again",
-                                    new CommonPageSettings()
+                                    new CommonPageSettings
                                         {
                                             HasNavigation = true,
                                             Title = "Confirm Pin",
@@ -53,7 +54,7 @@ namespace Guap
                         },
                     c => true,
                     string.Empty,
-                    new CommonPageSettings()
+                    new CommonPageSettings
                         {
                             HasNavigation = true,
                             Title = "Create Pin",

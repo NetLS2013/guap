@@ -230,6 +230,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderer\BorderedEditorRenderer.cs" />
     <Compile Include="Renderer\BottomBorderEntryRenderer.cs" />
+    <Compile Include="Renderer\BottomTabbedPageRenderer.cs" />
     <Compile Include="Renderer\LineSpacingLabelRenderer.cs" />
     <Compile Include="Renderer\PinItemViewRenderer.cs" />
     <Compile Include="Renderer\ZFRippleButton.cs" />

@@ -1,5 +1,8 @@
 ﻿using System;
+using Guap.CustomRender.Pin;
+using Guap.Helpers;
 using Guap.Views;
+using Guap.Views.Dashboard;
 using Xamarin.Forms;
 
 namespace Guap
@@ -18,6 +21,29 @@ namespace Guap
         private async void OpenPageTermsClick(object sender, EventArgs e)
         {    
             await Navigation.PushAsync(new Terms());
+        }
+
+        private async void OpenPageLoginClick(object sender, EventArgs e)
+        {
+            var succesHandler = new EventHandler<PinEventArgs>((pinSender, pinEventArgs) =>
+            {
+                App.SetMainPage(new Dashboard());
+                
+                Settings.Set(Settings.Key.IsLogged, true);
+            });
+
+            var setting = new CommonPageSettings
+            {
+                Title = "Unlock Wallet",
+                HeaderText = "Enter your 4 digit pin"
+            };
+                
+            await Navigation.PushAsync(
+                new PinAuthPage(
+                    succesHandler,
+                    valid => Equals(valid, Settings.Get(Settings.Key.Pin)),
+                    "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
+                    setting));
         }
     }
 }

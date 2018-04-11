@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<customRender:BottomTabbed
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dashboard="clr-namespace:Guap.Views.Dashboard;assembly=Guap"
+    xmlns:profile="clr-namespace:Guap.Views.Profile;assembly=Guap"
+    xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
+    x:Class="Guap.Views.Profile.BottomTabbedPage"
+    BarBackgroundColor="#000"
+    BarTextColor="#fff">
+    <dashboard:Dashboard
+        Title="Home"/>
+    
+    <profile:ReceivePage
+        Title="Receive"/>
+    
+    <Page Title="Scan"
+          BackgroundColor="Aquamarine"/>
+    
+    <Page Title="Send"
+          BackgroundColor="AntiqueWhite"/>
+    
+    <Page Title="Settings"
+          BackgroundColor="Azure"/>
+</customRender:BottomTabbed>

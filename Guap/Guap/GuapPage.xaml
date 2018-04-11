@@ -41,6 +41,7 @@
 	        BackgroundColor="#fff"
 	        Padding="1">
 	        <Button
+	            Clicked="OpenPageLoginClick"
 	            FontAttributes="Bold"
 	            Text="Login"
 	            BackgroundColor="#000"

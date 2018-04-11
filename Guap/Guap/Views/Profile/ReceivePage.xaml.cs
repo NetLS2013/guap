@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace Guap.Views.Profile
 {
@@ -15,6 +16,11 @@ namespace Guap.Views.Profile
             QrResult.BarcodeOptions.Width = qrHeight;
             QrResult.BarcodeOptions.Height = qrHeight;
             QrResult.BarcodeValue = "123";
+        }
+
+        private async void OpenPageContactsClick(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ContactListPage());
         }
     }
 }

@@ -39,6 +39,7 @@
     <EmbeddedResource Include="Views\Profile\ReceivePage.xaml" />
     <EmbeddedResource Include="Views\Modal\ResumeModalPage.xaml" />
     <EmbeddedResource Include="Views\Profile\ContactListPage.xaml" />
+    <EmbeddedResource Include="Views\Profile\BottomTabbedPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -48,6 +49,7 @@
     <Compile Include="Contracts\ISQLite.cs" />
     <Compile Include="CustomRender\BorderEditor.cs" />
     <Compile Include="CustomRender\BottomBorderEntry.cs" />
+    <Compile Include="CustomRender\BottomTabbed.cs" />
     <Compile Include="CustomRender\LineHeightLabel.cs" />
     <Compile Include="CustomRender\Pin\PinItemView.cs" />
     <Compile Include="CustomRender\Pin\PinViewModel.cs" />
@@ -57,6 +59,7 @@
       <DependentUpon>GuapPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BooleanConverter.cs" />
+    <Compile Include="Helpers\BottomBarPageExtensions.cs" />
     <Compile Include="Helpers\CommonPageSettings.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Service\TokenService.cs" />
@@ -100,6 +103,9 @@
     </Compile>
     <Compile Include="Views\PinView.xaml.cs">
       <DependentUpon>PinView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Profile\BottomTabbedPage.xaml.cs">
+      <DependentUpon>BottomTabbedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Profile\ContactListPage.xaml.cs">
       <DependentUpon>ContactListPage.xaml</DependentUpon>

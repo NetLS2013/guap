@@ -36,6 +36,7 @@
             </StackLayout>
             
             <Button
+                Clicked="OpenPageContactsClick"
                 TextColor="#e0bc0c"
                 BackgroundColor="Transparent"
                 Text="Request an Amount >"
@@ -46,7 +47,7 @@
             Spacing="0"
             VerticalOptions="End">
             <BoxView
-                BackgroundColor="#979797"
+                BackgroundColor="#bbb"
                 HeightRequest="1"/>
             
             <StackLayout
