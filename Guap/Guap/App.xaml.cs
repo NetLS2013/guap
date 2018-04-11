@@ -1,7 +1,7 @@
 using System;
-using Guap.CustomRender;
 using Guap.Helpers;
 using Guap.Views;
+using Guap.Views.Profile;
 using Xamarin.Forms;
 
 namespace Guap

@@ -72,12 +72,8 @@
     <Compile Include="ViewModels\CreateTokenViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
-    <Compile Include="Models\MnemonicWallet.cs" />
     <Compile Include="Models\UserModel.cs" />
-    <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\RequestProvider.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ContactListViewModel.cs" />
     <Compile Include="ViewModels\CreateAccountViewModel.cs" />
     <Compile Include="ViewModels\EnterAmountViewModel.cs" />
