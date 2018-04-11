@@ -2,14 +2,52 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Guap"
+             xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
              x:Class="Guap.GuapPage">
 	<StackLayout
-	    BackgroundColor="#fff">
-	    <Label
-	        Text="Guapcoin"
-	        HorizontalOptions="Center" />
-    
+	    x:Name="HomeContainer"
+	    BackgroundColor="#000">
+	    <Image
+	        Source="logo.png"
+	        HeightRequest="125"/>
+	    
+        <Label
+            Text="Guapcoin"
+            FontSize="36"
+            FontAttributes="Bold"
+            TextColor="#fff"
+            HorizontalOptions="Center" />
+	    
+	    <customRender:LineHeightLabel
+	        Margin="0,8,0,0"
+	        Text="Strenghening the Black Community&#x0a;through blockchain"
+	        FontSize="15"
+	        TextColor="#fff"
+	        HorizontalTextAlignment="Center"/>
+	    
 	    <Button
-	        Text="Sign up" Clicked="OpenPageTermsClick"/>
+	        Clicked="OpenPageTermsClick"
+	        Margin="0,40,0,0"
+	        FontAttributes="Bold"
+	        Text="Sign up"
+	        BackgroundColor="#e0bc0c"
+	        TextColor="#fff"
+	        FontSize="24"
+	        HeightRequest="60"
+	        BorderRadius="0"/>
+	    
+	    <StackLayout
+	        Margin="0,20,0,0"
+	        BackgroundColor="#fff"
+	        Padding="1">
+	        <Button
+	            FontAttributes="Bold"
+	            Text="Login"
+	            BackgroundColor="#000"
+	            TextColor="#fff"
+	            FontSize="24"
+	            HeightRequest="60"
+	            BorderRadius="0"/>
+	    </StackLayout>
 	</StackLayout>
 </ContentPage>

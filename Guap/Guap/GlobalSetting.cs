@@ -17,7 +17,7 @@ namespace Guap
             Wordlist = Wordlist.English;
             EthereumNetwork = "https://ropsten.infura.io/E8XftGiqmaErL2KN5Cp3";
             WalletPath = "m/44'/60'/0'/0/x";
-            BaseEndpoint = DefaultEndpoint;
+            BaseEndpoint = "http://guap.com:56057";
             DbName = "guap.db";
         }
 
@@ -42,9 +42,6 @@ namespace Guap
         public string UpdateAddressEndpoint { get; set; }
         
         public string GetAddressByNumberEndpoint { get; set; }
-        
-        
-        private const string DefaultEndpoint = "http://127.0.0.1:56057";
         
         private string BaseEndpoint
         {

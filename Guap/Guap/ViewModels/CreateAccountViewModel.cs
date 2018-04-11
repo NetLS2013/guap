@@ -65,7 +65,7 @@ namespace Guap.ViewModels
                                     + Environment.NewLine + "Your wallet has been created."
                                     + Environment.NewLine + "Check out the dashboard."
                             },
-                            async () => await _context.Navigation.PushAsync(new Dashboard())));
+                            () => App.SetMainPage(new Dashboard())));
                 
                     // save mnenonic phrase 
                     Settings.Set(Settings.Key.MnemonicPhrase, s);
@@ -118,7 +118,7 @@ namespace Guap.ViewModels
                                     + Environment.NewLine + "Your wallet has been created."
                                     + Environment.NewLine + "Check out the dashboard."
                             },
-                            async () => await _context.Navigation.PushAsync(new Dashboard())));
+                            () => App.SetMainPage(new Dashboard())));
 
                     // save mnenonic phrase 
                     Settings.Set(Settings.Key.MnemonicPhrase, s);
@@ -131,7 +131,7 @@ namespace Guap.ViewModels
 
         private async Task<bool> UpdateAddress(string words)
         {
-            var address = _ethereumService.GetAddress(0, words);
+            var address = _ethereumService.GetAddress(words);
             var result = false;
             
             try

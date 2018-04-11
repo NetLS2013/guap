@@ -8,8 +8,7 @@ namespace Guap.Views.Profile
         {
             InitializeComponent();
 
-            var qrHeight = (int)(App.ScreenHeight * 0.45);
-            qrHeight = qrHeight < 160 ? 300 : qrHeight;
+            var qrHeight = (int) (App.ScreenHeight * 0.45);
             
             QrWrapper.HeightRequest = qrHeight;
             

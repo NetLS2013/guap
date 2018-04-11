@@ -32,7 +32,7 @@ namespace Guap.Service
             return true;
         }
         
-        public string GetAddress(int id, string words, string seedPassword = "")
+        public string GetAddress(string words, int id = 0, string seedPassword = "")
         {
             var wallet = new Wallet(words, seedPassword, GlobalSetting.Instance.WalletPath);
             var account =  wallet.GetAccount(id);
