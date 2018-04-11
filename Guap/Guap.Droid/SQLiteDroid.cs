@@ -1,4 +1,9 @@
-﻿namespace Guap.Droid
+﻿using Guap.Droid;
+
+using Xamarin.Forms;
+
+[assembly: Dependency(typeof(SQLiteDroid))]
+namespace Guap.Droid
 {
     using System;
     using System.IO;

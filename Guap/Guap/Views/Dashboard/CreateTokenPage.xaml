@@ -16,13 +16,6 @@
                 Padding="40,40,40,0"
                 VerticalOptions="FillAndExpand">
 
-                <!--<customRender:LineHeightLabel
-                    FontSize="18"
-                    TextColor="#fff"
-                    Margin="0,8,0,0"
-                    FormattedText="{Binding SendToNumber}">
-                </customRender:LineHeightLabel>-->
-
                 <StackLayout
                     HorizontalOptions="FillAndExpand"
                     Orientation="Vertical"
@@ -33,10 +26,12 @@
                            FontSize="16"/>
 
                     <customRender:BottomBorderEntry
+                        FontSize="12"
                         TextColor="#fff"
                         HorizontalTextAlignment="Center"
                         Text="{Binding ContractAddress, Mode=TwoWay}"
-                        IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
+                        IsEnabled="{Binding IsEdit, Converter={StaticResource BooleanConverter}}"
+                        />
                 </StackLayout>
 
                 <StackLayout
@@ -122,11 +117,20 @@
                     TextColor="#ffffff"
                     HorizontalOptions="StartAndExpand"
                     FontSize="20"/>
-                
+
                 <Button
-                    Command="{Binding CreateTokenCommand}"
+                    Command="{Binding DeleteCommand}"
+                    Text="Delete"
+                    BackgroundColor="#e0bc0c"
+                    TextColor="#db0029"
+                    HorizontalOptions="CenterAndExpand"
+                    IsVisible="{Binding IsEdit}"
+                    FontSize="20"/>
+
+                <Button
+                    Command="{Binding SaveTokenCommand}"
                     IsEnabled="{Binding IsValid}"
-                    Text="Create"
+                    Text="Save"
                     BackgroundColor="#e0bc0c"
                     TextColor="#ffffff"
                     HorizontalOptions="EndAndExpand"

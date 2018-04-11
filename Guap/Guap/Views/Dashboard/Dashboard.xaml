@@ -3,10 +3,58 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Guap.Views.Dashboard.Dashboard">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout BackgroundColor="White">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <StackLayout Grid.Row="2" Grid.Column="0" BackgroundColor="#cccccc">
+                    <StackLayout BackgroundColor="White" Margin="2">
+                        <StackLayout  BackgroundColor="White" Padding="14,8,14,8" Margin="0" Orientation="Horizontal">
+                            <Label Text="ERC20 Tokens" VerticalOptions="Center" HorizontalOptions="Start" TextColor="#9b9b9b"></Label>
+                            <Image Source="create.png" VerticalOptions="Center" HorizontalOptions="EndAndExpand">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding CreateTokenCommand}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </StackLayout>
+                        <BoxView BackgroundColor="#f6f8fa" HeightRequest="1" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
+                        <ListView HasUnevenRows="True" SeparatorVisibility="None"
+                              ItemsSource="{Binding Tokens}" SelectedItem="{Binding Token, Mode=TwoWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <StackLayout>
+                                                <StackLayout Orientation="Vertical" Padding="14,0,14,0">
+
+                                                    <Label Text="{Binding Name}" TextColor="#9b9b9b" FontSize="14" />
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <Label Text="{Binding BalanceString}" TextColor="#9b9b9b" FontSize="10"/>
+                                                        <Label Text="{Binding Symbol}" TextColor="#9b9b9b" FontSize="10"/>
+                                                    </StackLayout>
+
+                                                </StackLayout>
+                                                <BoxView BackgroundColor="#f6f8fa" HeightRequest="1" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
+                                            </StackLayout>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </StackLayout>
+               
+            </Grid>
+           
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -11,7 +11,7 @@
                 <Label Text="{Binding HeaderText}" FontSize="24" FontAttributes="Bold" TextColor="#4a4a4a" Margin="0,0,0,10"></Label>
 
                 <controls:FlowListView BackgroundColor="Black" FlowColumnCount="3" RowHeight="50" SeparatorVisibility="None" HasUnevenRows="false" FlowItemsSource="{Binding Words}" Margin="0,0,0,10">
-
+                    
                     <controls:FlowListView.FlowColumnTemplate>
                         <DataTemplate>
                             <Label Margin="10" TextColor="White" FontAttributes="Bold" FontSize="18" 
@@ -19,7 +19,7 @@
                         </DataTemplate>
                     </controls:FlowListView.FlowColumnTemplate>
                 </controls:FlowListView>
-                
+
                 <Label Text="This mnemonic phrase is lorem ipsum dolor asit" TextColor="#4a4a4a"></Label>
             </StackLayout>
             <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="EndAndExpand" Padding="16,0,16,0">

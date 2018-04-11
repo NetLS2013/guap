@@ -7,6 +7,8 @@ using Xamarin.Forms.Platform.Android;
 [assembly: ExportRenderer(typeof(BottomBorderEntry), typeof(BottomBorderEntryRenderer))]
 namespace Guap.Droid.Renderer
 {
+    using Android.Graphics;
+
     public class BottomBorderEntryRenderer : EntryRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
@@ -16,6 +18,7 @@ namespace Guap.Droid.Renderer
             if (Control != null)
             {
                 Control.SetBackgroundResource(Resource.Drawable.EntryBorderBottom);
+                Control.SetTextColor(Color.White);
             }
         }
     }

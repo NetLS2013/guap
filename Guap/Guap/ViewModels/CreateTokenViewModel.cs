@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
 
+    using Guap.Contracts;
     using Guap.Models;
     using Guap.Service;
 
@@ -13,89 +14,115 @@
 
     using Nethereum.Web3;
 
+    using SQLite;
+
     using Xamarin.Forms;
 
     public class CreateTokenViewModel : BaseViewModel
     {
         private TokenService _tokenService;
 
+        private IRepository<Token> _repository;
+
         private Token _token;
 
-        private string _contractAddress;
-
-        private string _tokenName;
-
-        private string _tokenSymbol;
-
-        private int _decimals;
-
         private bool _isValid;
+
+        private bool _isEdit;
 
         private readonly Page _context;
 
         private ValidationErrorCollection _errors;
 
-        public CreateTokenViewModel(Page context)
+        private DashboardViewModel _dashboardViewModel;
+
+        public CreateTokenViewModel(Page context, DashboardViewModel viewModel, Token token = null)
         {
             this._context = context;
+            this._dashboardViewModel = viewModel;
+            
+            if (token != null)
+            {
+                Token = token;
+                this.IsEdit = true;
+                this.IsValid = true;
+            }
+            else
+            {
+                Token = new Token();
+                IsValid = false;
+            }
+            
+            string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
             _tokenService = new TokenService(new Web3(GlobalSetting.Instance.EthereumNetwork));
-            IsValid = false;
+            _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
         }
 
         public string ContractAddress
         {
             get
             {
-                return _contractAddress;
+                return this._token.Address;
             }
             set
             {
-                _contractAddress = value;
+                this._token.Address = value;
                 OnPropertyChanged(nameof(ContractAddress));
                
-                if (!this.ValidateTokenAddress())
+                if (!IsEdit)
                 {
-                    this.TokenName = string.Empty;
-                    this.TokenSymbol = string.Empty;
-                    this.Decimals = 0;
+                    if (!this.ValidateTokenAddress())
+                    {
+                        ClearFields();
 
-                    IsValid = false;
-                    return;
+                        IsValid = false;
+                        return;
+                    }
+
+                    IsBusy = true;
+                    try
+                    {
+                        Token = this._tokenService.GetTokenInfo(ContractAddress).Result;
+                    }
+                    catch (Exception e)
+                    {
+                        ClearFields();
+
+                        IsValid = false;
+                        return;
+                    }
+
+                    this.ValidateToken();
+
+                    if (this._token == null || !IsValid)
+                    {
+                        ClearFields();
+
+                        IsValid = false;
+                        return;
+                    }
+
+                    IsValid = true;
+                    IsBusy = false;
                 }
+               
+            }
+        }
 
-                IsBusy = true;
-                try
-                {
-                    this._token = this._tokenService.GetTokenInfo(ContractAddress).Result;
-                }
-                catch (Exception e)
-                {
-                    this.TokenName = string.Empty;
-                    this.TokenSymbol = string.Empty;
-                    this.Decimals = 0;
-
-                    IsValid = false;
-                    return;
-                }
-
-                this.TokenName = _token.Name;
-                this.TokenSymbol = _token.Symbol;
-                this.Decimals = _token.Decimals;
-
-                this.ValidateToken();
-
-                if (this._token == null || !IsValid)
-                {
-                    this.TokenName = string.Empty;
-                    this.TokenSymbol = string.Empty;
-                    this.Decimals = 0;
-
-                    IsValid = false;
-                    return;
-                }
-
-                IsValid = true;
-                IsBusy = false;
+        public Token Token
+        {
+            get
+            {
+                return this._token;
+            }
+            set
+            {
+                this._token = value;
+                OnPropertyChanged(nameof(Token));
+                OnPropertyChanged(nameof(ContractAddress));
+                OnPropertyChanged(nameof(TokenSymbol));
+                OnPropertyChanged(nameof(TokenName));
+                OnPropertyChanged(nameof(Decimals));
             }
         }
 
@@ -103,13 +130,13 @@
         {
             get
             {
-                return _tokenName;
+                return this._token.Name;
             }
             set
             {
-                _tokenName = value;
+                this._token.Name = value;
                 OnPropertyChanged(nameof(TokenName));
-                this.ValidateToken();
+                IsValid = true;
             }
         }
 
@@ -117,13 +144,13 @@
         {
             get
             {
-                return _tokenSymbol;
+                return this._token.Symbol;
             }
             set
             {
-                _tokenSymbol = value;
+                this._token.Symbol = value;
                 OnPropertyChanged(nameof(TokenSymbol));
-                this.ValidateToken();
+                IsValid = true;
             }
         }
 
@@ -131,13 +158,13 @@
         {
             get
             {
-                return _decimals;
+                return this._token.Decimals;
             }
             set
             {
-                _decimals = value;
+                this._token.Decimals = value;
                 OnPropertyChanged(nameof(Decimals));
-                this.ValidateToken();
+                IsValid = true;
             }
         }
 
@@ -167,11 +194,50 @@
             }
         }
 
-        public ICommand CreateTokenCommand => new Command(async () => await OnTokenSave());
+        public bool IsEdit
+        {
+            get
+            {
+                return this._isEdit;
+            }
+            set
+            {
+                _isEdit = value;
+                this.OnPropertyChanged(nameof(this.IsEdit));
+            }
+        }
+
+        public ICommand SaveTokenCommand => new Command(async () =>
+            {
+                if (IsEdit)
+                {
+                    await this.OnTokenEdit();
+                }
+                else
+                {
+                    await this.OnTokenSave();
+                }
+            });
 
         public ICommand BackCommand => new Command(async () => await OnBack());
 
+        public ICommand DeleteCommand => new Command(async () => await OnTokenDelete());
+
         private async Task OnTokenSave()
+        {
+            this.ValidateToken();
+
+            if (!IsValid || !this.ValidateTokenAddress())
+            {
+                return;
+            }
+          
+            await _repository.Insert(this._token);
+            await this._context.Navigation.PopAsync();
+            _dashboardViewModel.InitializeTokens();
+        }
+
+        private async Task OnTokenEdit()
         {
             this.ValidateToken();
 
@@ -180,13 +246,22 @@
                 return;
             }
 
-            // TODO save token
+            await _repository.Update(this._token);
+            await this._context.Navigation.PopAsync();
+            _dashboardViewModel.InitializeTokens();
+        }
 
+        private async Task OnTokenDelete()
+        {
+            await _repository.Delete(this._token);
+            await this._context.Navigation.PopAsync();
+            _dashboardViewModel.InitializeTokens();
         }
 
         private async Task OnBack()
         {
             await this._context.Navigation.PopAsync();
+            _dashboardViewModel.InitializeTokens();
         }
 
         private bool ValidateTokenAddress()
@@ -232,6 +307,13 @@
             Errors = result.ErrorList;
 
             IsValid = result.IsValid;
+        }
+
+        private void ClearFields()
+        {
+            this.TokenName = string.Empty;
+            this.TokenSymbol = string.Empty;
+            this.Decimals = 0;
         }
     }
 }

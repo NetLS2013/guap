@@ -16,6 +16,7 @@
         public Repository(SQLiteAsyncConnection db)
         {
             this.db = db;
+            db.CreateTableAsync<T>();
         }
 
         public AsyncTableQuery<T> AsQueryable() =>

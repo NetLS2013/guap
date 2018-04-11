@@ -20,70 +20,69 @@ namespace Guap
         public App()
         {
             InitializeComponent();
-            MainPage = new CreateTokenPage();
-            //var startPage = typeof(GuapPage);
+            var startPage = typeof(GuapPage);
 
-            //if (Equals(Settings.Get(Settings.Key.ResumePage), true))
-            //{
-            //    startPage = typeof(CreateWalletPage);
-            //}
-            //if (!Equals(Settings.Get(Settings.Key.PinSetupPage), true))
-            //{
-            //    var page = new PinAuthPage(
-            //        (sender1, args) =>
-            //            {
-            //                var pin = args.EnteredPin;
-            //                MainPage.Navigation.PushAsync(
-            //                    new PinAuthPage(
-            //                        (sender2, args2) =>
-            //                            {
-            //                                Settings.Set(Settings.Key.Pin, pin);
-            //                                Settings.Set(Settings.Key.PinSetupPage, true);
+            if (Equals(Settings.Get(Settings.Key.ResumePage), true))
+            {
+                startPage = typeof(CreateWalletPage);
+            }
+            if (!Equals(Settings.Get(Settings.Key.PinSetupPage), true))
+            {
+                var page = new PinAuthPage(
+                    (sender1, args) =>
+                        {
+                            var pin = args.EnteredPin;
+                            MainPage.Navigation.PushAsync(
+                                new PinAuthPage(
+                                    (sender2, args2) =>
+                                        {
+                                            Settings.Set(Settings.Key.Pin, pin);
+                                            Settings.Set(Settings.Key.PinSetupPage, true);
 
-            //                                var navigationPage =
-            //                                    new NavigationPage((Page)Activator.CreateInstance(startPage))
-            //                                        {
-            //                                            BarTextColor
-            //                                                = Color
-            //                                                    .White,
-            //                                            BarBackgroundColor
-            //                                                = Color
-            //                                                    .Black
-            //                                        };
-            //                                MainPage = navigationPage;
-            //                            },
-            //                        c => Equals(c, pin),
-            //                        "The 4 Digit pin you entered is incorrect." + Environment.NewLine
-            //                        + "Please review your pin and try again",
-            //                        new CommonPageSettings()
-            //                            {
-            //                                HasNavigation = true,
-            //                                Title = "Confirm Pin",
-            //                                HeaderText = "Create your 4 digit pin",
-            //                                HasBack = true
-            //                            }));
-            //            },
-            //        c => true,
-            //        string.Empty,
-            //        new CommonPageSettings()
-            //            {
-            //                HasNavigation = true,
-            //                Title = "Create Pin",
-            //                HeaderText = "Create your 4 digit pin"
-            //            });
+                                            var navigationPage =
+                                                new NavigationPage((Page)Activator.CreateInstance(startPage))
+                                                {
+                                                    BarTextColor
+                                                            = Color
+                                                                .White,
+                                                    BarBackgroundColor
+                                                            = Color
+                                                                .Black
+                                                };
+                                            MainPage = navigationPage;
+                                        },
+                                    c => Equals(c, pin),
+                                    "The 4 Digit pin you entered is incorrect." + Environment.NewLine
+                                    + "Please review your pin and try again",
+                                    new CommonPageSettings()
+                                    {
+                                        HasNavigation = true,
+                                        Title = "Confirm Pin",
+                                        HeaderText = "Create your 4 digit pin",
+                                        HasBack = true
+                                    }));
+                        },
+                    c => true,
+                    string.Empty,
+                    new CommonPageSettings()
+                    {
+                        HasNavigation = true,
+                        Title = "Create Pin",
+                        HeaderText = "Create your 4 digit pin"
+                    });
 
-            //    MainPage = new NavigationPage(page) { BarTextColor = Color.White, BarBackgroundColor = Color.Black };
-            //}
-            //else
-            //{
-            //    var navigationPage =
-            //        new NavigationPage((Page)Activator.CreateInstance(startPage))
-            //            {
-            //                BarTextColor = Color.White,
-            //                BarBackgroundColor = Color.Black
-            //            };
-            //    MainPage = navigationPage;
-            //}
+                MainPage = new NavigationPage(page) { BarTextColor = Color.White, BarBackgroundColor = Color.Black };
+            }
+            else
+            {
+                var navigationPage =
+                    new NavigationPage((Page)Activator.CreateInstance(startPage))
+                    {
+                        BarTextColor = Color.White,
+                        BarBackgroundColor = Color.Black
+                    };
+                MainPage = navigationPage;
+            }
         }
 
         protected override void OnStart()

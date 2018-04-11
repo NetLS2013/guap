@@ -1,4 +1,10 @@
-﻿namespace Guap.iOS
+﻿
+using Guap.iOS;
+
+using Xamarin.Forms;
+
+[assembly: Dependency(typeof(SQLiteIOS))]
+namespace Guap.iOS
 {
     using System;
     using System.IO;

@@ -20,6 +20,7 @@
             Wordlist = Wordlist.English;
             EthereumNetwork = "https://ropsten.infura.io/E8XftGiqmaErL2KN5Cp3";
             WalletPath = "m/44'/60'/0'/0/x";
+            DbName = "guap.db";
         }
 
         public static GlobalSetting Instance => Nested.Instance;
@@ -31,5 +32,7 @@
         public string EthereumNetwork { get; }
 
         public string WalletPath { get; }
+
+        public string DbName { get; }
     }
 }

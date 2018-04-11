@@ -8,6 +8,7 @@
 
     using Nethereum.Hex.HexTypes;
     using Nethereum.StandardTokenEIP20;
+    using Nethereum.Util;
     using Nethereum.Web3;
 
     public class TokenService
@@ -37,10 +38,12 @@
             return token;
         }
 
-        public async Task<BigInteger> GetBalance(Token token, string walletAddress)
+        public async Task<BigDecimal> GetBalance(Token token, string walletAddress)
         {
             var contract = this._web3.Eth.GetContract(this.TokenInfoABI, token.Address);
-            var balance = contract.GetFunction("balanceOf").CallAsync<BigInteger>(walletAddress).Result;
+            var balanceContract = await contract.GetFunction("balanceOf").CallAsync<BigInteger>(walletAddress);
+
+            var balance = new BigDecimal(balanceContract, token.Decimals) / new BigDecimal(BigInteger.Pow(new BigInteger(10), token.Decimals), token.Decimals);
 
             return balance;
         }

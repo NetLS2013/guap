@@ -1,5 +1,7 @@
 ﻿namespace Guap.Models
 {
+    using Nethereum.Util;
+
     using SQLite;
 
     [Table("Token")]
@@ -15,5 +17,11 @@
         public string Name { get; set; }
 
         public int Decimals { get; set; }
+
+        [Ignore]
+        public BigDecimal Balance { get; set; }
+
+        [Ignore]
+        public string BalanceString => Balance.ToString();
     }
 }

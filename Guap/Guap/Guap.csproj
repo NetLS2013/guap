@@ -65,6 +65,7 @@
     <Compile Include="Service\Repository.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CreateTokenViewModel.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\EnterAmountViewModel.cs" />
     <Compile Include="ViewModels\InputMnemonicViewModel.cs" />
     <Compile Include="ViewModels\MnemonicPhraseViewModel.cs" />

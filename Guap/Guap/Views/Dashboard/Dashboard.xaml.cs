@@ -9,12 +9,15 @@ using Xamarin.Forms.Xaml;
 
 namespace Guap.Views.Dashboard
 {
+    using Guap.ViewModels;
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Dashboard : ContentPage
     {
         public Dashboard()
         {
             InitializeComponent();
+            BindingContext = new DashboardViewModel(this);
         }
     }
 }
