@@ -7,9 +7,10 @@ namespace Guap.Views.Profile
         public BottomTabbedPage()
         {
             InitializeComponent();
-
+            
             BarTheme = BarThemeTypes.DarkWithoutAlpha;
             FixedMode = true;
+            IconActiveColor = "#e0bc0c";
         }
     }
 }

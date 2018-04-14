@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Guap.Helpers;
 using Guap.ViewModels;
 using Guap.Views.Modal;
@@ -8,10 +7,6 @@ using Xamarin.Forms;
 
 namespace Guap.Views
 {
-    using System.Collections.Generic;
-
-    using Guap.Service;
-
     public partial class CreateWalletPage : ContentPage
     {
         public CreateWalletPage()

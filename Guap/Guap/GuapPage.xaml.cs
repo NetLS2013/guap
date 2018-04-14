@@ -16,6 +16,11 @@ namespace Guap
             NavigationPage.SetHasNavigationBar(this, false);
             
             HomeContainer.Padding = new Thickness(App.ScreenHeight * 0.06, App.ScreenHeight * 0.09);
+
+            if (Settings.Get(Settings.Key.IsLogged) != null)
+            {
+                LoginButtonWrapper.IsVisible = true;
+            }
         }
 
         private async void OpenPageTermsClick(object sender, EventArgs e)

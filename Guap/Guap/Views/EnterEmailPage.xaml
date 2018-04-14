@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
+             x:Class="Guap.Views.EnterEmailPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout
+            BackgroundColor="#000">
+            <StackLayout
+                Padding="40,70,40,0"
+                VerticalOptions="FillAndExpand">
+                <Label
+                    Text="Create Account"
+                    TextColor="#fff"
+                    FontSize="20"
+                    FontAttributes="Bold"/>
+                
+                <customRender:LineHeightLabel
+                    FontSize="18"
+                    TextColor="#fff"
+                    Text="Add an email address to your account which will be used to reset your PIN code."
+                    Margin="0,8,0,0"/>
+                
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Vertical"
+                    Margin="0,40,0,0"
+                    Padding="20,0">
+                    <Label Text="Enter Email"
+                           HorizontalOptions="Center"
+                           TextColor="#fff"
+                           FontSize="16"/>
+                    
+                    <customRender:BottomBorderEntry
+                        Text="{Binding VerificationCode}"
+                        TextColor="#fff"
+                        Keyboard="Numeric"
+                        HorizontalTextAlignment="Center"/>
+                </StackLayout>
+            </StackLayout>
+            
+            <StackLayout
+                Orientation="Horizontal"
+                BackgroundColor="#e0bc0c"
+                VerticalOptions="End"
+                Padding="16,0,16,0">
+                <Button
+                    Text="Continue"
+                    BackgroundColor="#e0bc0c"
+                    TextColor="#fff"
+                    HorizontalOptions="EndAndExpand"
+                    FontSize="20"
+                    Clicked="OpenPageCreateWallet"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

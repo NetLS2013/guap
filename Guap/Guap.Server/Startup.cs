@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Guap.Server.Data;
+﻿using Guap.Server.Data;
 using Guap.Server.Data.Repositories;
+using Guap.Server.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Guap.Server
 {
@@ -27,6 +22,8 @@ namespace Guap.Server
         {
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+            services.AddTransient<IEmailSender, EmailSender>(provider => new EmailSender(Configuration));
             
             services.AddScoped<IUserRepository, UserRepository>();
             

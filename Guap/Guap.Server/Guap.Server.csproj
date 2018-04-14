@@ -21,6 +21,7 @@
     <Compile Include="Data\Repositories\GenericRepository.cs" />
     <Compile Include="Data\Repositories\UserRepository.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Service\EmailSender.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

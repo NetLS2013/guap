@@ -62,7 +62,7 @@
                     TextColor="#fff"
                     HorizontalOptions="EndAndExpand"
                     FontSize="20"
-                    Clicked="OpenPageCreateWallet"/>
+                    Clicked="OpenPageEnterEmail"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

@@ -5,21 +5,26 @@
     xmlns:dashboard="clr-namespace:Guap.Views.Dashboard;assembly=Guap"
     xmlns:profile="clr-namespace:Guap.Views.Profile;assembly=Guap"
     xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
+    xmlns:setting="clr-namespace:Guap.Views.Setting;assembly=Guap"
     x:Class="Guap.Views.Profile.BottomTabbedPage"
     BarBackgroundColor="#000"
     BarTextColor="#fff">
     <dashboard:Dashboard
-        Title="Home"/>
+        Title="Home"
+        Icon="home.png"/>
     
     <profile:ReceivePage
-        Title="Receive"/>
+        Title="Receive"
+        Icon="receive.png"/>
     
     <Page Title="Scan"
-          BackgroundColor="Aquamarine"/>
+        BackgroundColor="Aquamarine"/>
     
     <Page Title="Send"
-          BackgroundColor="AntiqueWhite"/>
+        BackgroundColor="AntiqueWhite"/>
     
-    <Page Title="Settings"
-          BackgroundColor="Azure"/>
+    <setting:SettingsPage
+        Title="Settings"
+        Icon="settings.png"
+        BackgroundColor="Azure"/>
 </customRender:BottomTabbed>

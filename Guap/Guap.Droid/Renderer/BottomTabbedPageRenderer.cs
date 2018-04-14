@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using Android.Graphics;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using BottomNavigationBar;
@@ -15,6 +17,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.AppCompat;
 using IPageController = Guap.Droid.Utils.IPageController;
+using Color = Android.Graphics.Color;
 
 //https://github.com/thrive-now/BottomNavigationBarXF
 [assembly: ExportRenderer (typeof (BottomTabbed), typeof (BottomTabbedPageRenderer))]
@@ -23,6 +26,7 @@ namespace Guap.Droid.Renderer
     public class BottomTabbedPageRenderer : VisualElementRenderer<BottomTabbed>, IOnTabClickListener
 	{
 		bool _disposed;
+	    int _tabPosition;
 		BottomNavigationBar.BottomBar _bottomBar;
 		FrameLayout _frameLayout;
 		IPageController _pageController;
@@ -36,11 +40,12 @@ namespace Guap.Droid.Renderer
 		#region IOnTabClickListener
 		public virtual void OnTabSelected (int position)
 		{
-			//Do we need this call? It's also done in OnElementPropertyChanged
 			SwitchContent(Element.Children [position]);
+		    
 			var bottomBarPage = Element as BottomTabbed;
 			bottomBarPage.CurrentPage = Element.Children[position];
-			//bottomBarPage.RaiseCurrentPageChanged();
+
+		    _tabPosition = position;
 		}
 
 		public virtual void OnTabReSelected (int position)
@@ -150,6 +155,7 @@ namespace Guap.Droid.Renderer
 					UpdateBarTextColor ();
 				    
 				    _bottomBar.SetTextAppearance(Resource.Style.TabTextStyle);
+				    _bottomBar.IgnoreScalingResize = true;
 				}
 
 				if (bottomBarPage.CurrentPage != null) {
@@ -197,25 +203,45 @@ namespace Guap.Droid.Renderer
 			var context = Context;
 
 			_bottomBar.Measure (MeasureSpecFactory.MakeMeasureSpec (width, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec (height, MeasureSpecMode.AtMost));
-			int tabsHeight = Math.Min (height, Math.Max (_bottomBar.MeasuredHeight, _bottomBar.MinimumHeight));
+			
+		    int tabsHeight = Math.Min (height, Math.Max (_bottomBar.MeasuredHeight, _bottomBar.MinimumHeight));
 
-			if (width > 0 && height > 0) {
+			if (width > 0 && height > 0)
+			{
 				_pageController.ContainerArea = new Rectangle(0, 0, context.FromPixels(width), context.FromPixels(_frameLayout.MeasuredHeight));
-				ObservableCollection<Element> internalChildren = _pageController.InternalChildren;
+			    
+			    ObservableCollection<Element> internalChildren = _pageController.InternalChildren;
+				
+			    for (int i = 0; i < internalChildren.Count; i++)
+			    {
+			        var bottomBarTab = _bottomBar.ItemContainer.GetChildAt(i);
+			        var tabIcon = bottomBarTab.FindViewById<AppCompatImageView>(BottomNavigationBar.Resource.Id.bb_bottom_bar_icon);
+			        var tabTitle = bottomBarTab.FindViewById<TextView>(BottomNavigationBar.Resource.Id.bb_bottom_bar_title);
+		        
+			        tabTitle.ScaleX = tabIcon.ScaleX = 1f;
+			        tabTitle.ScaleY = tabIcon.ScaleY = 1f;
 
-				for (var i = 0; i < internalChildren.Count; i++) {
-					var child = internalChildren [i] as VisualElement;
+			        tabIcon.LayoutParameters = new FrameLayout.LayoutParams(
+			            bottomBarTab.Width / 2, bottomBarTab.Height / 2)
+			        {
+			            Gravity = GravityFlags.CenterHorizontal
+			        };
 
-					if (child == null) {
-						continue;
-					}
-
-					IVisualElementRenderer renderer = Platform.GetRenderer (child);
-					var navigationRenderer = renderer as NavigationPageRenderer;
-					if (navigationRenderer != null) {
-						// navigationRenderer.ContainerPadding = tabsHeight;
-					}
-				}
+			        bottomBarTab.SetPadding(0, 0, 0, 0);
+			        tabIcon.SetPadding(0, 12, 0, 0);
+			        
+                    try
+                    {
+                        if (i == _tabPosition)
+                        {
+                            tabIcon.SetColorFilter(Color.ParseColor(Element.IconActiveColor), PorterDuff.Mode.SrcIn);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"--- Error: {e.Message}");
+                    }
+			    }
 
 				_bottomBar.Measure (MeasureSpecFactory.MakeMeasureSpec (width, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec (tabsHeight, MeasureSpecMode.Exactly));
 				_bottomBar.Layout (0, 0, width, tabsHeight);
@@ -227,7 +253,7 @@ namespace Guap.Droid.Renderer
 	    void UpdateSelectedTabIndex(Page page)
 	    {
 	        var index = Element.Children.IndexOf(page);
-            _bottomBar.SelectTabAtPosition(index, true);
+            _bottomBar.SelectTabAtPosition(index, false);
 	    }
 
 		void UpdateBarBackgroundColor ()
@@ -280,11 +306,11 @@ namespace Guap.Droid.Renderer
 			for (int i = 0; i < Element.Children.Count; ++i) {
 				Page page = Element.Children [i];
 
-				Color tabColor = BottomBarPageExtensions.GetTabColor(page);
+				Color tabColor = BottomBarPageExtensions.GetTabColor(page).ToAndroid();
 
 				if (tabColor != Color.Transparent)
                 {
-					_bottomBar.MapColorForTab (i, tabColor.ToAndroid ());
+					_bottomBar.MapColorForTab (i, tabColor);
 				}
 			}
 		}

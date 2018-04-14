@@ -37,6 +37,8 @@
 	        BorderRadius="0"/>
 	    
 	    <StackLayout
+	        x:Name="LoginButtonWrapper"
+	        IsVisible="False"
 	        Margin="0,20,0,0"
 	        BackgroundColor="#fff"
 	        Padding="1">
