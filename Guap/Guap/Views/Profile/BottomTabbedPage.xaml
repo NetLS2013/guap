@@ -18,11 +18,9 @@
         Title="Receive"
         Icon="receive.png"/>
     
-    <Page Title="Scan"
-        BackgroundColor="Aquamarine"/>
-    
-    <Page Title="Send"
-        BackgroundColor="AntiqueWhite"/>
+    <profile:ScanPage Title="Scan"/>
+
+    <profile:SendPage Title="Send" />
     
     <setting:SettingsPage
         Title="Settings"

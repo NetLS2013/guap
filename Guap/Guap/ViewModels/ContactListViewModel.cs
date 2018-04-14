@@ -10,13 +10,19 @@ namespace Guap.ViewModels
 {
     public class ContactListViewModel : BaseViewModel
     {
+        public event Action<string> SelectHandler;
+
         private IList<ContactModel> _contactList;
         private readonly RequestProvider _requestProvider;
+
+        private Page _context;
 
         public ContactListViewModel()
         {
             _requestProvider = new RequestProvider();
-            
+            //_context = context;
+
+
             Device.BeginInvokeOnMainThread(async () =>
                 ContactsList = await DependencyService.Get<IContactService>().GetContactListAsync());
         }
@@ -49,11 +55,17 @@ namespace Guap.ViewModels
                 {
 //                    await _context.Navigation.PushAsync(new PhoneVerificationPage(this));
                 }
+                else
+                {
+                    SelectHandler(result);
+                }
             }
             catch (Exception e)
             {
                 Debug.WriteLine($"--- Error: {e.Message}");
             }
+
+            //await this._context.Navigation.PopAsync();
         }
     }
 }

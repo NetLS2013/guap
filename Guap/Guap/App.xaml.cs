@@ -6,6 +6,9 @@ using Xamarin.Forms;
 
 namespace Guap
 {
+    using Plugin.Permissions;
+    using Plugin.Permissions.Abstractions;
+
     public partial class App : Application
     {
         public static int ScreenHeight { get; set;}
@@ -14,8 +17,42 @@ namespace Guap
         public App()
         {
             InitializeComponent();
+            //try
+            //{
+            //    var status = CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera).Result;
+                
+            //    if (status != PermissionStatus.Granted)
+            //    {
+
+            //        Device.BeginInvokeOnMainThread(
+            //            async () =>
+            //                {
+            //                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+            //                    if (results.ContainsKey(Permission.Camera))
+            //                        status = results[Permission.Camera];
+            //                    if (status != PermissionStatus.Granted || status == PermissionStatus.Unknown)
+            //                    {
+            //                        MainPage = new NavigationPage(new PermissionPage(Permission.Camera));
+            //                    }
+            //                });
+                    
+            //        //Best practice to always check that the key exists
+                    
+            //    }
+
+               
+            //}
+            //catch (Exception e)
+            //{
+            //    return;
+            //}
+
+            
 
             var startPage = typeof(GuapPage);
+
+            
+          
 
             if (Equals(Settings.Get(Settings.Key.IsLogged), true))
             {

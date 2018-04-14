@@ -11,7 +11,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout
-            BackgroundColor="#000">
+            BackgroundColor="#fff">
             <StackLayout
                 Padding="40,40,40,0"
                 VerticalOptions="FillAndExpand">
@@ -21,14 +21,12 @@
                     Orientation="Vertical"
                     Margin="0,40,0,0">
                     <Label Text="Token address"
-                           HorizontalOptions="Center"
-                           TextColor="#fff"
+                           TextColor="#000"
                            FontSize="16"/>
-
-                    <customRender:BottomBorderEntry
-                        FontSize="12"
-                        TextColor="#fff"
-                        HorizontalTextAlignment="Center"
+                    <customRender:BottomBorderEntryWhite
+                        FontSize="16"
+                        TextColor="#000"
+                        HorizontalTextAlignment="Start"
                         Text="{Binding ContractAddress, Mode=TwoWay}"
                         IsEnabled="{Binding IsEdit, Converter={StaticResource BooleanConverter}}"
                         />
@@ -39,56 +37,68 @@
                     Orientation="Vertical"
                     Margin="0,40,0,0">
                     <Label Text="Token name"
-                           HorizontalOptions="Center"
-                           TextColor="#fff"
+                           HorizontalOptions="Start"
+                           TextColor="#000"
                            FontSize="16"/>
-
-                    <customRender:BottomBorderEntry
-                        TextColor="#fff"
+                    <customRender:BottomBorderEntryWhite
+                        TextColor="#000"
                         Keyboard="Text"
-                        HorizontalTextAlignment="Center"
+                        HorizontalTextAlignment="Start"
                         Text="{Binding TokenName, Mode=TwoWay}"
                         IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
                 </StackLayout>
 
-                <StackLayout Orientation="Horizontal">
-                    <StackLayout
-                        HorizontalOptions="FillAndExpand"
-                        Orientation="Vertical"
-                        Margin="0,40,0,0">
-                        <Label Text="Token symbol"
-                               HorizontalOptions="Center"
-                               TextColor="#fff"
-                               FontSize="16"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                        <customRender:BottomBorderEntry
-                            TextColor="#fff"
-                            Keyboard="Text"
-                            HorizontalTextAlignment="Center"
-                            Text="{Binding TokenSymbol, Mode=TwoWay}"
-                            IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
-                    </StackLayout>
+                        <StackLayout
+                            Grid.Row="0" Grid.Column="0"
+                            HorizontalOptions="FillAndExpand"
+                            Orientation="Vertical"
+                            Margin="0,40,0,0">
+                            <Label Text="Token symbol"
+                                   HorizontalOptions="Start"
+                                   TextColor="#000"
+                                   FontSize="16"/>
 
-                    <StackLayout
-                        HorizontalOptions="FillAndExpand"
-                        Orientation="Vertical"
-                        Margin="0,40,0,0">
-                        <Label Text="Decimals"
-                               HorizontalOptions="Center"
-                               TextColor="#fff"
-                               FontSize="16"/>
+                            <customRender:BottomBorderEntryWhite
+                                TextColor="#000"
+                                Keyboard="Text"
+                                HorizontalTextAlignment="Start"
+                                Text="{Binding TokenSymbol, Mode=TwoWay}"
+                                IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
+                        </StackLayout>
 
-                        <customRender:BottomBorderEntry
-                            TextColor="#fff"
-                            Keyboard="Numeric"
-                            HorizontalTextAlignment="Center"
-                            Text="{Binding Decimals, Mode=TwoWay}"
-                            IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
-                    </StackLayout>
+                        <StackLayout
+                            Grid.Row="0" Grid.Column="1"
+                            HorizontalOptions="FillAndExpand"
+                            Orientation="Vertical"
+                            Margin="0,40,0,0">
+                            <Label Text="Decimals"
+                                   HorizontalOptions="Start"
+                                   TextColor="#000"
+                                   FontSize="16"/>
+
+                            <customRender:BottomBorderEntryWhite
+                                TextColor="#000"
+                                Keyboard="Numeric"
+                                HorizontalTextAlignment="Start"
+                                Text="{Binding Decimals, Mode=TwoWay}"
+                                IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
+                        </StackLayout>
+                    </Grid>
+                    
                 </StackLayout>
                 <ListView
                     HasUnevenRows="True"
-                    BackgroundColor="#000"
+                    BackgroundColor="#fff"
                     ItemsSource="{Binding Errors}"
                     SeparatorVisibility="None"
                     IsEnabled="false"
@@ -101,41 +111,31 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-               
-
             </StackLayout>
 
             <StackLayout
                 Orientation="Horizontal"
-                BackgroundColor="#e0bc0c"
+                BackgroundColor="#fff"
                 VerticalOptions="End"
                 Padding="16,0,16,0">
                 <Button
-                    Command="{Binding BackCommand}"
-                    Text="Cancel"
-                    BackgroundColor="#e0bc0c"
-                    TextColor="#ffffff"
-                    HorizontalOptions="StartAndExpand"
-                    FontSize="20"/>
-
-                <Button
-                    Command="{Binding DeleteCommand}"
+                    TextColor="#e0bc0c"
+                    BackgroundColor="Transparent"
                     Text="Delete"
-                    BackgroundColor="#e0bc0c"
-                    TextColor="#db0029"
-                    HorizontalOptions="CenterAndExpand"
+                    FontSize="20"
+                    HorizontalOptions="StartAndExpand"
+                    Command="{Binding DeleteCommand}"
                     IsVisible="{Binding IsEdit}"
-                    FontSize="20"/>
-
+                />
                 <Button
+                    TextColor="#e0bc0c"
+                    BackgroundColor="Transparent"
+                    Text="Save"
+                    FontSize="20"
+                    HorizontalOptions="EndAndExpand"
                     Command="{Binding SaveTokenCommand}"
                     IsEnabled="{Binding IsValid}"
-                    Text="Save"
-                    BackgroundColor="#e0bc0c"
-                    TextColor="#ffffff"
-                    HorizontalOptions="EndAndExpand"
-                    FontSize="20"/>
-                
+                    />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

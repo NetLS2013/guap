@@ -4,11 +4,13 @@ namespace Guap.Views.Profile
 {
     public partial class ContactListPage
     {
+        public ContactListViewModel ContactListViewModel { get; set; }
+
         public ContactListPage()
         {
             InitializeComponent();
-
-            BindingContext = new ContactListViewModel();
+            ContactListViewModel = new ContactListViewModel();
+            BindingContext = ContactListViewModel;
         }
     }
 }

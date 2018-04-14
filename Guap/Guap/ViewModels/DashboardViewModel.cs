@@ -7,10 +7,12 @@
     using System.Windows.Input;
 
     using Guap.Contracts;
+    using Guap.Helpers;
     using Guap.Models;
     using Guap.Service;
     using Guap.Views.Dashboard;
 
+    using Nethereum.HdWallet;
     using Nethereum.Util;
     using Nethereum.Web3;
 
@@ -56,7 +58,7 @@
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
 
-            _tokenService = new TokenService(new Web3(GlobalSetting.Instance.EthereumNetwork));
+            _tokenService = new TokenService(new Web3(new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(0), GlobalSetting.Instance.EthereumNetwork));
             Task.Run(async () => { InitializeTokens(); }).Wait();
         }
 
@@ -81,7 +83,7 @@
                 tokens = await _repository.Get();
                 foreach (var token in tokens)
                 {
-                    token.Balance = await _tokenService.GetBalance(token, "0x30832b7ceb2d9d680552c16613419241e5ca670c");
+                    token.Balance = await _tokenService.GetBalance(token, "0xED4e06BE10d494E753a2AC3F446D1070d048B442");
                 }
             }
             catch (Exception e)

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Guap.Views.Profile.PermissionPage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="White" Padding="0, 40, 0, 14">
+            <StackLayout VerticalOptions="StartAndExpand">
+                <Label HorizontalOptions="Center" VerticalOptions="Start" Text="Scan QR Codes" FontSize="20" TextColor="#4a4a4a" FontAttributes="Bold"></Label>
+                <Label  Margin="26,26,26,0" HorizontalOptions="End" VerticalOptions="Start" Text="Scan addresses, payment requests, paper wallets and more." FontSize="16" TextColor="#4a4a4a"></Label>
+            </StackLayout>
+            
+            <StackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand"  Margin="42,0,42,0">
+                <Label Text="Enable camera access in your device setting to get started." HorizontalOptions="Center" VerticalOptions="Center" TextColor="#4a4a4a"></Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="EndAndExpand" Padding="16,0,16,0">
+                <Button Clicked="GrantPermission" Text="Open Settings" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

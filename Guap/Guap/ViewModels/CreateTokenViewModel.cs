@@ -7,11 +7,13 @@
     using System.Windows.Input;
 
     using Guap.Contracts;
+    using Guap.Helpers;
     using Guap.Models;
     using Guap.Service;
 
     using MvvmValidation;
 
+    using Nethereum.HdWallet;
     using Nethereum.Web3;
 
     using SQLite;
@@ -46,15 +48,17 @@
                 Token = token;
                 this.IsEdit = true;
                 this.IsValid = true;
+                this._context.Title = "Edit Token";
             }
             else
             {
+                this._context.Title = "Create Token";
                 Token = new Token();
                 IsValid = false;
             }
             
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
-            _tokenService = new TokenService(new Web3(GlobalSetting.Instance.EthereumNetwork));
+            _tokenService = new TokenService(new Web3(new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(0), GlobalSetting.Instance.EthereumNetwork));
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
         }
 

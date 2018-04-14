@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Guap.Views.Dashboard
+namespace Guap.Views.Profile
 {
-    using Guap.Models;
     using Guap.ViewModels;
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateTokenPage : ContentPage
+    public partial class SendPage : ContentPage
     {
-        public CreateTokenPage(DashboardViewModel viewModel, Token token = null)
+        public SendViewModel SendViewModel { get; set; }
+
+        public SendPage()
         {
             InitializeComponent();
-            BindingContext = new CreateTokenViewModel(this, viewModel, token);
+            SendViewModel = new SendViewModel(this);
+            BindingContext = SendViewModel;
         }
     }
 }

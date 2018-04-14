@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
+             xmlns:helpers="clr-namespace:Guap.Helpers;assembly=Guap"
+             x:Class="Guap.Views.Profile.SendPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:BooleanConverter x:Key="BooleanConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout
+            BackgroundColor="#fff">
+            <StackLayout
+                Padding="40,40,40,0"
+                VerticalOptions="FillAndExpand">
+
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Vertical"
+                    >
+                    <Label Text="To"
+                           HorizontalOptions="Start"
+                           TextColor="#000"
+                           FontSize="16"/>
+
+                    <StackLayout Orientation="Horizontal">
+                        <customRender:BottomBorderEntryWhite
+                                TextColor="#000"
+                                HorizontalTextAlignment="Start"
+                                HorizontalOptions="FillAndExpand"
+                                Text="{Binding ReceiverAddress, Mode=TwoWay}"
+                                IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"
+                            />
+                        <Image Source="create.png" VerticalOptions="End" HorizontalOptions="End">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ScanCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                        <Button
+                            TextColor="#e0bc0c"
+                            BackgroundColor="Transparent"
+                            Text="Contact"
+                            FontSize="16"
+                            Command="{Binding ContactCommand}"/>
+                    </StackLayout>
+                </StackLayout>
+
+
+                <StackLayout Orientation="Horizontal">
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackLayout Grid.Column="0" Grid.Row="0"
+                            HorizontalOptions="FillAndExpand"
+                            Orientation="Vertical">
+
+                            <Label Text="Amount"
+                                   HorizontalOptions="Start"
+                                   TextColor="#000"
+                                   FontSize="16"/>
+                            <customRender:BottomBorderEntryWhite
+                                TextColor="#000"
+                                Keyboard="Numeric"
+                                HorizontalTextAlignment="Start"
+                                Text="{Binding Amount, Mode=TwoWay}"
+                                IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="1" Grid.Row="0"
+                            HorizontalOptions="FillAndExpand"
+                            Orientation="Vertical"
+                        >
+
+                            <Label Text="Select token"
+                                   HorizontalOptions="Start"
+                                   TextColor="#000"
+                                   FontSize="16"/>
+                            <customRender:BottomBorderPicker 
+                                SelectedIndex="{Binding TokenSelectedIndex}"
+                                ItemsSource="{Binding Tokens}"
+                                ItemDisplayBinding="{Binding Name}"
+                                TextColor="Black"
+                                Title="Token"
+                            />
+                        </StackLayout>
+                    </Grid>
+                    
+
+                </StackLayout>
+                <Button
+                    TextColor="#e0bc0c"
+                    BackgroundColor="Transparent"
+                    Text="Send"
+                    FontSize="18"
+                    HorizontalOptions="End"
+                    Command="{Binding SendCommand}"/>
+                <ListView
+                    HasUnevenRows="True"
+                    BackgroundColor="#fff"
+                    ItemsSource="{Binding Errors}"
+                    SeparatorVisibility="None"
+                    IsEnabled="false"
+                    Margin="8,24,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding .}" TextColor="#db0029" FontSize="14"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+            </StackLayout>
+
+            <StackLayout
+                Spacing="0"
+                VerticalOptions="End">
+                <BoxView
+                    BackgroundColor="#bbb"
+                    HeightRequest="1"/>
+
+                <StackLayout
+                    Orientation="Horizontal"
+                    Padding="24,4">
+                    <StackLayout
+                        Orientation="Vertical"
+                        VerticalOptions="Center"
+                        Spacing="0">
+                        <Label
+                            Text="ACE Wallet"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            TextColor="#9b9b9b"/>
+
+                        <Label
+                            Text="Available Balance"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            TextColor="#9b9b9b"/>
+                    </StackLayout>
+
+                    <StackLayout
+                        Orientation="Horizontal"
+                        HorizontalOptions="EndAndExpand"
+                        Spacing="0">
+                        <Label
+                            Text="{Binding Token.BalanceString}"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            FontSize="18"
+                            TextColor="#9b9b9b"/>
+                        <Label
+                            Text=" "
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            FontSize="18"
+                            TextColor="#9b9b9b"/>
+                        <Label
+                            Text="{Binding Token.Symbol}"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            FontSize="18"
+                            TextColor="#9b9b9b"/>
+
+                        <Button
+                            WidthRequest="40"
+                            BackgroundColor="Transparent"
+                            Text="up"
+                            VerticalOptions="Center"
+                            TextColor="#9b9b9b"
+                            Command="{Binding RefreshBalanceCommand}"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 x:Class="Guap.Views.Modal.TransactionModelPage">
+    <StackLayout
+        Margin="30"
+        BackgroundColor="White"
+        VerticalOptions="CenterAndExpand">
+        <StackLayout
+            Orientation="Vertical"
+            Padding="24">
+            <Label
+                FontSize="20"
+                TextColor="#4a4a4a"
+                Text="Success!"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"/>
+
+            <customRender:LineHeightLabel
+                FontSize="16"
+                Margin="0,8,0,30"
+                TextColor="#4a4a4a">
+                <customRender:LineHeightLabel.FormattedText>
+                    <FormattedString>
+                        <Span x:Name="Title"/>
+                    </FormattedString>
+                </customRender:LineHeightLabel.FormattedText>
+            </customRender:LineHeightLabel>
+            <Button StyleClass="Link" Text="View in block explorer" BackgroundColor="Transparent" TextColor="#e0bc0c" HorizontalOptions="Center" Clicked="OnNavigateExplorer"></Button>
+        </StackLayout>
+
+        <Button
+            Clicked="DismissModalClick"
+            FontSize="20"
+            BackgroundColor="#e0bc0c"
+            Text="OK"
+            FontAttributes="Bold"
+            TextColor="#fff"
+            BorderRadius="0"/>
+    </StackLayout>
+</pages:PopupPage>
