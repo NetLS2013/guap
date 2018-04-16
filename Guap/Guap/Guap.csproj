@@ -140,6 +140,7 @@
     </Compile>
     <Compile Include="Views\Shared\NavigationTitle.xaml.cs">
       <DependentUpon>NavigationTitle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Profile\PermissionPage.xaml.cs">
       <DependentUpon>PermissionPage.xaml</DependentUpon>
     </Compile>
