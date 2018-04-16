@@ -9,7 +9,7 @@
     <StackLayout
         BackgroundColor="White">
         <shared:NavigationTitle
-            TitleText="Settings"/>
+            TitleText="Receive"/>
         
         <StackLayout
             x:Name="QrContainer"

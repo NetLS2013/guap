@@ -17,9 +17,9 @@ namespace Guap.iOS.Renderer
             {
                 if (e.NewElement.Children[0] is StackLayout conteiner)
                 {
-//                    conteiner.HeightRequest =
-//                        new UINavigationController().NavigationBar.Frame.Height
-//                        + UIApplication.SharedApplication.StatusBarFrame.Height;
+                    conteiner.HeightRequest =
+                        new UINavigationController().NavigationBar.Frame.Height
+                        + UIApplication.SharedApplication.StatusBarFrame.Height;
                 }
             }
         }

@@ -44,6 +44,7 @@ namespace Guap.Server.Data.Repositories
             var user = await FindUser(model.PhoneNumber);
 
             user.Email = model.Email;
+            user.EmailConfirmed = false;
 
             await Update(user);
         }

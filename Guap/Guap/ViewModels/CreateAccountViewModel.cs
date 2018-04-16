@@ -177,7 +177,7 @@ namespace Guap.ViewModels
         {
             var validator = new ValidationHelper();
             
-            validator.AddRequiredRule(() => EmailInput, "The verification code is required.");
+            validator.AddRequiredRule(() => EmailInput, "The email is required.");
             
             if (!ValidateVerifyNumber(validator))
             {

@@ -15,12 +15,10 @@ namespace Guap.Droid.Renderer
             if (e.NewElement != null)
             {
                 int resourceId = Resources.GetIdentifier ("status_bar_height", "dimen", "android");
-                
-                var container = e.NewElement.Children[0] as StackLayout;
-                
-                if (container != null)
+
+                if (e.NewElement.Children[0] is StackLayout container)
                 {
-//                    container.HeightRequest = Resources.GetDimensionPixelSize(resourceId);
+                    container.HeightRequest = Resources.GetDimensionPixelSize(resourceId);
                 }
             }
         }
