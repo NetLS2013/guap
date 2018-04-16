@@ -14,10 +14,10 @@ namespace Guap.Views.Modal
     using Rg.Plugins.Popup.Pages;
     using Rg.Plugins.Popup.Services;
 
-    public partial class TransactionModelPage : PopupPage
+    public partial class TransactionModalPage : PopupPage
     {
         private string _url;
-        public TransactionModelPage(string title, string transactionHash)
+        public TransactionModalPage(string title, string transactionHash)
         {
             InitializeComponent();
             this.Title.Text = title;

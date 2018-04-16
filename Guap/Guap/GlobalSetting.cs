@@ -2,6 +2,8 @@
 
 namespace Guap
 {
+    using Guap.Models;
+
     public class GlobalSetting
     {
         private class Nested
@@ -17,9 +19,26 @@ namespace Guap
             Wordlist = Wordlist.English;
             EthereumNetwork = "https://ropsten.infura.io/E8XftGiqmaErL2KN5Cp3";
             WalletPath = "m/44'/60'/0'/0/x";
-            BaseEndpoint = "http://bf1c20c9.ngrok.io";
+            BaseEndpoint = "http://f51308c9.ngrok.io";
             DbName = "guap.db";
             BlockExplorer = "https://ropsten.etherscan.io";
+
+            Guap = new Token()
+                       {
+                           Address = "0x9B333Edb02150abC217B746921499650dd3e448E",
+                           Decimals = 18,
+                           Id = 0,
+                           Name = "Guap",
+                           Symbol = "Guap"
+
+            };
+
+            Ethereum = new Token()
+                           {
+                               Name = "Ethereum",
+                               Symbol = "ETH",
+                               Id = -1,
+                           };
         }
 
         public static GlobalSetting Instance => Nested.Instance;
@@ -34,6 +53,9 @@ namespace Guap
         public string WalletPath { get; }
         
         public string DbName { get; }
+
+        public Token Guap { get; set; }
+        public Token Ethereum { get; set; }
 
 
         public string RegisterNumberEndpoint { get; set; }

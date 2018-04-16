@@ -13,8 +13,8 @@
         <StackLayout
             BackgroundColor="#fff">
             <StackLayout
-                Padding="40,40,40,0"
-                VerticalOptions="FillAndExpand">
+                Padding="40,20,40,0"
+                VerticalOptions="StartAndExpand">
 
                 <StackLayout
                     HorizontalOptions="FillAndExpand"
@@ -109,7 +109,7 @@
                     ItemsSource="{Binding Errors}"
                     SeparatorVisibility="None"
                     IsEnabled="false"
-                    Margin="8,24,0,0">
+                    Margin="8,18,0,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

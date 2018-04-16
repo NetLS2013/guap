@@ -11,10 +11,14 @@
     using Guap.Models;
     using Guap.Service;
     using Guap.Views.Dashboard;
+    using Guap.Views.Modal;
 
     using Nethereum.HdWallet;
     using Nethereum.Util;
     using Nethereum.Web3;
+    using Nethereum.Web3.Accounts;
+
+    using Rg.Plugins.Popup.Extensions;
 
     using SQLite;
 
@@ -22,6 +26,8 @@
 
     public class DashboardViewModel : BaseViewModel
     {
+        public ActionSelectModalPage ActionSelectModalPage { get; set; }
+
         private Page _context;
 
         private IRepository<Token> _repository;
@@ -32,7 +38,13 @@
 
         private Token _token;
 
+        private Token _guap;
+
+        private Account _account;
+
         public ICommand CreateTokenCommand => new Command( async () => await this._context.Navigation.PushAsync(new CreateTokenPage(this)));
+
+        public ICommand SelectActionCommand => new Command( async () => Device.BeginInvokeOnMainThread(async () => await this._context.Navigation.PushPopupAsync(ActionSelectModalPage)));
 
         public Token Token
         {
@@ -51,14 +63,45 @@
             }
         }
 
+        public Token Guap
+        {
+            get
+            {
+                return _guap;
+            }
+            set
+            {
+                _guap = value;
+
+                OnPropertyChanged(nameof(Guap));
+            }
+        }
+
+        public Account Account
+        {
+            get
+            {
+                return _account;
+            }
+            set
+            {
+                _account = value;
+
+                OnPropertyChanged(nameof(Account));
+            }
+        }
+
         public DashboardViewModel(Page context)
         {
-            this._context = context;
+            ActionSelectModalPage = new ActionSelectModalPage();
+
+            _context = context;
+            _account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
 
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
 
-            _tokenService = new TokenService(new Web3(new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(0), GlobalSetting.Instance.EthereumNetwork));
+            _tokenService = new TokenService(new Web3(_account, GlobalSetting.Instance.EthereumNetwork));
             Task.Run(async () => { InitializeTokens(); }).Wait();
         }
 
@@ -77,20 +120,24 @@
 
         public async void InitializeTokens()
         {
+            _guap = GlobalSetting.Instance.Guap;
+            _guap.Balance = this._tokenService.GetBalance(_guap, _account.Address).Result;
+
             var tokens = new List<Token>();
-            try
+            tokens = await _repository.Get();
+
+            foreach (var token in tokens)
             {
-                tokens = await _repository.Get();
-                foreach (var token in tokens)
+                try
                 {
-                    token.Balance = await _tokenService.GetBalance(token, "0xED4e06BE10d494E753a2AC3F446D1070d048B442");
+                    token.Balance = await _tokenService.GetBalance(token, _account.Address);
+                }
+                catch (Exception e)
+                {
+
                 }
             }
-            catch (Exception e)
-            {
-                
-            }
-           
+
             Tokens = tokens;
         }
 

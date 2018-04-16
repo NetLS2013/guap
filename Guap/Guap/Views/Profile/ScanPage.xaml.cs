@@ -71,17 +71,32 @@ namespace Guap.Views.Profile
                     return;
                 }
                 Uri uri = new Uri(result.Text);
-               // this.scaner.
-                //if (!string.IsNullOrWhiteSpace(uri.))
-                //{
-                    
-                //}
+
+                if (!new Regex("^(?=.{42}$)0x[a-zA-Z0-9]*").IsMatch(uri.AbsolutePath))
+                {
+                    throw new Exception();
+                }
+
+                var paramsQuery = ParseQueryString(uri);
+                paramsQuery.TryGetValue("value", out string amount);
+
+                ScanEvent(uri.AbsolutePath, amount);
             }
             catch (Exception e)
             {
-             //   isValidAddress = false;
+               
             }
-          //  ScanEvent(result.Text);
+        }
+
+        private Dictionary<string, string> ParseQueryString(Uri uri)
+        {
+            var query = uri.Query.Substring(uri.Query.IndexOf('?') + 1);
+            var pairs = query.Split('&');
+            return pairs
+                .Select(o => o.Split('='))
+                .Where(items => items.Count() == 2)
+                .ToDictionary(pair => Uri.UnescapeDataString(pair[0]),
+                    pair => Uri.UnescapeDataString(pair[1]));
         }
     }
 }

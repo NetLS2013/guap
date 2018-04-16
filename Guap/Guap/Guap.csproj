@@ -102,11 +102,14 @@
     <Compile Include="Views\Dashboard\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Modal\ActionSelectModalPage.xaml.cs">
+      <DependentUpon>ActionSelectModalPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Modal\ResumeModalPage.xaml.cs">
       <DependentUpon>ResumeModalPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Modal\TransactionModelPage.xaml.cs">
-      <DependentUpon>TransactionModelPage.xaml</DependentUpon>
+    <Compile Include="Views\Modal\TransactionModalPage.xaml.cs">
+      <DependentUpon>TransactionModalPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewUserExistPage.xaml.cs">
       <DependentUpon>NewUserExistPage.xaml</DependentUpon>
@@ -351,7 +354,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Modal\TransactionModelPage.xaml">
+    <EmbeddedResource Include="Views\Modal\TransactionModalPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Modal\ActionSelectModalPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

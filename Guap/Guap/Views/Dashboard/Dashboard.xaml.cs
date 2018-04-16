@@ -14,10 +14,13 @@ namespace Guap.Views.Dashboard
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Dashboard : ContentPage
     {
+        public DashboardViewModel ViewModel { get; set; }
+
         public Dashboard()
         {
             InitializeComponent();
-            BindingContext = new DashboardViewModel(this);
+            ViewModel = new DashboardViewModel(this);
+            BindingContext = ViewModel;
         }
 
         private async void LogoutClicked(object sender, EventArgs e)

@@ -47,7 +47,15 @@ namespace Guap.Service
 
             return true;
         }
-        
+
+        public static Account GetAccount(string words, string pass = "")
+        {
+
+            Wallet wallet = new Wallet(words, pass, GlobalSetting.Instance.WalletPath);
+
+            return wallet.GetAccount(0);
+        }
+
         public string GetAddress(string words, int id = 0, string seedPassword = "")
         {
             var wallet = new Wallet(words, seedPassword, GlobalSetting.Instance.WalletPath);
@@ -59,10 +67,6 @@ namespace Guap.Service
         public async Task<string> SendEther(Account account, string toAddress, BigDecimal amount)
         {
             var realAmount = new HexBigInteger(UnitConversion.Convert.ToWei(amount));
-            var web3 = new Web3();
-            //var txCount = await web3.Eth.Transactions.GetTransactionCount.SendRequestAsync(account.Address);
-           // var encoded = web3.TransactionManager.SendTransactionAsync(OfflineTransactionSigning.SignTransaction(privateKey, receiveAddress, 10, txCount.Value));
-            //var gas = await _web3.Eth.Transactions.EstimateGas.SendRequestAsync(new TransactionInput("0x", toAddress, realAmount ));
             return await _web3.Eth.TransactionManager.SendTransactionAsync( account.Address, toAddress, realAmount);
         }
 

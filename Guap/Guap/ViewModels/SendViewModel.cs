@@ -18,6 +18,7 @@
     using Nethereum.HdWallet;
     using Nethereum.Util;
     using Nethereum.Web3;
+    using Nethereum.Web3.Accounts;
 
     using Rg.Plugins.Popup.Extensions;
 
@@ -51,6 +52,8 @@
 
         private string _amountString;
 
+        private Account _account;
+
         public event Action ScanEvent;
 
         public ICommand SendCommand => new Command(async () => await OnSend());
@@ -74,6 +77,20 @@
             }
         }
 
+        public Account Account
+        {
+            get
+            {
+                return _account;
+            }
+            set
+            {
+                _account = value;
+
+                OnPropertyChanged(nameof(Account));
+            }
+        }
+
         public Token Token
         {
             get
@@ -83,6 +100,7 @@
             set
             {
                 this._token = value;
+                this.OnRefreshBalance();
                 OnPropertyChanged(nameof(Token));
                 IsValid = true;
             }
@@ -163,11 +181,13 @@
         public SendViewModel(Page context)
         {
             this._context = context;
+            _account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
 
             this._token = null;
+
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
-            _tokenService = new TokenService(new Web3(new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(0), GlobalSetting.Instance.EthereumNetwork));
-            _ethereumService = new EthereumService(new Web3(new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(0), GlobalSetting.Instance.EthereumNetwork));
+            _tokenService = new TokenService(new Web3(_account, GlobalSetting.Instance.EthereumNetwork));
+            _ethereumService = new EthereumService(new Web3(_account, GlobalSetting.Instance.EthereumNetwork));
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
 
             InitializeTokens();
@@ -176,30 +196,11 @@
         public async void InitializeTokens()
         {
             Tokens = new List<Token>();
-            var ether = new Token()
-            {
-                Name = "Ethereum",
-                Symbol = "ETH",
-                Id = -1,
-                Balance = this._ethereumService.GetBalance(
-                                              new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "")
-                                                  .GetAccount(0).Address).Result
-            };
+           
+            var tokens = await _repository.Get();
+            tokens.Insert(0, GlobalSetting.Instance.Guap);
+            tokens.Insert(1, GlobalSetting.Instance.Ethereum);
 
-            var tokens = new List<Token>();
-            try
-            {
-                tokens = await _repository.Get();
-                foreach (var token in tokens)
-                {
-                    token.Balance = await _tokenService.GetBalance(token, new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(0).Address);
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-            tokens.Insert(0, ether);
             Tokens = new List<Token>(tokens);
         }
 
@@ -251,7 +252,7 @@
 
                 if (IsValid)
                 {
-                    Device.BeginInvokeOnMainThread(async () => await this._context.Navigation.PushPopupAsync(new TransactionModelPage(title, transactionHash)));
+                    Device.BeginInvokeOnMainThread(async () => await this._context.Navigation.PushPopupAsync(new TransactionModalPage(title, transactionHash)));
                 }
                 
             }
@@ -275,8 +276,15 @@
 
         private async Task OnRefreshBalance()
         {
+            if (this._token.Id == -1)
+            {
+                Token.Balance = await this._ethereumService.GetBalance(this._account.Address);
+            }
+            else
+            {
+                Token.Balance = await this._tokenService.GetBalance(Token, this._account.Address);
+            }
             
-            Token.Balance = await this._tokenService.GetBalance(Token, new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(0).Address);
             OnPropertyChanged(nameof(Token));
         }
 

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             x:Class="Guap.Views.Modal.ActionSelectModalPage">
+    <StackLayout
+        Margin="30"
+        BackgroundColor="White"
+        VerticalOptions="CenterAndExpand">
+        <StackLayout
+            Orientation="Vertical"
+            Padding="24">
+            <Label
+                FontSize="20"
+                TextColor="#4a4a4a"
+                Text="Select action"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Button
+                Clicked="ReceiveClick"
+                HorizontalOptions="StartAndExpand"
+                FontSize="20"
+                TextColor="#e0bc0c"
+                Text="Receive"
+                FontAttributes="Bold"
+                BackgroundColor="#fff"
+                BorderRadius="0"/>
+            <Label
+                Text="OR"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                />
+            <Button
+                Clicked="SendClick"
+                FontSize="20"
+                HorizontalOptions="EndAndExpand"
+                TextColor="#e0bc0c"
+                Text="Send"
+                FontAttributes="Bold"
+                BackgroundColor="#fff"
+                BorderRadius="0"/>
+        </StackLayout>
+    </StackLayout>
+</pages:PopupPage>

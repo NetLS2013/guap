@@ -4,22 +4,43 @@
              x:Class="Guap.Views.Dashboard.Dashboard">
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
+            <StackLayout BackgroundColor="#cccccc" Margin="10, 10, 10,0">
+                <StackLayout BackgroundColor="White" Margin="2" VerticalOptions="FillAndExpand">
+                    <StackLayout  BackgroundColor="White" Padding="14,8,14,0" Margin="0" Orientation="Horizontal" >
+                        <Label Text="Guap Wallet" VerticalOptions="Center" HorizontalOptions="Start" TextColor="#9b9b9b" FontSize="14" FontAttributes="Bold"></Label>
+                        <Image Source="create.png" VerticalOptions="Center" HorizontalOptions="EndAndExpand">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectActionCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                    <BoxView BackgroundColor="#f6f8fa" HeightRequest="1" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
+                    <StackLayout Orientation="Vertical" Padding="14,0,14,6" VerticalOptions="FillAndExpand">
+                        <Label Text="{Binding Account.Address}" HorizontalOptions="Start" TextColor="#9b9b9b" FontSize="12" LineBreakMode="TailTruncation"/>
+                        <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
+
+                            <Label Text="{Binding Guap.BalanceString}" TextColor="#9b9b9b" FontSize="10"/>
+                            <Label Text="{Binding Guap.Symbol}" TextColor="#9b9b9b" FontSize="10"/>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="20"/>
                     <RowDefinition Height="2*"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="10"/>
                     <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
 
-                <StackLayout Grid.Row="2" Grid.Column="0" BackgroundColor="#cccccc">
+                
+
+                <StackLayout Grid.Row="0" Grid.Column="0" BackgroundColor="#cccccc">
                     <StackLayout BackgroundColor="White" Margin="2">
-                        <StackLayout  BackgroundColor="White" Padding="14,8,14,8" Margin="0" Orientation="Horizontal">
-                            <Label Text="ERC20 Tokens" VerticalOptions="Center" HorizontalOptions="Start" TextColor="#9b9b9b"></Label>
+                        <StackLayout  BackgroundColor="White" Padding="14,8,14,0" Margin="0" Orientation="Horizontal">
+                            <Label Text="ERC20 Tokens" VerticalOptions="Center" HorizontalOptions="Start" TextColor="#9b9b9b" FontSize="14" FontAttributes="Bold"></Label>
                             <Image Source="create.png" VerticalOptions="Center" HorizontalOptions="EndAndExpand">
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding CreateTokenCommand}"/>

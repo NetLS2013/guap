@@ -13,19 +13,21 @@
         <StackLayout
             BackgroundColor="#fff">
             <StackLayout
-                Padding="40,40,40,0"
-                VerticalOptions="FillAndExpand">
+                Padding="40,20,40,0"
+                VerticalOptions="Center">
 
                 <StackLayout
                     HorizontalOptions="FillAndExpand"
                     Orientation="Vertical"
-                    Margin="0,40,0,0">
+                    Margin="0,0,0,0">
                     <Label Text="Token address"
                            TextColor="#000"
-                           FontSize="16"/>
+                           FontSize="14"
+                           VerticalOptions="End"/>
                     <customRender:BottomBorderEntryWhite
                         FontSize="16"
                         TextColor="#000"
+                        Margin="0"
                         HorizontalTextAlignment="Start"
                         Text="{Binding ContractAddress, Mode=TwoWay}"
                         IsEnabled="{Binding IsEdit, Converter={StaticResource BooleanConverter}}"
@@ -35,15 +37,17 @@
                 <StackLayout
                     HorizontalOptions="FillAndExpand"
                     Orientation="Vertical"
-                    Margin="0,40,0,0">
+                    Margin="0,20,0,0">
                     <Label Text="Token name"
                            HorizontalOptions="Start"
                            TextColor="#000"
-                           FontSize="16"/>
+                           FontSize="14"
+                           VerticalOptions="End"/>
                     <customRender:BottomBorderEntryWhite
                         TextColor="#000"
                         Keyboard="Text"
                         HorizontalTextAlignment="Start"
+                        Margin="0"
                         Text="{Binding TokenName, Mode=TwoWay}"
                         IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
                 </StackLayout>
@@ -62,11 +66,11 @@
                             Grid.Row="0" Grid.Column="0"
                             HorizontalOptions="FillAndExpand"
                             Orientation="Vertical"
-                            Margin="0,40,0,0">
+                            Margin="0,20,0,0">
                             <Label Text="Token symbol"
                                    HorizontalOptions="Start"
                                    TextColor="#000"
-                                   FontSize="16"/>
+                                   FontSize="14"/>
 
                             <customRender:BottomBorderEntryWhite
                                 TextColor="#000"
@@ -80,11 +84,11 @@
                             Grid.Row="0" Grid.Column="1"
                             HorizontalOptions="FillAndExpand"
                             Orientation="Vertical"
-                            Margin="0,40,0,0">
+                            Margin="0,20,0,0">
                             <Label Text="Decimals"
                                    HorizontalOptions="Start"
                                    TextColor="#000"
-                                   FontSize="16"/>
+                                   FontSize="14"/>
 
                             <customRender:BottomBorderEntryWhite
                                 TextColor="#000"
@@ -102,7 +106,7 @@
                     ItemsSource="{Binding Errors}"
                     SeparatorVisibility="None"
                     IsEnabled="false"
-                    Margin="8,24,0,0">
+                    Margin="8,16,0,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

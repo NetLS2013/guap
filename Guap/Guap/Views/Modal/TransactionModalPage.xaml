@@ -3,7 +3,7 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
                  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-                 x:Class="Guap.Views.Modal.TransactionModelPage">
+                 x:Class="Guap.Views.Modal.TransactionModalPage">
     <StackLayout
         Margin="30"
         BackgroundColor="White"
