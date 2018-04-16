@@ -24,6 +24,7 @@ namespace Guap.Server
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddTransient<IEmailSender, EmailSender>(provider => new EmailSender(Configuration));
+            services.AddTransient<ITokenProvider, TokenProvider>();
             
             services.AddScoped<IUserRepository, UserRepository>();
             

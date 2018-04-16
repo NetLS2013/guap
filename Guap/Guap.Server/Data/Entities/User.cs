@@ -16,5 +16,10 @@ namespace Guap.Server.Data.Entities
         public string Address { get; set; }
 
         public string VerificationCode { get; set; }
+        
+        public string Email { get; set; }
+        
+        [StringLength(253)]
+        public bool EmailConfirmed { get; set; }
     }
 }

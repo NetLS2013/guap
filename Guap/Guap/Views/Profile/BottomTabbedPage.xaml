@@ -8,7 +8,8 @@
     xmlns:setting="clr-namespace:Guap.Views.Setting;assembly=Guap"
     x:Class="Guap.Views.Profile.BottomTabbedPage"
     BarBackgroundColor="#000"
-    BarTextColor="#fff">
+    BarTextColor="#fff"
+    NavigationPage.HasNavigationBar="False">
     <dashboard:Dashboard
         Title="Home"
         Icon="home.png"/>
@@ -25,6 +26,5 @@
     
     <setting:SettingsPage
         Title="Settings"
-        Icon="settings.png"
-        BackgroundColor="Azure"/>
+        Icon="settings.png"/>
 </customRender:BottomTabbed>

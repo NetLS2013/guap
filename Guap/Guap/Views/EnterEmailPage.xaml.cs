@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Guap.ViewModels;
 using Xamarin.Forms;
 
 namespace Guap.Views
@@ -8,11 +8,8 @@ namespace Guap.Views
         public EnterEmailPage()
         {
             InitializeComponent();
-        }
 
-        private async void OpenPageCreateWallet(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new CreateWalletPage());
+            BindingContext = new CreateAccountViewModel(this);
         }
     }
 }

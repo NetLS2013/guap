@@ -216,6 +216,7 @@ namespace Guap.ViewModels
                         },
                         () => this._context.Navigation.PushAsync(new NewUserExistPage())));
                 
+                Settings.Set(Settings.Key.VerificationCode, _verificationCode);
                 Settings.Set(Settings.Key.PhoneNumber, phoneNumber);
             }
             catch (Exception e)

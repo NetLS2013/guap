@@ -25,7 +25,8 @@ namespace Guap.Helpers
             Pin,
             MnemonicPhrase,
             PhoneNumber,
-            IsLogged
+            IsLogged,
+            VerificationCode
         }
     }
 }

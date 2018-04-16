@@ -47,13 +47,16 @@ namespace Guap
         {
             set => UpdateEndpoint(value);
         }
-        
+
+        public string VerificationEmailEndpoint { get; set; }
+
         private void UpdateEndpoint(string baseEndpoint)
         {
             RegisterNumberEndpoint = $"{baseEndpoint}/api/Account/RegisterNumber";
             VerificationCodeEndpoint = $"{baseEndpoint}/api/Account/VerificationCode";
             UpdateAddressEndpoint = $"{baseEndpoint}/api/Wallet/UpdateAddress";
             GetAddressByNumberEndpoint = $"{baseEndpoint}/api/Wallet/GetAddressByNumber";
+            VerificationEmailEndpoint = $"{baseEndpoint}/api/Account/VerificationEmail";
         }
     }
 }

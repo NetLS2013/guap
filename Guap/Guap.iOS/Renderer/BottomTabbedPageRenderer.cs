@@ -1,4 +1,6 @@
-﻿using Guap.CustomRender;
+﻿using System;
+using System.Diagnostics;
+using Guap.CustomRender;
 using Guap.iOS.Renderer;
 using UIKit;
 using Xamarin.Forms;
@@ -38,13 +40,20 @@ namespace Guap.iOS.Renderer
             {
                 var newIcon = icon.Replace(".png", "_active.png");
 
-                item.Image = UIImage.FromBundle(icon);
-                item.Image = item.Image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
+                try
+                {
+                    item.Image = UIImage.FromBundle(icon);
+                    item.Image = item.Image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
 
-                item.SelectedImage = UIImage.FromBundle(newIcon);
-                item.SelectedImage = item.SelectedImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
+                    item.SelectedImage = UIImage.FromBundle(newIcon);
+                    item.SelectedImage = item.SelectedImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
 
-                item.SelectedImage.AccessibilityIdentifier = icon;
+                    item.SelectedImage.AccessibilityIdentifier = icon;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine($"--- Error: {e.Message}");
+                }
             }
         }
     }

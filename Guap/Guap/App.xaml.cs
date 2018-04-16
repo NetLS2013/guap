@@ -15,7 +15,7 @@ namespace Guap
         {
             InitializeComponent();
 
-            var startPage = typeof(BottomTabbedPage);
+            var startPage = typeof(GuapPage);
 
             if (Equals(Settings.Get(Settings.Key.IsLogged), true))
             {

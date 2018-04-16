@@ -1,24 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<customRender:NavigationBar 
+<?xml version="1.0" encoding="utf-8"?>
+<customRender:NavigationBar
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
-    x:Class="Guap.Views.Shared.Header">
+    x:Class="Guap.Views.Shared.NavigationTitle">
     <StackLayout
-        BackgroundColor="#000">
+        BackgroundColor="#000"
+        HeightRequest="63">
         <StackLayout
             Orientation="Horizontal"
             HorizontalOptions="CenterAndExpand">
-            <Image
-                Source="logo.png"
-                WidthRequest="36"
-                HeightRequest="36"/>
-    
             <Label
+                x:Name="TextLabel"
                 VerticalOptions="Center"
-                Text="Guapcoin"
                 TextColor="#fff"
-                FontSize="24"
+                FontSize="20"
                 FontAttributes="Bold"/>
         </StackLayout>
     </StackLayout>

@@ -10,9 +10,11 @@ namespace Guap.Server.Data.Repositories
     {
         Task RegisterNumber(UserModel model);
         Task<bool> CheckVerificationCode(UserModel model);
-        Task CinfirmPhone(UserModel model);
+        Task ConfirmPhone(UserModel model);
         Task<User> FindUser(string phoneNumber);
         Task UpdateAddress(UserModel modelPhoneNumber);
+        Task RegisterEmail(UserModel userModel);
+        Task ConfirmEmail(UserModel userModel);
     }
     
     public class UserRepository : GenericRepository<User>, IUserRepository
@@ -33,6 +35,24 @@ namespace Guap.Server.Data.Repositories
             var user = await FindUser(model.PhoneNumber);
 
             user.Address = model.Address;
+
+            await Update(user);
+        }
+
+        public async Task RegisterEmail(UserModel model)
+        {
+            var user = await FindUser(model.PhoneNumber);
+
+            user.Email = model.Email;
+
+            await Update(user);
+        }
+
+        public async Task ConfirmEmail(UserModel model)
+        {
+            var user = await FindUser(model.PhoneNumber);
+
+            user.EmailConfirmed = true;
 
             await Update(user);
         }
@@ -61,7 +81,7 @@ namespace Guap.Server.Data.Repositories
             return string.Equals(user.VerificationCode, model.VerificationCode);
         }
 
-        public async Task CinfirmPhone(UserModel model)
+        public async Task ConfirmPhone(UserModel model)
         {
             var user = await FindUser(model.PhoneNumber);
 

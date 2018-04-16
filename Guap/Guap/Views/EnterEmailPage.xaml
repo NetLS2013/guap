@@ -33,11 +33,27 @@
                            FontSize="16"/>
                     
                     <customRender:BottomBorderEntry
-                        Text="{Binding VerificationCode}"
+                        Text="{Binding EmailInput}"
                         TextColor="#fff"
-                        Keyboard="Numeric"
+                        Keyboard="Email"
                         HorizontalTextAlignment="Center"/>
                 </StackLayout>
+                
+                <ListView
+                    HasUnevenRows="True"
+                    BackgroundColor="#000"
+                    ItemsSource="{Binding Errors}"
+                    SeparatorVisibility="None"
+                    IsEnabled="false"
+                    Margin="8,24,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding .}" TextColor="#db0029" FontSize="14"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackLayout>
             
             <StackLayout
@@ -51,7 +67,7 @@
                     TextColor="#fff"
                     HorizontalOptions="EndAndExpand"
                     FontSize="20"
-                    Clicked="OpenPageCreateWallet"/>
+                    Command="{Binding OpenPageCreateWalletCommand}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

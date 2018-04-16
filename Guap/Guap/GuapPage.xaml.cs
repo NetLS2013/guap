@@ -3,6 +3,7 @@ using Guap.CustomRender.Pin;
 using Guap.Helpers;
 using Guap.Views;
 using Guap.Views.Dashboard;
+using Guap.Views.Profile;
 using Xamarin.Forms;
 
 namespace Guap
@@ -32,7 +33,7 @@ namespace Guap
         {
             var succesHandler = new EventHandler<PinEventArgs>((pinSender, pinEventArgs) =>
             {
-                App.SetMainPage(new Dashboard());
+                App.SetMainPage(new BottomTabbedPage());
                 
                 Settings.Set(Settings.Key.IsLogged, true);
             });

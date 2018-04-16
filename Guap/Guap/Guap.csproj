@@ -44,6 +44,7 @@
     <EmbeddedResource Include="Views\Setting\AboutGuapPage.xaml" />
     <EmbeddedResource Include="Views\Setting\HelpAndSupportPage.xaml" />
     <EmbeddedResource Include="Views\Setting\SettingsPage.xaml" />
+    <EmbeddedResource Include="Views\Shared\NavigationTitle.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -55,6 +56,7 @@
     <Compile Include="CustomRender\BottomBorderEntry.cs" />
     <Compile Include="CustomRender\BottomTabbed.cs" />
     <Compile Include="CustomRender\LineHeightLabel.cs" />
+    <Compile Include="CustomRender\NavigationBar.cs" />
     <Compile Include="CustomRender\Pin\PinItemView.cs" />
     <Compile Include="CustomRender\Pin\PinViewModel.cs" />
     <Compile Include="DependencyServcie\IContactService.cs" />
@@ -126,6 +128,9 @@
     </Compile>
     <Compile Include="Views\Setting\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\NavigationTitle.xaml.cs">
+      <DependentUpon>NavigationTitle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SuccessSignup.xaml.cs">
       <DependentUpon>SuccessSignup.xaml</DependentUpon>

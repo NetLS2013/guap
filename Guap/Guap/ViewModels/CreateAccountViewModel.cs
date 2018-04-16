@@ -9,19 +9,24 @@ using Guap.Models;
 using Guap.Service;
 using Guap.Views;
 using Guap.Views.Dashboard;
+using Guap.Views.Profile;
+using MvvmValidation;
 using Xamarin.Forms;
 
 namespace Guap.ViewModels
 {
-    public class CreateAccountViewModel
+    public class CreateAccountViewModel : BaseViewModel
     {
         private readonly Page _context;
         private readonly RequestProvider _requestProvider;
 
-        private EthereumService _ethereumService;
+        private readonly EthereumService _ethereumService;
+        private string _emailInput;
+        private ValidationErrorCollection _errors;
 
-        public ICommand CteateAccountCommand => new Command(async () => await OnCreateContact());
+        public ICommand CteateAccountCommand => new Command(async () => await OnCreateAccount());
         public ICommand RestoreWalletCommand => new Command(async () => await OpenRestoreWallet());
+        public ICommand OpenPageCreateWalletCommand => new Command(async () => await OpenPageCreateWallet());
 
         public CreateAccountViewModel(Page context)
         {
@@ -30,8 +35,48 @@ namespace Guap.ViewModels
             _requestProvider = new RequestProvider();
             _ethereumService = new EthereumService();
         }
+        
+        public string EmailInput
+        {
+            get
+            {
+                return _emailInput;
+            }
+            set
+            {
+                if (_emailInput != value)
+                {
+                    _emailInput = value;
+                    
+                    OnPropertyChanged(nameof(EmailInput));
+                }
+            }
+        }
+        
+        public ValidationErrorCollection Errors
+        {
+            get
+            {
+                return _errors;
+            }
+            set
+            {
+                _errors = value;
+                
+                OnPropertyChanged(nameof(Errors));
+            }
+        }
+        
+        private bool ValidateVerifyNumber(ValidationHelper validator)
+        {
+            var result = validator.ValidateAll();
 
-        private async Task OnCreateContact()
+            Errors = result.ErrorList;
+
+            return result.IsValid;
+        }
+
+        private async Task OnCreateAccount()
         {
             var words = EthereumService.MnenonicPhraseGenerate();
 
@@ -65,12 +110,11 @@ namespace Guap.ViewModels
                                     + Environment.NewLine + "Your wallet has been created."
                                     + Environment.NewLine + "Check out the dashboard."
                             },
-                            () => App.SetMainPage(new Dashboard())));
+                            () => App.SetMainPage(new BottomTabbedPage())));
                 
                     // save mnenonic phrase 
                     Settings.Set(Settings.Key.MnemonicPhrase, s);
                     Settings.Set(Settings.Key.IsLogged, true);
-
                 }
             };
 
@@ -118,7 +162,7 @@ namespace Guap.ViewModels
                                     + Environment.NewLine + "Your wallet has been created."
                                     + Environment.NewLine + "Check out the dashboard."
                             },
-                            () => App.SetMainPage(new Dashboard())));
+                            () => App.SetMainPage(new BottomTabbedPage())));
 
                     // save mnenonic phrase 
                     Settings.Set(Settings.Key.MnemonicPhrase, s);
@@ -127,6 +171,39 @@ namespace Guap.ViewModels
             };
 
             await _context.Navigation.PushAsync(inputMnemonic);
+        }
+        
+        private async Task OpenPageCreateWallet()
+        {
+            var validator = new ValidationHelper();
+            
+            validator.AddRequiredRule(() => EmailInput, "The verification code is required.");
+            
+            if (!ValidateVerifyNumber(validator))
+            {
+                return;
+            }
+
+            try
+            {
+                var result = await _requestProvider
+                    .PostAsync<UserModel, bool>(GlobalSetting.Instance.VerificationEmailEndpoint, 
+                        new UserModel
+                        {
+                            Email = _emailInput,
+                            VerificationCode = Settings.Get(Settings.Key.VerificationCode).ToString(),
+                            PhoneNumber = Settings.Get(Settings.Key.PhoneNumber).ToString()
+                        });
+                
+                if (result)
+                {
+                    await _context.Navigation.PushAsync(new CreateWalletPage());
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"--- Error: {e.Message}");
+            }
         }
 
         private async Task<bool> UpdateAddress(string words)

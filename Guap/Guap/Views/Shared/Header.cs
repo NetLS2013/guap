@@ -1,8 +1,8 @@
-﻿using Xamarin.Forms;
+﻿using Guap.CustomRender;
 
 namespace Guap.Views.Shared
 {
-    public partial class Header : StackLayout
+    public partial class Header : NavigationBar
     {
         public Header()
         {

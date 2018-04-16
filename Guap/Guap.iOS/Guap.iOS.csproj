@@ -229,6 +229,7 @@
     <Compile Include="Renderer\BottomBorderEntryRenderer.cs" />
     <Compile Include="Renderer\BottomTabbedPageRenderer.cs" />
     <Compile Include="Renderer\LineSpacingLabelRenderer.cs" />
+    <Compile Include="Renderer\NavigationBarRenderer.cs" />
     <Compile Include="Renderer\PinItemViewRenderer.cs" />
     <Compile Include="Renderer\ZFRippleButton.cs" />
     <Compile Include="SQLiteIOS.cs" />
