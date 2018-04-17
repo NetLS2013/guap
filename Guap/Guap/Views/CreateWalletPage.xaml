@@ -8,7 +8,10 @@
         <StackLayout
             BackgroundColor="#fff"
             Spacing="0">
-            <shared:Header/>
+            <shared:NavigationTitle
+                TitleText="Guapcoin"
+                HasIcon="True"
+                TitleFontSize="24"/>
             
             <StackLayout
                 Padding="30"

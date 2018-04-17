@@ -6,7 +6,12 @@
              xmlns:shared="clr-namespace:Guap.Views.Shared;assembly=Guap">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#ffffff">
-            <shared:Header IsVisible="{Binding IsCustomHeader}"/>
+            <shared:NavigationTitle
+                TitleText="Guapcoin"
+                HasIcon="True"
+                TitleFontSize="24"
+                IsVisible="{Binding IsCustomHeader}"/>
+            
             <StackLayout Margin="30" VerticalOptions="FillAndExpand">
                 <Label Text="{Binding HeaderText}" FontSize="24" FontAttributes="Bold"  TextColor="#4a4a4a" Margin="0,0,0,10"></Label>
                 <Label Text="Enter your mnenonic phrase below to create your wallet." FontSize="18" TextColor="#4a4a4a"></Label>

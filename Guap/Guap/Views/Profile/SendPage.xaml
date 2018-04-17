@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
              xmlns:helpers="clr-namespace:Guap.Helpers;assembly=Guap"
+             xmlns:shared="clr-namespace:Guap.Views.Shared;assembly=Guap"
              x:Class="Guap.Views.Profile.SendPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -12,6 +13,9 @@
     <ContentPage.Content>
         <StackLayout
             BackgroundColor="#fff">
+            <shared:NavigationTitle
+                TitleText="Send"/>
+            
             <StackLayout
                 Padding="40,20,40,0"
                 VerticalOptions="StartAndExpand">

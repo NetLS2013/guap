@@ -236,6 +236,7 @@
     <Compile Include="Renderer\BottomTabbedPageRenderer.cs" />
     <Compile Include="Renderer\FrameShadowRenderer.cs" />
     <Compile Include="Renderer\NavigationBarRenderer.cs" />
+    <Compile Include="Renderer\StyleNavigationPageRenderer.cs" />
     <Compile Include="Service\ContactService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderer\BorderedEditorRenderer.cs" />

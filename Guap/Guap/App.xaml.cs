@@ -1,4 +1,5 @@
 using System;
+using Guap.CustomRender;
 using Guap.Helpers;
 using Guap.Views;
 using Guap.Views.Profile;
@@ -74,11 +75,7 @@ namespace Guap
 
         public static void SetMainPage(Page page)
         {
-            var navigationPage = new NavigationPage(page)
-            {
-                BarTextColor = Color.White,
-                BarBackgroundColor = Color.Black
-            };
+            var navigationPage = new StyleNavigationPage(page);
             
             Current.MainPage = navigationPage;
         }

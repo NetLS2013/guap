@@ -14,11 +14,9 @@ namespace Guap.Droid.Renderer
 
             if (e.NewElement != null)
             {
-                int resourceId = Resources.GetIdentifier ("status_bar_height", "dimen", "android");
-
-                if (e.NewElement.Children[0] is StackLayout container)
+                if (e.NewElement.Children[0] is RelativeLayout container)
                 {
-                    container.HeightRequest = Resources.GetDimensionPixelSize(resourceId);
+                    container.HeightRequest = 56;
                 }
             }
         }

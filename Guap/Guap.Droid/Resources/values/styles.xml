@@ -14,7 +14,9 @@
         
 	    <item name="android:textAllCaps">false</item>
 		<item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
-	</style>
+
+        <item name="android:actionBarSize">56dp</item>
+    </style>
     
 	<style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
 		<item name="colorAccent">#FF4081</item>

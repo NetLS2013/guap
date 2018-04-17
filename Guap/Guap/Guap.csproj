@@ -35,7 +35,6 @@
     <EmbeddedResource Include="Views\PhoneVerificationPage.xaml" />
     <EmbeddedResource Include="Views\CreateWalletPage.xaml" />
     <EmbeddedResource Include="Views\Profile\EnterAmountPage.xaml" />
-    <EmbeddedResource Include="Views\Shared\Header.xaml" />
     <EmbeddedResource Include="Views\Profile\ReceivePage.xaml" />
     <EmbeddedResource Include="Views\Modal\ResumeModalPage.xaml" />
     <EmbeddedResource Include="Views\Profile\ContactListPage.xaml" />
@@ -62,6 +61,7 @@
     <Compile Include="CustomRender\NavigationBar.cs" />
     <Compile Include="CustomRender\Pin\PinItemView.cs" />
     <Compile Include="CustomRender\Pin\PinViewModel.cs" />
+    <Compile Include="CustomRender\StyleNavigationPage.cs" />
     <Compile Include="DependencyServcie\IContactService.cs" />
     <Compile Include="GlobalSetting.cs" />
     <Compile Include="GuapPage.xaml.cs">
@@ -171,9 +171,6 @@
     </Compile>
     <Compile Include="Views\CreateWalletPage.xaml.cs">
       <DependentUpon>CreateWalletPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Shared\Header.cs">
-      <DependentUpon>Header.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Profile\ReceivePage.xaml.cs">
       <DependentUpon>ReceivePage.xaml</DependentUpon>

@@ -4,18 +4,32 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
     x:Class="Guap.Views.Shared.NavigationTitle">
-    <StackLayout
-        BackgroundColor="#000"
-        HeightRequest="63">
+    <RelativeLayout
+        BackgroundColor="#000">
         <StackLayout
-            Orientation="Horizontal"
+            RelativeLayout.WidthConstraint=
+            "{ ConstraintExpression Type = RelativeToParent, Property = Width, Factor = 1 }"
+            RelativeLayout.HeightConstraint=
+            "{ ConstraintExpression Type = RelativeToParent, Property = Height, Factor = 1 }"
             HorizontalOptions="CenterAndExpand">
-            <Label
-                x:Name="TextLabel"
-                VerticalOptions="Center"
-                TextColor="#fff"
-                FontSize="20"
-                FontAttributes="Bold"/>
+            <StackLayout
+                Orientation="Horizontal"
+                VerticalOptions="EndAndExpand"
+                Margin="0,0,0,12">
+                <Image
+                    x:Name="IconImage"
+                    IsVisible="False"
+                    Source="logo.png"
+                    WidthRequest="36"
+                    HeightRequest="36"/>
+                
+                <Label
+                    x:Name="TextLabel"
+                    VerticalOptions="Center"
+                    TextColor="#fff"
+                    FontSize="20"
+                    FontAttributes="Bold"/>
+            </StackLayout>
         </StackLayout>
-    </StackLayout>
+    </RelativeLayout>
 </customRender:NavigationBar>

@@ -1,10 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:shared="clr-namespace:Guap.Views.Shared;assembly=Guap"
              x:Class="Guap.Views.Profile.PermissionPage">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White" Padding="0, 40, 0, 14">
-            <StackLayout VerticalOptions="StartAndExpand">
+        <StackLayout BackgroundColor="White">
+            <shared:NavigationTitle
+                TitleText="Scan"/>
+            
+            <StackLayout VerticalOptions="StartAndExpand" Padding="0, 40, 0, 14">
                 <Label HorizontalOptions="Center" VerticalOptions="Start" Text="Scan QR Codes" FontSize="20" TextColor="#4a4a4a" FontAttributes="Bold"></Label>
                 <Label  Margin="26,26,26,0" HorizontalOptions="End" VerticalOptions="Start" Text="Scan addresses, payment requests, paper wallets and more." FontSize="16" TextColor="#4a4a4a"></Label>
             </StackLayout>

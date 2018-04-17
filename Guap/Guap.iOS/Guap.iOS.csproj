@@ -240,6 +240,7 @@
     <Compile Include="Renderer\LineSpacingLabelRenderer.cs" />
     <Compile Include="Renderer\NavigationBarRenderer.cs" />
     <Compile Include="Renderer\PinItemViewRenderer.cs" />
+    <Compile Include="Renderer\StyleNavigationPageRenderer.cs" />
     <Compile Include="Renderer\ZFRippleButton.cs" />
     <Compile Include="SQLiteIOS.cs" />
     <Compile Include="Service\ContactService.cs" />
