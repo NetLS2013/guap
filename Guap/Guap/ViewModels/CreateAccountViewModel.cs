@@ -197,7 +197,7 @@ namespace Guap.ViewModels
                 
                 if (result)
                 {
-                    await _context.Navigation.PushAsync(new CreateWalletPage());
+                    await _context.Navigation.PushAsync(new NewUserExistPage());
                 }
             }
             catch (Exception e)

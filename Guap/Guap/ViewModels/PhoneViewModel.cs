@@ -214,7 +214,7 @@ namespace Guap.ViewModels
                                 "Your identity has been verified." + Environment.NewLine
                                                                    + "You can create your wallet"
                         },
-                        () => this._context.Navigation.PushAsync(new NewUserExistPage())));
+                        () => this._context.Navigation.PushAsync(new EnterEmailPage())));
                 
                 Settings.Set(Settings.Key.VerificationCode, _verificationCode);
                 Settings.Set(Settings.Key.PhoneNumber, phoneNumber);

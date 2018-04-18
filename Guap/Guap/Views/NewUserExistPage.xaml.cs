@@ -1,16 +1,9 @@
 ﻿using System;
 using Xamarin.Forms;
+using Guap.ViewModels;
 
 namespace Guap.Views
 {
-    using System.Collections.Generic;
-
-    using Guap.Helpers;
-    using Guap.Service;
-    using Guap.ViewModels;
-
-    using NBitcoin;
-
     public partial class NewUserExistPage : ContentPage
     {
         public NewUserExistPage()
