@@ -57,6 +57,7 @@
     <Compile Include="CustomRender\BottomBorderEntryWhite.cs" />
     <Compile Include="CustomRender\BottomBorderPicker.cs" />
     <Compile Include="CustomRender\BottomTabbed.cs" />
+    <Compile Include="CustomRender\FrameShadow.cs" />
     <Compile Include="CustomRender\LineHeightLabel.cs" />
     <Compile Include="CustomRender\NavigationBar.cs" />
     <Compile Include="CustomRender\Pin\PinItemView.cs" />

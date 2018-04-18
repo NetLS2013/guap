@@ -236,6 +236,7 @@
     <Compile Include="Renderer\BottomBorderEntryWhiteRenderer.cs" />
     <Compile Include="Renderer\BottomBorderPickerRenderer.cs" />
     <Compile Include="Renderer\BottomTabbedPageRenderer.cs" />
+    <Compile Include="Renderer\FrameShadowRenderer.cs" />
     <Compile Include="Renderer\LineSpacingLabelRenderer.cs" />
     <Compile Include="Renderer\NavigationBarRenderer.cs" />
     <Compile Include="Renderer\PinItemViewRenderer.cs" />
