@@ -2,14 +2,34 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
-             x:Class="Guap.Views.Setting.AboutGuapPage">
+             x:Class="Guap.Views.Setting.AboutGuapPage"
+             Title="About $Guap">
     <ContentPage.Content> 
         <StackLayout
             BackgroundColor="#fff">
             <ScrollView
                 VerticalOptions="FillAndExpand">
                 <StackLayout
-                    Padding="30">
+                    Padding="30"
+                    Orientation="Vertical">
+                    <StackLayout
+                        HorizontalOptions="CenterAndExpand">
+                        <StackLayout
+                            Orientation="Horizontal">
+                            <Image
+                                Source="logo.png"
+                                WidthRequest="36"
+                                HeightRequest="36"/>
+                
+                            <Label
+                                VerticalOptions="Center"
+                                TextColor="#000"
+                                FontSize="20"
+                                Text="Guapcoin"
+                                FontAttributes="Bold"/>
+                        </StackLayout>
+                    </StackLayout>
+                    
                     <customRender:LineHeightLabel
                         FontSize="16"
                         Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
