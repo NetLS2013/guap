@@ -9,10 +9,5 @@ namespace Guap.CustomRender
         public bool FixedMode { get; set; }
         public BarThemeTypes BarTheme { get; set; }
         public string IconActiveColor { get; set; }
-
-        public void RaiseCurrentPageChanged()
-        {
-            OnCurrentPageChanged();
-        }
     }
 }

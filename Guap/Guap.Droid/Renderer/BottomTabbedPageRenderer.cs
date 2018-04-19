@@ -27,12 +27,13 @@ namespace Guap.Droid.Renderer
 	{
 		bool _disposed;
 	    int _tabPosition;
-		BottomNavigationBar.BottomBar _bottomBar;
+		BottomBar _bottomBar;
 		FrameLayout _frameLayout;
 		IPageController _pageController;
 	    IDictionary<Page, BottomBarBadge> _badges;
+	    private int _height;
 
-		public BottomTabbedPageRenderer ()
+	    public BottomTabbedPageRenderer ()
 		{
 			AutoPackage = false;
 		}
@@ -118,17 +119,20 @@ namespace Guap.Droid.Renderer
 			{
 			    BottomTabbed bottomBarPage = e.NewElement;
 
-				if (_bottomBar == null) {
+				if (_bottomBar == null)
+				{
 					_pageController = PageController.Create (bottomBarPage);
 
 					// create a view which will act as container for Page's
 					_frameLayout = new FrameLayout (Forms.Context);
 					_frameLayout.LayoutParameters = new FrameLayout.LayoutParams (LayoutParams.MatchParent, LayoutParams.MatchParent, GravityFlags.Fill);
-					AddView (_frameLayout, 0);
+					
+				    AddView (_frameLayout, 0);
 
 					// create bottomBar control
 					_bottomBar = BottomNavigationBar.BottomBar.Attach (_frameLayout, null);
 					_bottomBar.NoTabletGoodness ();
+				    
 					if (bottomBarPage.FixedMode)
 					{
 						_bottomBar.UseFixedMode();
@@ -198,15 +202,15 @@ namespace Guap.Droid.Renderer
 		protected override void OnLayout (bool changed, int l, int t, int r, int b)
 		{
 			int width = r - l;
-			int height = b - t;
+			_height = Math.Max(b - t, _height);
 
 			var context = Context;
 
-			_bottomBar.Measure (MeasureSpecFactory.MakeMeasureSpec (width, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec (height, MeasureSpecMode.AtMost));
+			_bottomBar.Measure (MeasureSpecFactory.MakeMeasureSpec (width, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec (_height, MeasureSpecMode.AtMost));
 			
-		    int tabsHeight = Math.Min (height, Math.Max (_bottomBar.MeasuredHeight, _bottomBar.MinimumHeight));
+		    int tabsHeight = Math.Min (_height, Math.Max (_bottomBar.MeasuredHeight, _bottomBar.MinimumHeight));
 
-			if (width > 0 && height > 0)
+			if (width > 0 && _height > 0)
 			{
 				_pageController.ContainerArea = new Rectangle(0, 0, context.FromPixels(width), context.FromPixels(_frameLayout.MeasuredHeight));
 			    
@@ -242,7 +246,7 @@ namespace Guap.Droid.Renderer
                         Console.WriteLine($"--- Error: {e.Message}");
                     }
 			    }
-
+			    
 				_bottomBar.Measure (MeasureSpecFactory.MakeMeasureSpec (width, MeasureSpecMode.Exactly), MeasureSpecFactory.MakeMeasureSpec (tabsHeight, MeasureSpecMode.Exactly));
 				_bottomBar.Layout (0, 0, width, tabsHeight);
 			}
