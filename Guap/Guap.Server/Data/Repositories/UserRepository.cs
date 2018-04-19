@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Guap.Server.Data.Entities;
@@ -15,6 +16,7 @@ namespace Guap.Server.Data.Repositories
         Task UpdateAddress(UserModel modelPhoneNumber);
         Task RegisterEmail(UserModel userModel);
         Task ConfirmEmail(UserModel userModel);
+        List<User> GetAllUsers();
     }
     
     public class UserRepository : GenericRepository<User>, IUserRepository
@@ -56,6 +58,11 @@ namespace Guap.Server.Data.Repositories
             user.EmailConfirmed = true;
 
             await Update(user);
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return GetAll().ToList();
         }
 
         public async Task RegisterNumber(UserModel model)

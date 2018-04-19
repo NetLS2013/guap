@@ -1,4 +1,5 @@
-﻿using Guap.Server.Data;
+﻿using System.Threading.Tasks;
+using Guap.Server.Data;
 using Guap.Server.Data.Repositories;
 using Guap.Server.Service;
 using Microsoft.AspNetCore.Builder;
@@ -25,10 +26,17 @@ namespace Guap.Server
             
             services.AddTransient<IEmailSender, EmailSender>(provider => new EmailSender(Configuration));
             services.AddTransient<ITokenProvider, TokenProvider>();
+            services.AddTransient<INotification, Notification>();
             
             services.AddScoped<IUserRepository, UserRepository>();
             
             services.AddMvc();
+            
+            
+            var notificationService = services.BuildServiceProvider()
+                .GetService<INotification>();
+
+            Task.Run(async () => await notificationService.WatchChain());
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -27,6 +27,8 @@
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Service\EmailSender.cs" />
     <Compile Include="Service\TokenProvider.cs" />
+    <Compile Include="Service\Notification.cs" />
+    <Compile Include="Utils\TokenSignature.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -34,6 +36,7 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
+    <PackageReference Include="Nethereum.Web3" Version="2.4.0" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
