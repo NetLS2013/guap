@@ -51,7 +51,7 @@ namespace Guap.Service
         public static Account GetAccount(string words, string pass = "")
         {
 
-            Wallet wallet = new Wallet(words, pass, GlobalSetting.Instance.WalletPath);
+            Wallet wallet = new Wallet(words, pass);
 
             return wallet.GetAccount(0);
         }

@@ -6,11 +6,13 @@ namespace Guap.Views.Profile
 {
     public partial class EnterAmountPage : ContentPage
     {
+        public EnterAmountViewModel ViewModel { get; set; }
+
         public EnterAmountPage()
         {
             InitializeComponent();
-
-            BindingContext = new EnterAmountViewModel(this);
+            ViewModel = new EnterAmountViewModel(this);
+            BindingContext = ViewModel;
         }
 
         protected override void OnAppearing()

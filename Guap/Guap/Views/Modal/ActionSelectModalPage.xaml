@@ -18,7 +18,7 @@
                 HorizontalOptions="Center"/>
         </StackLayout>
 
-        <StackLayout Orientation="Horizontal">
+        <StackLayout Orientation="Horizontal" Margin="10">
             <Button
                 Clicked="ReceiveClick"
                 HorizontalOptions="StartAndExpand"
@@ -44,5 +44,14 @@
                 BackgroundColor="#fff"
                 BorderRadius="0"/>
         </StackLayout>
+
+        <Button
+            Clicked="CancelClick"
+            FontSize="20"
+            BackgroundColor="#e0bc0c"
+            Text="Cancel"
+            FontAttributes="Bold"
+            TextColor="#fff"
+            BorderRadius="0"/>
     </StackLayout>
 </pages:PopupPage>

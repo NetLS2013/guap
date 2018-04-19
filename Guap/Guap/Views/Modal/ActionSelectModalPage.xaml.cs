@@ -34,5 +34,10 @@ namespace Guap.Views.Modal
             Send();
             await PopupNavigation.PopAsync();
         }
-    }
+
+	    private async void CancelClick(object sender, EventArgs e)
+	    {
+	        await PopupNavigation.PopAsync();
+        }
+	}
 }

@@ -23,7 +23,7 @@
                     FontSize="13"/>
             
                 <Label
-                    Text="0x0cacdbb61ba1e9dec89fc4d8c81f15797fff9ac6"
+                    Text="{Binding Account.Address}"
                     HorizontalOptions="Center"
                     TextColor="#4a4a4a"
                     FontSize="13"/>
@@ -36,11 +36,12 @@
                     x:Name="QrResult"
                     BarcodeFormat="QR_CODE"
                     HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand"/>
+                    VerticalOptions="FillAndExpand"
+                    BarcodeValue="{Binding RequestString}"/>
             </StackLayout>
             
             <Button
-                Clicked="OpenPageContactsClick"
+                Command="{Binding RequestAmountCommand}"
                 TextColor="#e0bc0c"
                 BackgroundColor="Transparent"
                 Text="Request an Amount >"
@@ -79,13 +80,26 @@
                     HorizontalOptions="EndAndExpand"
                     Spacing="0">
                     <Label
-                        Text="0.000324 ETH"
+                        Text="{Binding Token.BalanceString}"
                         FontAttributes="Bold"
                         VerticalOptions="Center"
                         FontSize="18"
                         TextColor="#9b9b9b"/>
-                    
+                    <Label
+                        Text=" "
+                        FontAttributes="Bold"
+                        VerticalOptions="Center"
+                        FontSize="18"
+                        TextColor="#9b9b9b"/>
+                    <Label
+                        Text="{Binding Token.Symbol}"
+                        FontAttributes="Bold"
+                        VerticalOptions="Center"
+                        FontSize="18"
+                        TextColor="#9b9b9b"/>
+
                     <Button
+                        Command="{Binding RefreshBalanceCommand}"
                         WidthRequest="40"
                         BackgroundColor="Transparent"
                         Text="up"

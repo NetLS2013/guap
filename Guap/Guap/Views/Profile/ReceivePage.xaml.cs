@@ -3,11 +3,14 @@ using Xamarin.Forms;
 
 namespace Guap.Views.Profile
 {
+    using Guap.ViewModels;
+
     public partial class ReceivePage : ContentPage
     {
         public ReceivePage()
         {
             InitializeComponent();
+            BindingContext = new ReceiveViewModel(this);
 
             var qrHeight = (int) (App.ScreenHeight * 0.45);
             
@@ -15,12 +18,6 @@ namespace Guap.Views.Profile
             
             QrResult.BarcodeOptions.Width = qrHeight;
             QrResult.BarcodeOptions.Height = qrHeight;
-            QrResult.BarcodeValue = "123";
-        }
-
-        private async void OpenPageContactsClick(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ContactListPage());
         }
     }
 }

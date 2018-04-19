@@ -181,7 +181,7 @@
         public SendViewModel(Page context)
         {
             this._context = context;
-            _account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
+            Account = GlobalSetting.Instance.Account;
 
             this._token = null;
 
@@ -190,7 +190,18 @@
             _ethereumService = new EthereumService(new Web3(_account, GlobalSetting.Instance.EthereumNetwork));
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
 
+            GlobalSetting.Instance.AccountUpdate += () => { InitializeAccount(); };
+
             InitializeTokens();
+        }
+
+        private async void InitializeAccount()
+        {
+            Account = GlobalSetting.Instance.Account;
+            _tokenService = new TokenService(new Web3(Account, GlobalSetting.Instance.EthereumNetwork));
+            _ethereumService = new EthereumService(new Web3(Account, GlobalSetting.Instance.EthereumNetwork));
+
+            this.OnRefreshBalance();
         }
 
         public async void InitializeTokens()

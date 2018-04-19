@@ -2,7 +2,13 @@
 
 namespace Guap
 {
+    using System;
+
+    using Guap.Helpers;
     using Guap.Models;
+    using Guap.Service;
+
+    using Nethereum.Web3.Accounts;
 
     public class GlobalSetting
     {
@@ -19,7 +25,7 @@ namespace Guap
             Wordlist = Wordlist.English;
             EthereumNetwork = "https://ropsten.infura.io/E8XftGiqmaErL2KN5Cp3";
             WalletPath = "m/44'/60'/0'/0/x";
-            BaseEndpoint = "http://f51308c9.ngrok.io";
+            BaseEndpoint = "http://3bdf9930.ngrok.io";
             DbName = "guap.db";
             BlockExplorer = "https://ropsten.etherscan.io";
 
@@ -39,10 +45,20 @@ namespace Guap
                                Symbol = "ETH",
                                Id = -1,
                            };
+
+            if (!string.IsNullOrWhiteSpace((string)Settings.Get(Settings.Key.MnemonicPhrase)))
+            {
+                Account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
+            }
+            else
+            {
+                Account = null;
+            }
         }
 
         public static GlobalSetting Instance => Nested.Instance;
-        
+
+        public event Action AccountUpdate;
 
         public WordCount WordCount { get; }
 
@@ -55,7 +71,23 @@ namespace Guap
         public string DbName { get; }
 
         public Token Guap { get; set; }
+
         public Token Ethereum { get; set; }
+
+        public Account Account { get; private set; }
+
+        public void UpdateAccount()
+        {
+            if (!string.IsNullOrWhiteSpace((string)Settings.Get(Settings.Key.MnemonicPhrase)))
+            {
+                Account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
+            }
+            else
+            {
+                Account = null;
+            }
+            AccountUpdate();
+        }
 
 
         public string RegisterNumberEndpoint { get; set; }

@@ -28,7 +28,11 @@
     {
         public ActionSelectModalPage ActionSelectModalPage { get; set; }
 
+        private Account _account;
+
         private Page _context;
+
+        private bool _isRefreshing;
 
         private IRepository<Token> _repository;
 
@@ -40,11 +44,12 @@
 
         private Token _guap;
 
-        private Account _account;
 
         public ICommand CreateTokenCommand => new Command( async () => await this._context.Navigation.PushAsync(new CreateTokenPage(this)));
 
         public ICommand SelectActionCommand => new Command( async () => Device.BeginInvokeOnMainThread(async () => await this._context.Navigation.PushPopupAsync(ActionSelectModalPage)));
+
+        public ICommand RefreshTokensListCommand => new Command( async () => InitializeTokens());
 
         public Token Token
         {
@@ -77,6 +82,20 @@
             }
         }
 
+        public bool IsRefreshing
+        {
+            get
+            {
+                return this._isRefreshing;
+            }
+            set
+            {
+                _isRefreshing = value;
+
+                OnPropertyChanged(nameof(IsRefreshing));
+            }
+        }
+
         public Account Account
         {
             get
@@ -94,15 +113,15 @@
         public DashboardViewModel(Page context)
         {
             ActionSelectModalPage = new ActionSelectModalPage();
-
             _context = context;
-            _account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
+            Account = GlobalSetting.Instance.Account;
 
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
 
-            _tokenService = new TokenService(new Web3(_account, GlobalSetting.Instance.EthereumNetwork));
+            _tokenService = new TokenService(new Web3(GlobalSetting.Instance.Account, GlobalSetting.Instance.EthereumNetwork));
             Task.Run(async () => { InitializeTokens(); }).Wait();
+            GlobalSetting.Instance.AccountUpdate += () => { InitializeAccount(); };
         }
 
         public List<Token> Tokens
@@ -118,10 +137,20 @@
             }
         }
 
+        private async void InitializeAccount()
+        {
+            Account = GlobalSetting.Instance.Account;
+            _tokenService = new TokenService(new Web3(Account, GlobalSetting.Instance.EthereumNetwork));
+            InitializeTokens();
+        }
+
         public async void InitializeTokens()
         {
-            _guap = GlobalSetting.Instance.Guap;
-            _guap.Balance = this._tokenService.GetBalance(_guap, _account.Address).Result;
+            IsRefreshing = true;
+
+            var guap = GlobalSetting.Instance.Guap;
+            guap.Balance =await this._tokenService.GetBalance(guap, Account.Address);
+            this.Guap = guap;
 
             var tokens = new List<Token>();
             tokens = await _repository.Get();
@@ -130,7 +159,7 @@
             {
                 try
                 {
-                    token.Balance = await _tokenService.GetBalance(token, _account.Address);
+                    token.Balance = await _tokenService.GetBalance(token, Account.Address);
                 }
                 catch (Exception e)
                 {
@@ -139,6 +168,7 @@
             }
 
             Tokens = tokens;
+            IsRefreshing = false;
         }
 
     }

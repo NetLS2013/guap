@@ -92,6 +92,7 @@
     <Compile Include="ViewModels\PhoneViewModel.cs" />
     <Compile Include="Service\EthereumService.cs" />
     <Compile Include="ViewModels\PinAuthViewModel.cs" />
+    <Compile Include="ViewModels\ReceiveViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\SendViewModel.cs" />
     <Compile Include="Views\Dashboard\CreateTokenPage.xaml.cs">

@@ -7,6 +7,8 @@ namespace Guap.ViewModels
 {
     public class EnterAmountViewModel : BaseViewModel
     {
+        public event Action<decimal> AmountChanged;
+
         private decimal _inputAmmount;
         
         private readonly Page _context;
@@ -30,9 +32,12 @@ namespace Guap.ViewModels
             set
             {
                 _inputAmmount = decimal.TryParse(value, out var amount) ? amount : 0;
-                
                 OnPropertyChanged(nameof(AmountTrigger));
                 OnPropertyChanged(nameof(CurrencyConverter));
+                if (this._inputAmmount > decimal.Zero)
+                {
+                    AmountChanged(_inputAmmount);
+                }
             }
         }
         
