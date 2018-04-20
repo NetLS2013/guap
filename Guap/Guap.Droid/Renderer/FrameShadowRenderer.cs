@@ -6,6 +6,9 @@ using Xamarin.Forms;
 [assembly: ExportRenderer(typeof(FrameShadow), typeof(FrameShadowRenderer))]
 namespace Guap.Droid.Renderer
 {
+    using Android.OS;
+    using Android.Support.V4.View;
+
     using Xamarin.Forms.Platform.Android;
 
     using Resource = Guap.Droid.Resource;
@@ -18,8 +21,19 @@ namespace Guap.Droid.Renderer
             if (e.NewElement != null)
             {
                 ViewGroup.SetBackgroundResource(Resource.Drawable.FrameShadow);
-                
-                Elevation = 6;
+
+                double dAndroidVersion;
+                if (double.TryParse(Build.VERSION.Release, out dAndroidVersion))
+                {
+                    if (dAndroidVersion < 21)
+                    {
+                        ViewCompat.SetElevation(ViewGroup, 6.0f);
+                    }
+                    else
+                    {
+                        Elevation = 6;
+                    }
+                }
             }
         }
     }

@@ -14,12 +14,12 @@
             
             <StackLayout Margin="30" VerticalOptions="FillAndExpand">
                 <Label Text="{Binding HeaderText}" FontSize="24" FontAttributes="Bold"  TextColor="#4a4a4a" Margin="0,0,0,10"></Label>
-                <Label Text="Enter your mnenonic phrase below to create your wallet." FontSize="18" TextColor="#4a4a4a"></Label>
+                <Label  Text="{Binding Text}" FontSize="18" TextColor="#4a4a4a"></Label>
                 <customRender:BorderEditor VerticalOptions="FillAndExpand" TextColor="#4a4a4a" Text="{Binding InputMnemonic, Mode=TwoWay}"/>
                 <Label Text="{Binding Error}" FontSize="14" TextColor="#db0029" Margin="0,10,0,10" IsVisible="{Binding IsInvalid}"></Label>
             </StackLayout>
             <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="EndAndExpand" Padding="16,0,16,0">
-                <Button Text="Back" BackgroundColor="#e0bc0c" TextColor="#ffffff" FontSize="20" Command="{Binding BackToMnemonicPhraseCommand}"></Button>
+                <Button Text="{Binding LeftButtonText}" BackgroundColor="#e0bc0c" TextColor="#ffffff" FontSize="20" Command="{Binding BackToMnemonicPhraseCommand}"></Button>
                 <Button Text="Continue" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20" Command="{Binding CompleteMnemonicPhraseCommand}"></Button>
             </StackLayout>
         </StackLayout>

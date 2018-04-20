@@ -18,12 +18,16 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout
-                            Padding="8"
-                            Orientation="Vertical">
+                            Padding="30, 18,30,18"
+                            Orientation="Horizontal">
+                            <Image Source="{Binding Icon}" VerticalOptions="Center"></Image>
                             <Label
+                                Margin="18, 0, 0, 0"
                                 Text="{Binding Title}"
                                 FontSize="14"
-                                FontAttributes="Bold"/>
+                                VerticalOptions="Center"
+                                FontAttributes="Bold"
+                            />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

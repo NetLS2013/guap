@@ -98,7 +98,30 @@
                                 IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
                         </StackLayout>
                     </Grid>
-                    
+
+                </StackLayout>
+                <StackLayout
+                    Orientation="Horizontal"
+                    BackgroundColor="#fff"
+                   >
+                    <Button
+                        TextColor="#e0bc0c"
+                        BackgroundColor="Transparent"
+                        Text="Delete"
+                        FontSize="20"
+                        HorizontalOptions="StartAndExpand"
+                        Command="{Binding DeleteCommand}"
+                        IsVisible="{Binding IsEdit}"
+                    />
+                    <Button
+                        TextColor="#e0bc0c"
+                        BackgroundColor="Transparent"
+                        Text="Save"
+                        FontSize="20"
+                        HorizontalOptions="EndAndExpand"
+                        Command="{Binding SaveTokenCommand}"
+                        IsEnabled="{Binding IsValid}"
+                    />
                 </StackLayout>
                 <ListView
                     HasUnevenRows="True"
@@ -115,31 +138,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </StackLayout>
-
-            <StackLayout
-                Orientation="Horizontal"
-                BackgroundColor="#fff"
-                VerticalOptions="End"
-                Padding="16,0,16,0">
-                <Button
-                    TextColor="#e0bc0c"
-                    BackgroundColor="Transparent"
-                    Text="Delete"
-                    FontSize="20"
-                    HorizontalOptions="StartAndExpand"
-                    Command="{Binding DeleteCommand}"
-                    IsVisible="{Binding IsEdit}"
-                />
-                <Button
-                    TextColor="#e0bc0c"
-                    BackgroundColor="Transparent"
-                    Text="Save"
-                    FontSize="20"
-                    HorizontalOptions="EndAndExpand"
-                    Command="{Binding SaveTokenCommand}"
-                    IsEnabled="{Binding IsValid}"
-                    />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

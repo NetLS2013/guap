@@ -15,9 +15,9 @@ namespace Guap.Views
             BindingContext = new CreateAccountViewModel(this);
         }
 
-        private async void OpenPageEnterEmail(object sender, EventArgs e)
+        private async void OpenPageCreateAccount(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new EnterEmailPage());
+            await Navigation.PushAsync(new CreateWalletPage());
         }
     }
 }

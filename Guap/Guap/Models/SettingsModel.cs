@@ -7,5 +7,7 @@
         public string Title { get; set; }
 
         public MethodInvoke Method { get; set; }
+
+        public string Icon { get; set; }
     }
 }

@@ -127,7 +127,6 @@ namespace Guap
             }
         }
 
-
         private void UpdateBlockExplorerEndpoint(string baseEndpoint)
         {
             ExplorerTransactionEndpoint = $"{baseEndpoint}/tx/";

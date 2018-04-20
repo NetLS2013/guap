@@ -23,12 +23,13 @@ namespace Guap.ViewModels
             
             SettingsList = new List<SettingsModel>
             {
-                new SettingsModel { Title = "Restore Wallet", Method = RestoreWallet },
-                new SettingsModel { Title = "Backup Wallet", Method = BackupWallet },
-                new SettingsModel { Title = "Reset Pin", Method = ResetPin },
-                new SettingsModel { Title = "Help & Support", Method = HelpAndSupport },
-                new SettingsModel { Title = "Send Feedback", Method = SendFeedBack },
-                new SettingsModel { Title = "About $Guapcoin", Method = AboutGuap },
+                new SettingsModel { Title = "Restore Wallet", Method = RestoreWallet, Icon = "notification.png", },
+                new SettingsModel { Title = "Backup Wallet", Method = BackupWallet, Icon = "notification.png" },
+                new SettingsModel { Title = "Reset Pin", Method = ResetPin, Icon = "notification.png" },
+                new SettingsModel { Title = "Help & Support", Method = HelpAndSupport, Icon = "notification.png" },
+                new SettingsModel { Title = "Send Feedback", Method = SendFeedBack, Icon = "notification.png" },
+                new SettingsModel { Title = "About $Guapcoin", Method = AboutGuap, Icon = "notification.png" ,},
+                new SettingsModel { Title = "Logout", Method = Logout, Icon = "notification.png" }
             };
         }
 
@@ -38,7 +39,7 @@ namespace Guap.ViewModels
                 new CommonPageSettings
                     {
                         HasNavigation = true,
-                        HasBack = true,
+                        //HasBack = true,
                         Title = "Backup Wallet",
                         HeaderText = "Mnemonic Phrase"
                     });
@@ -57,8 +58,10 @@ namespace Guap.ViewModels
                         HasNavigation = true,
                         HasBack = true,
                         HeaderText = "Restore Wallet",
-                        Title = "Restore Wallet"
-                });
+                        Title = "Restore Wallet",
+                        Text = "Enter your mnenonic phrase below to restore your wallet.",
+                        LeftButtonText = "Cancel"
+                    });
 
             inputMnemonic.ViewModel.Validators.Add(
                 new KeyValuePair<string, Func<string, bool>>(
@@ -208,6 +211,11 @@ namespace Guap.ViewModels
             {
                 Debug.WriteLine($"--- Error: {e.StackTrace}");
             }
+        }
+
+        private void Logout()
+        {
+            throw new NotImplementedException();
         }
     }
 }

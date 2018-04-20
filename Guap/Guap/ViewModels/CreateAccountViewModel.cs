@@ -83,11 +83,13 @@ namespace Guap.ViewModels
 
             var inputMnemonic = new InputMnemonicPhrasePage(
                 new CommonPageSettings
-                {
-                    HasNavigation = false,
-                    HeaderText = "Mnemonic Phrase"
-                });
-        
+                    {
+                        HasNavigation = false,
+                        HeaderText = "Mnemonic Phrase",
+                        Text = "Enter your mnenonic phrase below to create your wallet.",
+                        LeftButtonText = "Back"
+                    });
+
             inputMnemonic.ViewModel.Validators.Add(
                 new KeyValuePair<string, Func<string, bool>>(
                     "The mnemonic phrase you entered is incorrect." + Environment.NewLine + "Typos can cause this."
@@ -111,8 +113,12 @@ namespace Guap.ViewModels
                                     + Environment.NewLine + "Your wallet has been created."
                                     + Environment.NewLine + "Check out the dashboard."
                             },
-                            () => App.SetMainPage(new BottomTabbedPage())));
-                
+                            () =>
+                                {
+                                    GlobalSetting.Instance.UpdateAccount();
+                                    App.SetMainPage(new BottomTabbedPage());
+                                }));
+
                     // save mnenonic phrase 
                     Settings.Set(Settings.Key.MnemonicPhrase, s);
                     Settings.Set(Settings.Key.IsLogged, true);
@@ -136,10 +142,13 @@ namespace Guap.ViewModels
         {
             var inputMnemonic = new InputMnemonicPhrasePage(
                 new CommonPageSettings
-                    { 
+                    {
                         HasNavigation = false,
-                        HeaderText = "Mnemonic Phrase"
+                        HeaderText = "Mnemonic Phrase",
+                        Text = "Enter your mnenonic phrase below to restore your wallet.",
+                        LeftButtonText = "Back"
                     });
+
 
             inputMnemonic.ViewModel.Validators.Add(
                 new KeyValuePair<string, Func<string, bool>>(
@@ -163,7 +172,12 @@ namespace Guap.ViewModels
                                     + Environment.NewLine + "Your wallet has been created."
                                     + Environment.NewLine + "Check out the dashboard."
                             },
-                            () => App.SetMainPage(new BottomTabbedPage())));
+                            () =>
+                                {
+                                    GlobalSetting.Instance.UpdateAccount();
+                                    App.SetMainPage(new BottomTabbedPage());
+                                }));
+
 
                     // save mnenonic phrase 
                     Settings.Set(Settings.Key.MnemonicPhrase, s);

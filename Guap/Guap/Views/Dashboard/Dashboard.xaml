@@ -10,8 +10,8 @@
                 TitleText="Guapcoin"
                 HasIcon="True"
                 TitleFontSize="24"/>
-            <StackLayout Padding="30, 0, 30,0">
-                <customRender:FrameShadow HorizontalOptions="FillAndExpand" Padding="0" Margin="0, 30, 0,0">
+            <StackLayout Padding="24, 0, 24,0">
+                <customRender:FrameShadow HorizontalOptions="FillAndExpand" Padding="0" Margin="0, 24, 0,0">
 
                     <StackLayout BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                         <StackLayout  BackgroundColor="White" Padding="14,8,14,0" Margin="0" Orientation="Horizontal" >

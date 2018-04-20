@@ -42,6 +42,8 @@
         {
             this.HeaderText = pageSettings.HeaderText;
             this.IsCustomHeader = pageSettings.IsShowCustomHeader;
+            this.Text = pageSettings.Text;
+            this.LeftButtonText = pageSettings.LeftButtonText;
 
             this._context = context;
             IsInvalid = false;
@@ -60,6 +62,10 @@
                 OnPropertyChanged(nameof(HeaderText));
             }
         }
+
+        public string Text { get; set; }
+
+        public string LeftButtonText { get; set; }
 
         public bool IsCustomHeader
         {
@@ -136,8 +142,6 @@
             }
             IsInvalid = false;
 
-            // TODO set next page, assign somewhere words list
-            ///await _context.Navigation.PushAsync(new SuccessSignup());
             this.SuccessAction(InputMnemonic);
         }
 
