@@ -21,5 +21,7 @@ namespace Guap.Server.Data.Entities
         
         [StringLength(253)]
         public bool EmailConfirmed { get; set; }
+
+        public bool NotificationsEnabled { get; set; }
     }
 }

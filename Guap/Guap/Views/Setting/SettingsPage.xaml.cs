@@ -5,11 +5,12 @@ namespace Guap.Views.Setting
 {
     public partial class SettingsPage : ContentPage
     {
+        public SettingsViewModel ViewModel { get; set; }
         public SettingsPage()
         {
             InitializeComponent();
-            
-            BindingContext = new SettingsViewModel(this);
+            ViewModel = new SettingsViewModel(this);
+            BindingContext = ViewModel;
         }
     }
 }

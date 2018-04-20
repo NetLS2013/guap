@@ -7,6 +7,8 @@ using Xamarin.Forms;
 
 namespace Guap.ViewModels
 {
+    using System.Windows.Input;
+
     using Guap.Helpers;
     using Guap.Service;
     using Guap.Views;
@@ -17,20 +19,123 @@ namespace Guap.ViewModels
         private readonly Page _context;
         private List<SettingsModel> _settingsList;
 
+        private RequestProvider _requestProvider;
+
+        private bool _isNotification;
+        private bool _isLockApp;
+
+        public event Action LockAppSuccess;
+        public event Action ReloadSettings;
+
         public SettingsViewModel(Page context)
         {
             _context = context;
-            
+            _requestProvider = new RequestProvider();
+
+            LockApp = (bool)Settings.Get(Settings.Key.IsLockApp);
+            Notification = (bool)Settings.Get(Settings.Key.IsNotification);
+
+            _requestProvider.PostAsync<NotificationModel, string>(
+                GlobalSetting.Instance.NotificationsEnabledEndpoint,
+                new NotificationModel
+                    {
+                        NotificationsEnabled = Notification,
+                        PhoneNumber = Settings.Get(Settings.Key.PhoneNumber).ToString()
+                    });
+
+            InitSettings();
+
+            ReloadSettings += () => { InitSettings(); };
+        }
+
+        private void InitSettings()
+        {
             SettingsList = new List<SettingsModel>
+                               {
+                                   new SettingsModel { Title = "Notification", Icon = "notification.png", IsVisible = true,  Toggled = Notification, ToggledCommand = NotificationCommand },
+                                   new SettingsModel { Title = "Lock App", Icon = "notification.png", IsVisible = true,  Toggled = LockApp, ToggledCommand = LockAppCommand },
+                                   new SettingsModel { Title = "Restore Wallet", Method = RestoreWallet, Icon = "notification.png", },
+                                   new SettingsModel { Title = "Backup Wallet", Method = BackupWallet, Icon = "notification.png" },
+                                   new SettingsModel { Title = "Reset Pin", Method = ResetPin, Icon = "notification.png" },
+                                   new SettingsModel { Title = "Help & Support", Method = HelpAndSupport, Icon = "notification.png" },
+                                   new SettingsModel { Title = "Send Feedback", Method = SendFeedBack, Icon = "notification.png" },
+                                   new SettingsModel { Title = "About $Guapcoin", Method = AboutGuap, Icon = "notification.png" ,},
+                                   new SettingsModel { Title = "Logout", Method = Logout, Icon = "notification.png" }
+                               };
+        }
+
+        public ICommand NotificationCommand => new Command(async () =>
             {
-                new SettingsModel { Title = "Restore Wallet", Method = RestoreWallet, Icon = "notification.png", },
-                new SettingsModel { Title = "Backup Wallet", Method = BackupWallet, Icon = "notification.png" },
-                new SettingsModel { Title = "Reset Pin", Method = ResetPin, Icon = "notification.png" },
-                new SettingsModel { Title = "Help & Support", Method = HelpAndSupport, Icon = "notification.png" },
-                new SettingsModel { Title = "Send Feedback", Method = SendFeedBack, Icon = "notification.png" },
-                new SettingsModel { Title = "About $Guapcoin", Method = AboutGuap, Icon = "notification.png" ,},
-                new SettingsModel { Title = "Logout", Method = Logout, Icon = "notification.png" }
-            };
+                this.Notification = !this.Notification;
+                Settings.Set(Settings.Key.IsNotification, Notification);
+
+                try
+                {
+                    await _requestProvider.PostAsync<NotificationModel, string>(GlobalSetting.Instance.NotificationsEnabledEndpoint,
+                        new NotificationModel
+                            {
+                                NotificationsEnabled = Notification,
+                                PhoneNumber = Settings.Get(Settings.Key.PhoneNumber).ToString()
+                            });
+                    
+                }
+                catch (Exception e)
+                {
+
+                }
+                
+            });
+
+        public ICommand LockAppCommand => new Command(() =>
+            {
+                var setting = new CommonPageSettings
+                                  {
+                                      Title = "Unlock Wallet",
+                                      HeaderText = "Enter your 4 digit pin",
+                                      HasNavigation = true
+                                  };
+                
+                this._context.Navigation.PushAsync(
+                    new PinAuthPage(
+                        (sender, args) =>
+                            {
+                                this.LockApp = !this.LockApp;
+                                Settings.Set(Settings.Key.IsLockApp, LockApp);
+                                LockAppSuccess();
+                                ReloadSettings();
+                                this._context.Navigation.PopAsync();
+                            },
+                        valid => Equals(valid, Settings.Get(Settings.Key.Pin)),
+                        "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
+                        setting
+                    ));
+                ReloadSettings();
+            });
+
+        public bool Notification
+        {
+            get
+            {
+                return this._isNotification;
+            }
+            set
+            {
+                this._isNotification = value;
+                OnPropertyChanged(nameof(Notification));
+            }
+        }
+
+        public bool LockApp
+        {
+            get
+            {
+                return this._isLockApp;
+            }
+            set
+            {
+                this._isLockApp = value;
+                OnPropertyChanged(nameof(LockApp));
+            }
         }
 
         private void BackupWallet()
@@ -215,7 +320,9 @@ namespace Guap.ViewModels
 
         private void Logout()
         {
-            throw new NotImplementedException();
+            Settings.Set(Settings.Key.IsLogged, false);
+
+            App.SetMainPage(new GuapPage());
         }
     }
 }

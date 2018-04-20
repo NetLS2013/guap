@@ -21,6 +21,16 @@ namespace Guap
 
             var startPage = typeof(GuapPage);
 
+            if (Equals(Settings.Get(Settings.Key.IsLockApp), null))
+            {
+                Settings.Set(Settings.Key.IsLockApp, true);
+            }
+
+            if (Equals(Settings.Get(Settings.Key.IsNotification), null))
+            {
+                Settings.Set(Settings.Key.IsNotification, true);
+            }
+
             if (Equals(Settings.Get(Settings.Key.IsLogged), true))
             {
                 startPage = typeof(BottomTabbedPage);

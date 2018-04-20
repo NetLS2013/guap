@@ -103,6 +103,10 @@ namespace Guap.ViewModels
 
                 if (result)
                 {
+                    // save mnenonic phrase 
+                    Settings.Set(Settings.Key.MnemonicPhrase, s);
+                    Settings.Set(Settings.Key.IsLogged, true);
+
                     await _context.Navigation.PushAsync(
                         new SuccessSignup(
                             new CommonPageSettings
@@ -119,9 +123,7 @@ namespace Guap.ViewModels
                                     App.SetMainPage(new BottomTabbedPage());
                                 }));
 
-                    // save mnenonic phrase 
-                    Settings.Set(Settings.Key.MnemonicPhrase, s);
-                    Settings.Set(Settings.Key.IsLogged, true);
+                   
                 }
             };
 
@@ -162,6 +164,10 @@ namespace Guap.ViewModels
 
                 if (result)
                 {
+                    // save mnenonic phrase 
+                    Settings.Set(Settings.Key.MnemonicPhrase, s);
+                    Settings.Set(Settings.Key.IsLogged, true);
+                    
                     await _context.Navigation.PushAsync(
                         new SuccessSignup(
                             new CommonPageSettings
@@ -174,14 +180,8 @@ namespace Guap.ViewModels
                             },
                             () =>
                                 {
-                                    GlobalSetting.Instance.UpdateAccount();
                                     App.SetMainPage(new BottomTabbedPage());
                                 }));
-
-
-                    // save mnenonic phrase 
-                    Settings.Set(Settings.Key.MnemonicPhrase, s);
-                    Settings.Set(Settings.Key.IsLogged, true);
                 }
             };
 

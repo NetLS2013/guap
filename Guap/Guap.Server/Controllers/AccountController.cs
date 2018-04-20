@@ -151,5 +151,21 @@ namespace Guap.Server.Controllers
             
             return Ok(true);
         }
+        
+
+        [HttpPost]
+        public async Task<IActionResult> NotificationsEnabled([FromBody] NotificationModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var user = new UserModel { PhoneNumber = model.PhoneNumber };
+
+            await _userRepository.NotificationEnabled(user, model);
+
+            return Ok();
+        }
     }
 }

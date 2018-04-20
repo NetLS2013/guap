@@ -3,31 +3,35 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:shared="clr-namespace:Guap.Views.Shared;assembly=Guap"
+    xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
     x:Class="Guap.Views.Setting.SettingsPage"
     Title="Contacts">
     <StackLayout
-        BackgroundColor="White">
+        BackgroundColor="White" Spacing="0">
         <shared:NavigationTitle
             TitleText="Settings"/>
         
         <ListView
-            HasUnevenRows="True"
+           HasUnevenRows="True"
             ItemsSource="{Binding SettingsList}"
-            SelectedItem="{Binding SelectedSetting}">
+            SelectedItem="{Binding SelectedSetting}"
+            x:Name="ListView1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout
-                            Padding="30, 18,30,18"
+                            Padding="36, 20"
                             Orientation="Horizontal">
                             <Image Source="{Binding Icon}" VerticalOptions="Center"></Image>
                             <Label
                                 Margin="18, 0, 0, 0"
                                 Text="{Binding Title}"
-                                FontSize="14"
+                                FontSize="20"
                                 VerticalOptions="Center"
-                                FontAttributes="Bold"
+                                FontAttributes="None"
                             />
+                            <customRender:ToggleButton CheckedImage="toggle_on.png" UnCheckedImage="toggle_off.png" HeightRequest="36" WidthRequest="36"
+                                                Checked="{Binding Toggled,Mode=TwoWay}" Command="{Binding ToggledCommand}" VerticalOptions="Center" IsVisible="{Binding IsVisible}" HorizontalOptions="End"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

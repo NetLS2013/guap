@@ -64,6 +64,7 @@
     <Compile Include="CustomRender\Pin\PinItemView.cs" />
     <Compile Include="CustomRender\Pin\PinViewModel.cs" />
     <Compile Include="CustomRender\StyleNavigationPage.cs" />
+    <Compile Include="CustomRender\ToggleButton.cs" />
     <Compile Include="DependencyServcie\IContactService.cs" />
     <Compile Include="GlobalSetting.cs" />
     <Compile Include="GuapPage.xaml.cs">
@@ -73,6 +74,7 @@
     <Compile Include="Helpers\BottomBarPageExtensions.cs" />
     <Compile Include="Helpers\CommonPageSettings.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Service\TokenService.cs" />
     <Compile Include="Models\MnemonicWallet.cs" />

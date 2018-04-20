@@ -16,6 +16,7 @@ namespace Guap.Server.Data.Repositories
         Task UpdateAddress(UserModel modelPhoneNumber);
         Task RegisterEmail(UserModel userModel);
         Task ConfirmEmail(UserModel userModel);
+        Task NotificationEnabled(UserModel userModel, NotificationModel model);
         List<User> GetAllUsers();
         Task<User> FindByEmail(string email);
     }
@@ -62,6 +63,15 @@ namespace Guap.Server.Data.Repositories
             var user = await FindUser(model.PhoneNumber);
 
             user.EmailConfirmed = true;
+
+            await Update(user);
+        }
+
+        public async Task NotificationEnabled(UserModel userModel, NotificationModel model)
+        {
+            var user = await FindUser(userModel.PhoneNumber);
+
+            user.NotificationsEnabled = model.NotificationsEnabled;
 
             await Update(user);
         }

@@ -3,6 +3,7 @@
 namespace Guap.Views.Profile
 {
     using Guap.Views.Dashboard;
+    using Guap.Views.Setting;
 
     using Plugin.Permissions;
     using Plugin.Permissions.Abstractions;
@@ -13,12 +14,14 @@ namespace Guap.Views.Profile
     {
         public BottomTabbedPage()
         {
+            GlobalSetting.Instance.UpdateAccountWithOutEvent();
             InitializeComponent();
 
             this.InitCamera();
             var dashboard = Children[0] as Dashboard;
             var scan = Children[2] as ScanPage;
             var send = Children[3] as SendPage;
+            var settings = Children[4] as SettingsPage;
 
             send.SendViewModel.ScanEvent += () =>
                 {
@@ -40,7 +43,13 @@ namespace Guap.Views.Profile
                             send.SendViewModel.TokenSelectedIndex = 0;
                         });
                 };
-
+            settings.ViewModel.LockAppSuccess += () =>
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                        {
+                            this.CurrentPage = this.Children[0];
+                        });
+                };
 
             if (scan != null)
             {
@@ -50,7 +59,7 @@ namespace Guap.Views.Profile
                         send.SendViewModel.SetReceiverInfo(address, amount);
                     };
             }
-            
+
 
             BarTheme = BarThemeTypes.DarkWithoutAlpha;
             FixedMode = true;

@@ -78,6 +78,7 @@ namespace Guap
 
         public void UpdateAccount()
         {
+            var c = (string)Settings.Get(Settings.Key.MnemonicPhrase);
             if (!string.IsNullOrWhiteSpace((string)Settings.Get(Settings.Key.MnemonicPhrase)))
             {
                 Account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
@@ -88,6 +89,20 @@ namespace Guap
             }
             AccountUpdate();
         }
+
+        public void UpdateAccountWithOutEvent()
+        {
+
+            if (!string.IsNullOrWhiteSpace((string)Settings.Get(Settings.Key.MnemonicPhrase)))
+            {
+                Account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
+            }
+            else
+            {
+                Account = null;
+            }
+        }
+
 
 
         public string RegisterNumberEndpoint { get; set; }
@@ -101,6 +116,8 @@ namespace Guap
         public string VerificationEmailEndpoint { get; set; }
         
         public string ExplorerTransactionEndpoint { get; set; }
+        
+        public string NotificationsEnabledEndpoint { get; set; }
         
         public string ForgotPinEndpoint { get; set; }
         
@@ -116,6 +133,7 @@ namespace Guap
             UpdateAddressEndpoint = $"{baseEndpoint}/api/Wallet/UpdateAddress";
             GetAddressByNumberEndpoint = $"{baseEndpoint}/api/Wallet/GetAddressByNumber";
             VerificationEmailEndpoint = $"{baseEndpoint}/api/Account/VerificationEmail";
+            NotificationsEnabledEndpoint = $"{baseEndpoint}/api/Account/NotificationsEnabled";
             ForgotPinEndpoint = $"{baseEndpoint}/api/Account/ForgotPin";
         }
 
