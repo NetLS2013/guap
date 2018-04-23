@@ -30,6 +30,7 @@
   <ItemGroup>
     <EmbeddedResource Include="App.xaml" />
     <EmbeddedResource Include="GuapPage.xaml" />
+    <EmbeddedResource Include="Views\Modal\InviteShareModalPage.xaml" />
     <EmbeddedResource Include="Views\NewUserExistPage.xaml" />
     <EmbeddedResource Include="Views\PhoneNumberPage.xaml" />
     <EmbeddedResource Include="Views\PhoneVerificationPage.xaml" />
@@ -44,6 +45,7 @@
     <EmbeddedResource Include="Views\Setting\HelpAndSupportPage.xaml" />
     <EmbeddedResource Include="Views\Setting\SettingsPage.xaml" />
     <EmbeddedResource Include="Views\Shared\NavigationTitle.xaml" />
+    <EmbeddedResource Include="Views\ForgotPinPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -107,6 +109,9 @@
     <Compile Include="Views\Modal\ActionSelectModalPage.xaml.cs">
       <DependentUpon>ActionSelectModalPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Modal\InviteShareModalPage.xaml.cs">
+      <DependentUpon>InviteShareModalPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Modal\ResumeModalPage.xaml.cs">
       <DependentUpon>ResumeModalPage.xaml</DependentUpon>
     </Compile>
@@ -130,6 +135,9 @@
     </Compile>
     <Compile Include="Views\Profile\EnterAmountPage.xaml.cs">
       <DependentUpon>EnterAmountPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ForgotPinPage.xaml.cs">
+      <DependentUpon>ForgotPinPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Setting\AboutGuapPage.xaml.cs">
       <DependentUpon>AboutGuapPage.xaml</DependentUpon>
@@ -238,6 +246,12 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.Messaging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\Xam.Plugins.Messaging.5.1.0\lib\netstandard1.0\Plugin.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Messaging.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\Xam.Plugins.Messaging.5.1.0\lib\netstandard1.0\Plugin.Messaging.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Plugin.Permissions, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Plugin.Permissions.2.2.1\lib\netstandard1.0\Plugin.Permissions.dll</HintPath>
     </Reference>
@@ -292,6 +306,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\SuccessSignup.xaml">

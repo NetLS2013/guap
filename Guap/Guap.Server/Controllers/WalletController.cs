@@ -51,7 +51,7 @@ namespace Guap.Server.Controllers
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"--- Error: {e.Message}");
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
                 
                 return BadRequest();
             }

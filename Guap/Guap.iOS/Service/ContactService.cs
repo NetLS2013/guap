@@ -57,7 +57,7 @@ namespace Guap.iOS.Service
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"--- Error: {e.Message}");
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
             }
 
             return Task.FromResult(contactList);

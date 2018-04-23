@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script>
+        function detectAndServe() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            var appId;
+            var redirect;
+            
+            if (/android/i.test(userAgent)) {
+                appId = "com.hoteltonight.android.prod";
+                
+                redirect = "market://details?id=" + appId;
+            }
+
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                appId = "407690035";
+                
+                redirect = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=" 
+                    + appId + "&amp;onlyLatestVersion=true&amp;pageNumber=0&amp;sortOrdering=1&amp;type=Purple+Software";
+            }
+
+            document.querySelector("a").href = redirect || "https://guapcoin.com/";
+        };
+    </script>
+</head>
+<body onload="detectAndServe()">
+    <h1><a>Click link below to get Guapcoin Wallet</a></h1>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 x:Class="Guap.Views.Modal.InviteShareModalPage">
+    <StackLayout
+        Margin="30"
+        BackgroundColor="White"
+        VerticalOptions="CenterAndExpand">
+        <StackLayout
+            Orientation="Vertical"
+            Padding="24">
+            <Label
+                FontSize="20"
+                TextColor="#4a4a4a"
+                Text="Invite Them!"
+                FontAttributes="Bold"/>
+                
+            <customRender:LineHeightLabel
+                x:Name="InviteText"
+                FontSize="16"
+                Margin="0,8,0,30"
+                TextColor="#4a4a4a"/>
+        </StackLayout>
+        
+        <StackLayout
+            Orientation="Horizontal"
+            BackgroundColor="#e0bc0c"
+            VerticalOptions="End"
+            Padding="16,0,16,0">
+            <Button
+                Text="Cancel"
+                BackgroundColor="#e0bc0c"
+                TextColor="#fff"
+                HorizontalOptions="StartAndExpand"
+                FontSize="20"
+                Clicked="DismissModalClick"/>
+                
+            <Button
+                Text="Okay"
+                BackgroundColor="#e0bc0c"
+                TextColor="#fff"
+                HorizontalOptions="EndAndExpand"
+                FontSize="20"
+                Clicked="OkayModalClick"/>
+        </StackLayout>
+    </StackLayout>
+</pages:PopupPage>

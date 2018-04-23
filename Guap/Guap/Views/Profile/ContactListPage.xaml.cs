@@ -9,7 +9,7 @@ namespace Guap.Views.Profile
         public ContactListPage()
         {
             InitializeComponent();
-            ContactListViewModel = new ContactListViewModel();
+            ContactListViewModel = new ContactListViewModel(this);
             BindingContext = ContactListViewModel;
         }
     }

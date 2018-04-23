@@ -98,12 +98,16 @@ namespace Guap
         
         public string GetAddressByNumberEndpoint { get; set; }
         
+        public string VerificationEmailEndpoint { get; set; }
+        
+        public string ExplorerTransactionEndpoint { get; set; }
+        
+        public string ForgotPinEndpoint { get; set; }
+        
         private string BaseEndpoint
         {
             set => UpdateEndpoint(value);
         }
-
-        public string VerificationEmailEndpoint { get; set; }
 
         private void UpdateEndpoint(string baseEndpoint)
         {
@@ -112,6 +116,7 @@ namespace Guap
             UpdateAddressEndpoint = $"{baseEndpoint}/api/Wallet/UpdateAddress";
             GetAddressByNumberEndpoint = $"{baseEndpoint}/api/Wallet/GetAddressByNumber";
             VerificationEmailEndpoint = $"{baseEndpoint}/api/Account/VerificationEmail";
+            ForgotPinEndpoint = $"{baseEndpoint}/api/Account/ForgotPinPin";
         }
 
         private string BlockExplorer
@@ -122,7 +127,6 @@ namespace Guap
             }
         }
 
-        public string ExplorerTransactionEndpoint { get; set; }
 
         private void UpdateBlockExplorerEndpoint(string baseEndpoint)
         {

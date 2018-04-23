@@ -87,7 +87,7 @@ namespace Guap.ViewModels
             }
             set
             {
-                if (_phoneNumber != value && value.Length <= 16)
+                if (_phoneNumber != value && value.Length <= 15)
                 {
                     _phoneNumber = value;
                 }
@@ -175,7 +175,7 @@ namespace Guap.ViewModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"--- Error: {e.Message}");
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Guap.ViewModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"--- Error: {e.Message}");
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
             }
         }
     }

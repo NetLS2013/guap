@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Data\Entities\User.cs" />
     <Compile Include="Migrations\20180406142637_User.cs" />

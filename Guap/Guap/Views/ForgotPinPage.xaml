@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
+             x:Class="Guap.Views.ForgotPinPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout
+            BackgroundColor="#000">
+            <StackLayout
+                Padding="40,70,40,0"
+                VerticalOptions="FillAndExpand">
+                <Label
+                    Text="Reset PIN"
+                    TextColor="#fff"
+                    FontSize="20"
+                    FontAttributes="Bold"/>
+                
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Vertical"
+                    Margin="0,40,0,0"
+                    Padding="20,0">
+                    <Label Text="Enter Email"
+                           HorizontalOptions="Center"
+                           TextColor="#fff"
+                           FontSize="16"/>
+                    
+                    <customRender:BottomBorderEntry
+                        Text="{Binding EmailInput}"
+                        TextColor="#fff"
+                        Keyboard="Email"
+                        HorizontalTextAlignment="Center"/>
+                </StackLayout>
+                
+                <ListView
+                    HasUnevenRows="True"
+                    BackgroundColor="#000"
+                    ItemsSource="{Binding Errors}"
+                    SeparatorVisibility="None"
+                    IsEnabled="false"
+                    Margin="8,24,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding .}" TextColor="#db0029" FontSize="14"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            
+            <StackLayout
+                Orientation="Horizontal"
+                BackgroundColor="#e0bc0c"
+                VerticalOptions="End"
+                Padding="16,0,16,0">
+                <Button
+                    Text="Send"
+                    BackgroundColor="#e0bc0c"
+                    TextColor="#fff"
+                    HorizontalOptions="EndAndExpand"
+                    FontSize="20"
+                    Command="{Binding ForgotPinCommand}"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

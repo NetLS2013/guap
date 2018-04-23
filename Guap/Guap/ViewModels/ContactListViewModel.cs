@@ -4,6 +4,8 @@ using System.Diagnostics;
 using Guap.DependencyServcie;
 using Guap.Models;
 using Guap.Service;
+using Guap.Views.Modal;
+using Rg.Plugins.Popup.Extensions;
 using Xamarin.Forms;
 
 namespace Guap.ViewModels
@@ -17,11 +19,10 @@ namespace Guap.ViewModels
 
         private Page _context;
 
-        public ContactListViewModel()
+        public ContactListViewModel(Page context)
         {
             _requestProvider = new RequestProvider();
-            //_context = context;
-
+            _context = context;
 
             Device.BeginInvokeOnMainThread(async () =>
                 ContactsList = await DependencyService.Get<IContactService>().GetContactListAsync());
@@ -41,10 +42,21 @@ namespace Guap.ViewModels
             }
         }
         
-        public ContactModel SelectedContact { set => OnSelectedContact(value); }
+        public ContactModel SelectedContact
+        {
+            set
+            {
+                OnSelectedContact(value);
+                
+                OnPropertyChanged(nameof(SelectedContact));
+            }
+        }
 
         private async void OnSelectedContact(ContactModel contact)
         {
+            if (contact == null)
+                return;
+            
             try
             {
                 var result = await _requestProvider
@@ -53,7 +65,7 @@ namespace Guap.ViewModels
 
                 if (string.IsNullOrWhiteSpace(result))
                 {
-//                    await _context.Navigation.PushAsync(new PhoneVerificationPage(this));
+                    await _context.Navigation.PushPopupAsync(new InviteShareModalPage(contact));
                 }
                 else
                 {
@@ -62,10 +74,8 @@ namespace Guap.ViewModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"--- Error: {e.Message}");
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
             }
-
-            //await this._context.Navigation.PopAsync();
         }
     }
 }

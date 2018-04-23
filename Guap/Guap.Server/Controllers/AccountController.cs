@@ -98,13 +98,13 @@ namespace Guap.Server.Controllers
                 var token = await _tokenProvider.GenerateAsync(user);
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { phone = user.PhoneNumber, token }, HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(user.Email, "Confirm your account",
+                await _emailSender.SendEmailAsync(user.Email, "Guapcoin Support Service",
                     "Please confirm your account by clicking this link: "
                     + callbackUrl);
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"--- Error: {e.Message}");
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
                 
                 return BadRequest();
             }
@@ -127,12 +127,29 @@ namespace Guap.Server.Controllers
             }
             catch(Exception e)
             {
-                Debug.WriteLine($"--- Error: {e.Message}");
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
                 
                 return BadRequest("Invalid confirmation token.");
             }
             
             return Ok("Thank you for confirming your account.");
+        }
+        
+        public async Task<IActionResult> ForgotPinPin([FromBody] UserModel model)
+        {
+            var user = await _userRepository.FindByEmail(model.Email);
+
+            try
+            {
+                await _emailSender.SendEmailAsync(user.Email, "Guapcoin Support Service",
+                    "Your PIN: " + user.VerificationCode);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
+            }
+            
+            return Ok(true);
         }
     }
 }

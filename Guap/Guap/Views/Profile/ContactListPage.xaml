@@ -9,12 +9,12 @@
         <ListView
             HasUnevenRows="True"
             ItemsSource="{Binding ContactsList}"
-            SelectedItem="{Binding SelectedContact}">
+            SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout
-                            Padding="8"
+                            Padding="16,8"
                             Orientation="Vertical">
                             <Label
                                 Text="{Binding Name}"

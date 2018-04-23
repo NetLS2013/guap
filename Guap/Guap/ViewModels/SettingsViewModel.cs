@@ -206,7 +206,7 @@ namespace Guap.ViewModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"--- Error: {e.Message}");
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
             }
         }
     }

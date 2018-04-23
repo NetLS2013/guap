@@ -27,6 +27,7 @@ namespace Guap.ViewModels
         public ICommand CteateAccountCommand => new Command(async () => await OnCreateAccount());
         public ICommand RestoreWalletCommand => new Command(async () => await OpenRestoreWallet());
         public ICommand OpenPageCreateWalletCommand => new Command(async () => await OpenPageCreateWallet());
+        public ICommand ForgotPinCommand => new Command(async () => await ForgotPin());
 
         public CreateAccountViewModel(Page context)
         {
@@ -67,7 +68,7 @@ namespace Guap.ViewModels
             }
         }
         
-        private bool ValidateVerifyNumber(ValidationHelper validator)
+        private bool Validate(ValidationHelper validator)
         {
             var result = validator.ValidateAll();
 
@@ -173,13 +174,44 @@ namespace Guap.ViewModels
             await _context.Navigation.PushAsync(inputMnemonic);
         }
         
+        private async Task ForgotPin()
+        {
+            var validator = new ValidationHelper();
+            
+            validator.AddRequiredRule(() => EmailInput, "The email is required.");
+            
+            if (!Validate(validator))
+            {
+                return;
+            }
+
+            try
+            {
+                var result = await _requestProvider
+                    .PostAsync<UserModel, bool>(GlobalSetting.Instance.ForgotPinEndpoint, 
+                        new UserModel
+                        {
+                            Email = _emailInput
+                        });
+                
+                if (result)
+                {
+                    await _context.Navigation.PopAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
+            }
+        }
+        
         private async Task OpenPageCreateWallet()
         {
             var validator = new ValidationHelper();
             
             validator.AddRequiredRule(() => EmailInput, "The email is required.");
             
-            if (!ValidateVerifyNumber(validator))
+            if (!Validate(validator))
             {
                 return;
             }
@@ -202,7 +234,7 @@ namespace Guap.ViewModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"--- Error: {e.Message}");
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
             }
         }
 
@@ -223,7 +255,7 @@ namespace Guap.ViewModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"--- Error: {e.Message}");
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
             }
             
             return result;

@@ -52,7 +52,7 @@ namespace Guap.iOS.Renderer
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine($"--- Error: {e.Message}");
+                    Debug.WriteLine($"--- Error: {e.StackTrace}");
                 }
             }
         }

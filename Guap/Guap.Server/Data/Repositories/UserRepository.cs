@@ -17,6 +17,7 @@ namespace Guap.Server.Data.Repositories
         Task RegisterEmail(UserModel userModel);
         Task ConfirmEmail(UserModel userModel);
         List<User> GetAllUsers();
+        Task<User> FindByEmail(string email);
     }
     
     public class UserRepository : GenericRepository<User>, IUserRepository
@@ -30,6 +31,11 @@ namespace Guap.Server.Data.Repositories
             var number = new string(phoneNumber.Where(char.IsDigit).ToArray());
             
             return await Get(m => m.PhoneNumber.Contains(number));
+        }
+        
+        public async Task<User> FindByEmail(string email)
+        {
+            return await Get(m => m.Email.Contains(email));
         }
 
         public async Task UpdateAddress(UserModel model)
