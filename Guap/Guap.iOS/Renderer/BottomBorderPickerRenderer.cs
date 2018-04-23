@@ -30,6 +30,10 @@ namespace Guap.iOS.Renderer
                 Control.Layer.ShadowOpacity = 1.0f;
                 Control.Layer.ShadowRadius = 0.0f;
                 Control.TextColor = UIColor.Black;
+
+                var downarrow = UIImage.FromBundle("dropdown.png");
+                Control.RightViewMode = UITextFieldViewMode.Always;
+                Control.RightView = new UIImageView(downarrow);
             }
         }
     }

@@ -32,16 +32,19 @@
                     <StackLayout Orientation="Horizontal">
                         <customRender:BottomBorderEntryWhite
                                 TextColor="#000"
+                                Placeholder="Receiver address"
                                 HorizontalTextAlignment="Start"
                                 HorizontalOptions="FillAndExpand"
                                 Text="{Binding ReceiverAddress, Mode=TwoWay}"
                                 IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"
                             />
-                        <Image Source="create.png" VerticalOptions="End" HorizontalOptions="End">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ScanCommand}"/>
-                            </Image.GestureRecognizers>
-                        </Image>
+                        <StackLayout Margin="-20" Padding="20" VerticalOptions="Center" HorizontalOptions="End">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer   Command="{Binding ScanCommand}"/>
+                            </StackLayout.GestureRecognizers>
+                            <Image Source="create.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
+                        </StackLayout>
+
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                         <Button
@@ -73,6 +76,7 @@
                                    FontSize="16"/>
                             <customRender:BottomBorderEntryWhite
                                 TextColor="#000"
+                                Placeholder="Amount to send"
                                 Keyboard="Numeric"
                                 HorizontalTextAlignment="Start"
                                 Text="{Binding Amount, Mode=TwoWay}"

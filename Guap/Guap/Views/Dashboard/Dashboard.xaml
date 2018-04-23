@@ -15,12 +15,14 @@
 
                     <StackLayout BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                         <StackLayout  BackgroundColor="White" Padding="14,8,14,0" Margin="0" Orientation="Horizontal" >
-                            <Label Text="Guap Wallet" VerticalOptions="Center" HorizontalOptions="Start" TextColor="#9b9b9b" FontSize="14" FontAttributes="Bold"></Label>
-                            <Image Source="create.png" VerticalOptions="Center" HorizontalOptions="EndAndExpand">
-                                <Image.GestureRecognizers>
+                            <Label Text="Guap Wallet" VerticalOptions="Center" HorizontalOptions="StartAndExpand" TextColor="#9b9b9b" FontSize="14" FontAttributes="Bold"></Label>
+                            <StackLayout Margin="-20" Padding="20" VerticalOptions="Center" HorizontalOptions="End">
+                                <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding SelectActionCommand}"/>
-                                </Image.GestureRecognizers>
-                            </Image>
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="create.png" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+
                         </StackLayout>
                         <BoxView BackgroundColor="#f6f8fa" HeightRequest="1" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
                         <StackLayout Orientation="Vertical" Padding="14,0,14,6" VerticalOptions="FillAndExpand">
@@ -46,12 +48,14 @@
                     <customRender:FrameShadow Grid.Row="0" Grid.Column="0" Padding="0">
                         <StackLayout BackgroundColor="White">
                             <StackLayout  BackgroundColor="White" Padding="14,8,14,0" Margin="0" Orientation="Horizontal">
-                                <Label Text="ERC20 Tokens" VerticalOptions="Center" HorizontalOptions="Start" TextColor="#9b9b9b" FontSize="14" FontAttributes="Bold"></Label>
-                                <Image Source="create.png" VerticalOptions="Center" HorizontalOptions="EndAndExpand">
-                                    <Image.GestureRecognizers>
+                                <Label Text="ERC20 Tokens" VerticalOptions="Center" HorizontalOptions="StartAndExpand" TextColor="#9b9b9b" FontSize="14" FontAttributes="Bold"></Label>
+
+                                <StackLayout Margin="-20" Padding="20" VerticalOptions="Center" HorizontalOptions="End">
+                                    <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding CreateTokenCommand}"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
+                                    </StackLayout.GestureRecognizers>
+                                    <Image Source="create.png" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
+                                </StackLayout>
                             </StackLayout>
                             <BoxView BackgroundColor="#f6f8fa" HeightRequest="1" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
                             <ListView HasUnevenRows="True" SeparatorVisibility="None"
