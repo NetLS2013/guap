@@ -116,7 +116,7 @@ namespace Guap
             UpdateAddressEndpoint = $"{baseEndpoint}/api/Wallet/UpdateAddress";
             GetAddressByNumberEndpoint = $"{baseEndpoint}/api/Wallet/GetAddressByNumber";
             VerificationEmailEndpoint = $"{baseEndpoint}/api/Account/VerificationEmail";
-            ForgotPinEndpoint = $"{baseEndpoint}/api/Account/ForgotPinPin";
+            ForgotPinEndpoint = $"{baseEndpoint}/api/Account/ForgotPin";
         }
 
         private string BlockExplorer

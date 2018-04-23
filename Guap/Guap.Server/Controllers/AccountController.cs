@@ -135,7 +135,7 @@ namespace Guap.Server.Controllers
             return Ok("Thank you for confirming your account.");
         }
         
-        public async Task<IActionResult> ForgotPinPin([FromBody] UserModel model)
+        public async Task<IActionResult> ForgotPin([FromBody] UserModel model)
         {
             var user = await _userRepository.FindByEmail(model.Email);
 

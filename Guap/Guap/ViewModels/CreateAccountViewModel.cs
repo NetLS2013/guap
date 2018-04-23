@@ -91,7 +91,7 @@ namespace Guap.ViewModels
             inputMnemonic.ViewModel.Validators.Add(
                 new KeyValuePair<string, Func<string, bool>>(
                     "The mnemonic phrase you entered is incorrect." + Environment.NewLine + "Typos can cause this."
-                    + Environment.NewLine + "Please review your phrase and try again",
+                    + Environment.NewLine + "Please review your phrase and try again.",
                     s => string.Join(" ", words) == s));
 
 
@@ -144,7 +144,7 @@ namespace Guap.ViewModels
             inputMnemonic.ViewModel.Validators.Add(
                 new KeyValuePair<string, Func<string, bool>>(
                     "The mnemonic phrase you entered is incorrect." + Environment.NewLine + "Typos can cause this."
-                    + Environment.NewLine + "Please review your phrase and try again",
+                    + Environment.NewLine + "Please review your phrase and try again.",
                     s => EthereumService.MnenonicPhraseValidate(s)));
 
             inputMnemonic.ViewModel.SuccessAction = async s =>

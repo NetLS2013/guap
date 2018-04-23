@@ -21,7 +21,7 @@ namespace Guap.iOS.Renderer
                 
                 Control.Layer.BackgroundColor = UIColor.Black.CGColor;
                 Control.Layer.MasksToBounds = false;
-                Control.Layer.ShadowColor = UICustomColor.FromHex(0x979797).CGColor;
+                Control.Layer.ShadowColor = UIColor.White.CGColor;
                 Control.Layer.ShadowOffset = new CGSize(0.0, 1.0f);
                 Control.Layer.ShadowOpacity = 1.0f;
                 Control.Layer.ShadowRadius = 0.0f;

@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="Black">
            
-            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="20">
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="30">
                 <Image Source="logo.png" Margin="0, 0, 0, 60" />
                 <customRender:LineHeightLabel x:Name="Message" TextColor="#fff" FontSize="18"/>
             </StackLayout>

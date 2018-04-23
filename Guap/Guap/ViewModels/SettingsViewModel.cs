@@ -63,7 +63,7 @@ namespace Guap.ViewModels
             inputMnemonic.ViewModel.Validators.Add(
                 new KeyValuePair<string, Func<string, bool>>(
                     "The mnemonic phrase you entered is incorrect." + Environment.NewLine + "Typos can cause this."
-                    + Environment.NewLine + "Please review your phrase and try again",
+                    + Environment.NewLine + "Please review your phrase and try again.",
                     s => EthereumService.MnenonicPhraseValidate(s)));
 
             inputMnemonic.ViewModel.SuccessAction = async s =>
@@ -118,7 +118,7 @@ namespace Guap.ViewModels
                                         this._context.Navigation.RemovePage(this._context.Navigation.NavigationStack[this._context.Navigation.NavigationStack.Count - 2]);
                                     },
                                 c => Equals(c, pin),
-                                "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again",
+                                "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
                                 new CommonPageSettings
                                     {
                                         HasNavigation = true,

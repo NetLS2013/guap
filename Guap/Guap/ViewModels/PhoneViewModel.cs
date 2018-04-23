@@ -212,7 +212,7 @@ namespace Guap.ViewModels
                             HasNavigation = false,
                             HeaderText =
                                 "Your identity has been verified." + Environment.NewLine
-                                                                   + "You can create your wallet"
+                                                                   + "You can create your wallet."
                         },
                         () => this._context.Navigation.PushAsync(new EnterEmailPage())));
                 

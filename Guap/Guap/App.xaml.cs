@@ -47,7 +47,7 @@ namespace Guap
                                             SetMainPage((Page)Activator.CreateInstance(startPage));
                                         },
                                     c => Equals(c, pin),
-                                    "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again",
+                                    "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
                                     new CommonPageSettings
                                         {
                                             HasNavigation = true,
