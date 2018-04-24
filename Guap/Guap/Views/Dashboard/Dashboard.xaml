@@ -26,11 +26,10 @@
                         </StackLayout>
                         <BoxView BackgroundColor="#f6f8fa" HeightRequest="1" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
                         <StackLayout Orientation="Vertical" Padding="14,0,14,6" VerticalOptions="FillAndExpand">
-                            <Label Text="{Binding Account.Address}" HorizontalOptions="Start" TextColor="#9b9b9b" FontSize="12" LineBreakMode="TailTruncation"/>
                             <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
 
-                                <Label Text="{Binding Guap.BalanceString}" TextColor="#9b9b9b" FontSize="10"/>
-                                <Label Text="{Binding Guap.Symbol}" TextColor="#9b9b9b" FontSize="10"/>
+                                <Label Text="{Binding Guap.BalanceString}" TextColor="#9b9b9b" FontSize="14"/>
+                                <Label Text="{Binding Guap.Symbol}" TextColor="#9b9b9b" FontSize="14"/>
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>

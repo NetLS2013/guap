@@ -14,24 +14,34 @@
         <ListView
            HasUnevenRows="True"
             ItemsSource="{Binding SettingsList, Mode=TwoWay}"
-            SelectedItem="{Binding SelectedSetting}"
-            x:Name="ListView1">
+            SelectedItem="{Binding SelectedSetting, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout
-                            Padding="36, 20"
+                            HeightRequest="70"
+                            Padding="36, 0"
                             Orientation="Horizontal">
-                            <Image Source="{Binding Icon}" VerticalOptions="Center"></Image>
+                            <Image WidthRequest="30" Source="{Binding Icon}" VerticalOptions="Center"></Image>
+                            
                             <Label
                                 Margin="18, 0, 0, 0"
                                 Text="{Binding Title}"
                                 FontSize="20"
+                                TextColor="#4a4a4a"
                                 VerticalOptions="Center"
-                                FontAttributes="None"
-                            />
-                            <customRender:ToggleButton CheckedImage="toggle_on.png" UnCheckedImage="toggle_off.png" HeightRequest="36" WidthRequest="36"
-                                                Checked="{Binding Toggled,Mode=TwoWay}" Command="{Binding ToggledCommand}" VerticalOptions="Center" IsVisible="{Binding IsVisible}" HorizontalOptions="End"/>
+                                FontAttributes="None"/>
+                            
+                            <customRender:ToggleButton
+                                Margin="0,0,50,0"
+                                CheckedImage="toggle_on.png"
+                                UnCheckedImage="toggle_off.png"
+                                HeightRequest="30"
+                                Checked="{Binding Toggled,Mode=TwoWay}"
+                                Command="{Binding ToggledCommand}"
+                                VerticalOptions="Center"
+                                IsVisible="{Binding IsVisible}"
+                                HorizontalOptions="EndAndExpand"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

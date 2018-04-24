@@ -64,7 +64,7 @@ namespace Guap.Server.Service
 
         public async Task WatchChain()
         {
-            _lastBlock = _web3.Eth.Blocks.GetBlockNumber.SendRequestAsync().Result.Value - _currentBlock - 1;
+            _lastBlock = _web3.Eth.Blocks.GetBlockNumber.SendRequestAsync().Result.Value - 1;
             
             while (true)
             {

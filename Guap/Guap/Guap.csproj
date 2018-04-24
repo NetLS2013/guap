@@ -75,7 +75,9 @@
     <Compile Include="Helpers\BottomBarPageExtensions.cs" />
     <Compile Include="Helpers\CommonPageSettings.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Helpers\StatusResult.cs" />
     <Compile Include="Models\NotificationModel.cs" />
+    <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Service\TokenService.cs" />
     <Compile Include="Models\MnemonicWallet.cs" />

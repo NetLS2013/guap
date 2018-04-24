@@ -61,6 +61,14 @@
                 VerticalOptions="End"
                 Padding="16,0,16,0">
                 <Button
+                    Text="Back"
+                    BackgroundColor="#e0bc0c"
+                    TextColor="#fff"
+                    HorizontalOptions="StartAndExpand"
+                    FontSize="20"
+                    Command="{Binding BackCommand}"/>
+                
+                <Button
                     Command="{Binding PageSuccessSignupCommand}"
                     Text="Accept"
                     BackgroundColor="#e0bc0c"

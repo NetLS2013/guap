@@ -233,7 +233,7 @@ namespace Guap.ViewModels
             try
             {
                 var result = await _requestProvider
-                    .PostAsync<UserModel, bool>(GlobalSetting.Instance.VerificationEmailEndpoint, 
+                    .PostAsync<UserModel, ResultModel>(GlobalSetting.Instance.VerificationEmailEndpoint, 
                         new UserModel
                         {
                             Email = _emailInput,
@@ -241,7 +241,15 @@ namespace Guap.ViewModels
                             PhoneNumber = Settings.Get(Settings.Key.PhoneNumber).ToString()
                         });
                 
-                if (result)
+                validator.AddRule(EmailInput,
+                    () => RuleResult.Assert(result.Result, result.Message));
+                
+                if (!Validate(validator))
+                {
+                    return;
+                }
+                
+                if (result.Result)
                 {
                     await _context.Navigation.PushAsync(new NewUserExistPage());
                 }

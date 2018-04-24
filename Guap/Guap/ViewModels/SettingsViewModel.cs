@@ -271,10 +271,9 @@ namespace Guap.ViewModels
         {
             set
             {
-                if (value != null)
-                {
-                    OnSelectedSetting(value);
-                }
+                OnSelectedSetting(value);
+                
+                OnPropertyChanged(nameof(SelectedSetting));
             }
         }
 

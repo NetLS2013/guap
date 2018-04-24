@@ -31,6 +31,8 @@ namespace Guap.ViewModels
         
         public ICommand PagePhoneNumberCommand => new Command(async () => await OnPagePhoneNumber());
         public ICommand PageSuccessSignupCommand => new Command(async () => await OnPageSuccessSignup());
+        
+        public ICommand BackCommand => new Command(async () => await _context.Navigation.PopAsync());
 
         public PhoneViewModel(Page context)
         {
@@ -131,21 +133,8 @@ namespace Guap.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Errors)));
             }
         }
-
-        private bool ValidatePhoneNumber()
-        {
-            var validator = new ValidationHelper();
-            validator.AddRequiredRule(() => Country, "Country is required.");
-            validator.AddRequiredRule(() => PhoneNumber, "Phone number is required.");
-
-            var result = validator.ValidateAll();
-
-            Errors = result.ErrorList;
-
-            return result.IsValid;
-        }
         
-        private bool ValidateVerifyNumber(ValidationHelper validator)
+        private bool Validate(ValidationHelper validator)
         {
             var result = validator.ValidateAll();
 
@@ -156,7 +145,12 @@ namespace Guap.ViewModels
 
         private async Task OnPagePhoneNumber()
         {
-            if(!ValidatePhoneNumber())
+            var validator = new ValidationHelper();
+            
+            validator.AddRequiredRule(() => Country, "Country is required.");
+            validator.AddRequiredRule(() => PhoneNumber, "Phone number is required.");
+            
+            if(!Validate(validator))
             {
                 return;
             }
@@ -165,10 +159,18 @@ namespace Guap.ViewModels
             {
                 var phoneNumber = string.Concat(_country.Trim(), new string(_phoneNumber?.Where(char.IsDigit).ToArray()));
                 var result = await _requestProvider
-                    .PostAsync<UserModel, bool>(GlobalSetting.Instance.RegisterNumberEndpoint, 
+                    .PostAsync<UserModel, ResultModel>(GlobalSetting.Instance.RegisterNumberEndpoint, 
                         new UserModel { PhoneNumber = phoneNumber });
 
-                if (result)
+                validator.AddRule(PhoneNumber,
+                    () => RuleResult.Assert(result.Result, result.Message));
+                
+                if (!Validate(validator))
+                {
+                    return;
+                }
+                
+                if (result.Result)
                 {
                     await _context.Navigation.PushAsync(new PhoneVerificationPage(this));
                 }
@@ -185,7 +187,7 @@ namespace Guap.ViewModels
             
             validator.AddRequiredRule(() => VerificationCode, "The verification code is required.");
             
-            if (!ValidateVerifyNumber(validator))
+            if (!Validate(validator))
             {
                 return;
             }
@@ -200,7 +202,7 @@ namespace Guap.ViewModels
                 validator.AddRule(VerificationCode,
                     () => RuleResult.Assert(result, "The verification code was incorrect.\nPlease try again."));
                 
-                if (!ValidateVerifyNumber(validator))
+                if (!Validate(validator))
                 {
                     return;
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Guap.Server.Data.Repositories;
 using Guap.Server.Models;
@@ -29,10 +30,16 @@ namespace Guap.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterNumber([FromBody]UserModel model)
         {
-            if (!ModelState.IsValid
-                || string.IsNullOrWhiteSpace(model.PhoneNumber))
+            if (string.IsNullOrWhiteSpace(model.PhoneNumber))
             {
                 return BadRequest();
+            }
+            
+            var regex = new Regex(@"^\+?[1-9]\d{10,14}$");
+
+            if (!regex.IsMatch(model.PhoneNumber))
+            {
+                return Ok(new { code = "1001", result = false });
             }
 
             var user = new UserModel
@@ -42,7 +49,7 @@ namespace Guap.Server.Controllers
             
             await _userRepository.RegisterNumber(user);
 
-            return Ok(true);
+            return Ok(new { result = true });
         }
         
         [HttpPost]
@@ -75,6 +82,13 @@ namespace Guap.Server.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest();
+            }
+            
+            var regex = new Regex(@"^(([^<>()\[\]\\.,;:\s@""]+(\.[^<>()\[\]\\.,;:\s@""]+)*)|("".+""))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$");
+
+            if (!regex.IsMatch(model.Email))
+            {
+                return Ok(new { code = "1002", result = false });
             }
 
             var user = new UserModel
@@ -109,9 +123,10 @@ namespace Guap.Server.Controllers
                 return BadRequest();
             }
 
-            return Ok(true);
+            return Ok(new { result = true });
         }
 
+        [HttpPost]
         public async Task<IActionResult> ConfirmEmail(string phone, string token)
         {
             var user = await _userRepository.FindUser(phone);
@@ -135,6 +150,7 @@ namespace Guap.Server.Controllers
             return Ok("Thank you for confirming your account.");
         }
         
+        [HttpPost]
         public async Task<IActionResult> ForgotPin([FromBody] UserModel model)
         {
             var user = await _userRepository.FindByEmail(model.Email);
@@ -151,7 +167,6 @@ namespace Guap.Server.Controllers
             
             return Ok(true);
         }
-        
 
         [HttpPost]
         public async Task<IActionResult> NotificationsEnabled([FromBody] NotificationModel model)
