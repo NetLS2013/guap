@@ -102,8 +102,34 @@ namespace Guap
                 Account = null;
             }
         }
+        
+        private string BaseEndpoint
+        {
+            set => UpdateEndpoint(value);
+        }
 
+        private void UpdateEndpoint(string baseEndpoint)
+        {
+            RegisterNumberEndpoint = $"{baseEndpoint}/api/Account/RegisterNumber";
+            VerificationCodeEndpoint = $"{baseEndpoint}/api/Account/VerificationCode";
+            UpdateAddressEndpoint = $"{baseEndpoint}/api/Wallet/UpdateAddress";
+            GetAddressByNumberEndpoint = $"{baseEndpoint}/api/Wallet/GetAddressByNumber";
+            VerificationEmailEndpoint = $"{baseEndpoint}/api/Account/VerificationEmail";
+            NotificationsEnabledEndpoint = $"{baseEndpoint}/api/Account/NotificationsEnabled";
+            ForgotPinEndpoint = $"{baseEndpoint}/api/Account/ForgotPin";
+            
+            // === external api ===
+            FiatEndpoint = "https://api.coinmarketcap.com/v1/ticker/ethereum";
+        }
 
+        private string BlockExplorer
+        {
+            set
+            {
+                UpdateBlockExplorerEndpoint(value);
+            }
+        }
+        
 
         public string RegisterNumberEndpoint { get; set; }
         
@@ -120,30 +146,8 @@ namespace Guap
         public string NotificationsEnabledEndpoint { get; set; }
         
         public string ForgotPinEndpoint { get; set; }
-        
-        private string BaseEndpoint
-        {
-            set => UpdateEndpoint(value);
-        }
 
-        private void UpdateEndpoint(string baseEndpoint)
-        {
-            RegisterNumberEndpoint = $"{baseEndpoint}/api/Account/RegisterNumber";
-            VerificationCodeEndpoint = $"{baseEndpoint}/api/Account/VerificationCode";
-            UpdateAddressEndpoint = $"{baseEndpoint}/api/Wallet/UpdateAddress";
-            GetAddressByNumberEndpoint = $"{baseEndpoint}/api/Wallet/GetAddressByNumber";
-            VerificationEmailEndpoint = $"{baseEndpoint}/api/Account/VerificationEmail";
-            NotificationsEnabledEndpoint = $"{baseEndpoint}/api/Account/NotificationsEnabled";
-            ForgotPinEndpoint = $"{baseEndpoint}/api/Account/ForgotPin";
-        }
-
-        private string BlockExplorer
-        {
-            set
-            {
-                UpdateBlockExplorerEndpoint(value);
-            }
-        }
+        public string FiatEndpoint { get; set; }
 
         private void UpdateBlockExplorerEndpoint(string baseEndpoint)
         {

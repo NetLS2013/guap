@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
+using System.Threading.Tasks;
+using Guap.Models;
+using Guap.Service;
 using Guap.Views.Profile;
 using Xamarin.Forms;
 
@@ -9,20 +13,41 @@ namespace Guap.ViewModels
     {
         public event Action<decimal> AmountChanged;
 
-        private decimal _inputAmmount;
+        private decimal? _inputAmmount;
+        private decimal _usdPrice;
         
         private readonly Page _context;
         
         private readonly NumberFormatInfo _noneSymbolFormat;
+        private readonly RequestProvider _requestProvider;
 
         public EnterAmountViewModel(Page context)
         {
             _context = context;
             
+            _requestProvider = new RequestProvider();
+            
             _noneSymbolFormat = (NumberFormatInfo) CultureInfo.CurrentCulture.NumberFormat.Clone();
             _noneSymbolFormat.CurrencySymbol = "";
+
+            Task.Run(async () => await Initialization());
         }
-        
+
+        private async Task Initialization()
+        {
+            try
+            {
+                var fiatResult = await _requestProvider.GetAsync<Fiat[]>(GlobalSetting.Instance.FiatEndpoint);
+                {
+                    decimal.TryParse(fiatResult[0].PriceUsd, out _usdPrice);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
+            }
+        }
+
         public string InputAmmount
         {
             get
@@ -32,11 +57,13 @@ namespace Guap.ViewModels
             set
             {
                 _inputAmmount = decimal.TryParse(value, out var amount) ? amount : 0;
+                
                 OnPropertyChanged(nameof(AmountTrigger));
                 OnPropertyChanged(nameof(CurrencyConverter));
+                
                 if (this._inputAmmount > decimal.Zero)
                 {
-                    AmountChanged(_inputAmmount);
+                    AmountChanged(_inputAmmount.GetValueOrDefault());
                 }
             }
         }
@@ -79,7 +106,7 @@ namespace Guap.ViewModels
                         },
                         new Span
                         {
-                            Text = string.Format(_noneSymbolFormat, "{0:c}", _inputAmmount * (decimal)379.05),
+                            Text = string.Format(_noneSymbolFormat, "{0:c}", _inputAmmount * _usdPrice),
                             FontAttributes = FontAttributes.Bold
                         },
                         new Span

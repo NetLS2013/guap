@@ -76,6 +76,7 @@
     <Compile Include="Helpers\CommonPageSettings.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\StatusResult.cs" />
+    <Compile Include="Models\Fiat.cs" />
     <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
