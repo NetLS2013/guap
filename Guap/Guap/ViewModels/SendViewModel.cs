@@ -231,41 +231,48 @@
 
                 if (this._token.Id == -1)
                 {
-                    try
+                    transactionHash = await this._ethereumService.SendEther(
+                                          new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(
+                                              0),
+                                          ReceiverAddress,
+                                          this._amount.Value);
+                    if (!string.IsNullOrWhiteSpace(transactionHash))
                     {
-                        transactionHash = await this._ethereumService.SendEther(new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(0), ReceiverAddress, this._amount.Value);
                         title = "Your Ethereum was send successfully.";
-
                         this.CleanFields();
-
                     }
-                    catch (Exception e)
+                    else
                     {
-                        ValidateSend("You don't have enough Ether or send to wrong address.");
+                        return;
                     }
-                   
                 }
                 else
                 {
-                    try
-                    {
-                        transactionHash = await this._tokenService.Send(Token, new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(0), ReceiverAddress, this._amount.Value);
-                        title = "Your " + Token.Name + " was send successfully.";
 
+                    transactionHash = await this._tokenService.Send(
+                                          Token,
+                                          new Wallet((string)Settings.Get(Settings.Key.MnemonicPhrase), "").GetAccount(
+                                              0),
+                                          ReceiverAddress,
+                                          this._amount.Value);
+
+                    if (!string.IsNullOrWhiteSpace(transactionHash))
+                    {
+                        title = "Your Ethereum was send successfully.";
                         this.CleanFields();
                     }
-                    catch (Exception e)
+                    else
                     {
-                        ValidateSend("You don't have enough " + Token.Name + " tokens or ether for fee or send to wrong address or smart contract don't support token transfer.");
+                        return;
                     }
-                    
+
                 }
 
-                if (IsValid)
-                {
-                    Device.BeginInvokeOnMainThread(async () => await this._context.Navigation.PushPopupAsync(new TransactionModalPage(title, transactionHash)));
-                }
-                
+                Device.BeginInvokeOnMainThread(
+                    async () => await this._context.Navigation.PushPopupAsync(
+                                    new TransactionModalPage(title, transactionHash)));
+
+
             }
         }
 

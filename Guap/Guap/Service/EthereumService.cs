@@ -5,6 +5,8 @@ namespace Guap.Service
     using System;
     using System.Numerics;
 
+    using Guap.Contracts;
+
     using NBitcoin;
 
     using Nethereum.HdWallet;
@@ -13,6 +15,10 @@ namespace Guap.Service
     using Nethereum.Util;
     using Nethereum.Web3;
     using Nethereum.Web3.Accounts;
+
+    using Plugin.Connectivity;
+
+    using Xamarin.Forms;
 
     public class EthereumService
     {
@@ -66,14 +72,43 @@ namespace Guap.Service
 
         public async Task<string> SendEther(Account account, string toAddress, BigDecimal amount)
         {
-            var realAmount = new HexBigInteger(UnitConversion.Convert.ToWei(amount));
-            return await _web3.Eth.TransactionManager.SendTransactionAsync( account.Address, toAddress, realAmount);
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("No internet connection! Cannot sent Ethereum.");
+                return null;
+            }
+
+            try
+            {
+                var realAmount = new HexBigInteger(UnitConversion.Convert.ToWei(amount));
+                return await _web3.Eth.TransactionManager.SendTransactionAsync(account.Address, toAddress, realAmount);
+            }
+            catch (Exception e)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Check own balance, receiver address or amount and and try again.");
+                return null;
+            }
         }
 
         public async Task<BigDecimal> GetBalance(string address)
-        { 
-            var balance =  _web3.Eth.GetBalance.SendRequestAsync(address).Result;
-            return UnitConversion.Convert.FromWeiToBigDecimal(balance.Value, UnitConversion.EthUnit.Ether);
+        {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("No internet connection! Cannot get current balance from blockchain.");
+                return new BigDecimal(0);
+            }
+
+            try
+            {
+                var balance = _web3.Eth.GetBalance.SendRequestAsync(address).Result;
+                return UnitConversion.Convert.FromWeiToBigDecimal(balance.Value, UnitConversion.EthUnit.Ether);
+            }
+            catch (Exception e)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Something wrong when request balance, please try again.");
+                return new BigDecimal(0);
+            }
+            
         }
     }
 }

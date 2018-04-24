@@ -105,7 +105,7 @@
                     BackgroundColor="#fff"
                    >
                     <Button
-                        TextColor="#e0bc0c"
+                        TextColor="#db0029"
                         BackgroundColor="Transparent"
                         Text="Delete"
                         FontSize="20"

@@ -18,6 +18,8 @@
     using Nethereum.Web3;
     using Nethereum.Web3.Accounts;
 
+    using Plugin.Connectivity;
+
     using Rg.Plugins.Popup.Extensions;
 
     using SQLite;
@@ -44,6 +46,7 @@
 
         private Token _guap;
 
+        private IMessage _message;
 
         public ICommand CreateTokenCommand => new Command( async () => await this._context.Navigation.PushAsync(new CreateTokenPage(this)));
 
@@ -65,6 +68,8 @@
                     return;
 
                 this._context.Navigation.PushAsync(new CreateTokenPage(this, this._token));
+                this._token = null;
+                OnPropertyChanged(nameof(Token));
             }
         }
 
@@ -118,7 +123,7 @@
 
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
-
+            _message = DependencyService.Get<IMessage>();
             _tokenService = new TokenService(new Web3(GlobalSetting.Instance.Account, GlobalSetting.Instance.EthereumNetwork));
             Task.Run(async () => { InitializeTokens(); }).Wait();
             GlobalSetting.Instance.AccountUpdate += () => { InitializeAccount(); };
@@ -149,25 +154,35 @@
             IsRefreshing = true;
 
             var guap = GlobalSetting.Instance.Guap;
-            guap.Balance =await this._tokenService.GetBalance(guap, Account.Address);
-            this.Guap = guap;
 
             var tokens = new List<Token>();
             tokens = await _repository.Get();
 
-            foreach (var token in tokens)
+            if (!CrossConnectivity.Current.IsConnected)
             {
-                try
-                {
-                    token.Balance = await _tokenService.GetBalance(token, Account.Address);
-                }
-                catch (Exception e)
-                {
+                Device.BeginInvokeOnMainThread(
+                    () => _message.LongAlert("No internet connection! Cannot load tokens balances."));
+            }
+            else
+            {
+                guap.Balance = await this._tokenService.GetBalance(guap, Account.Address);
 
+                foreach (var token in tokens)
+                {
+                    try
+                    {
+                        token.Balance = await _tokenService.GetBalance(token, Account.Address);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
                 }
             }
 
+            this.Guap = guap;
             Tokens = tokens;
+
             IsRefreshing = false;
         }
 

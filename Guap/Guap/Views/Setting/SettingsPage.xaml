@@ -13,7 +13,7 @@
         
         <ListView
            HasUnevenRows="True"
-            ItemsSource="{Binding SettingsList}"
+            ItemsSource="{Binding SettingsList, Mode=TwoWay}"
             SelectedItem="{Binding SelectedSetting}"
             x:Name="ListView1">
             <ListView.ItemTemplate>

@@ -18,7 +18,7 @@ namespace Guap.Droid
             base.OnCreate(bundle);
             
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            
+
             App.ScreenHeight = (int) (Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
             App.ScreenWidth = (int) (Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density);
             

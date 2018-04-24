@@ -7,6 +7,8 @@ using Xamarin.Forms;
 
 namespace Guap.ViewModels
 {
+    using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
     using System.Windows.Input;
 
     using Guap.Helpers;
@@ -17,7 +19,7 @@ namespace Guap.ViewModels
     public class SettingsViewModel : BaseViewModel
     {
         private readonly Page _context;
-        private List<SettingsModel> _settingsList;
+        private ObservableCollection<SettingsModel> _settingsList;
 
         private RequestProvider _requestProvider;
 
@@ -25,7 +27,6 @@ namespace Guap.ViewModels
         private bool _isLockApp;
 
         public event Action LockAppSuccess;
-        public event Action ReloadSettings;
 
         public SettingsViewModel(Page context)
         {
@@ -35,22 +36,12 @@ namespace Guap.ViewModels
             LockApp = (bool)Settings.Get(Settings.Key.IsLockApp);
             Notification = (bool)Settings.Get(Settings.Key.IsNotification);
 
-            _requestProvider.PostAsync<NotificationModel, string>(
-                GlobalSetting.Instance.NotificationsEnabledEndpoint,
-                new NotificationModel
-                    {
-                        NotificationsEnabled = Notification,
-                        PhoneNumber = Settings.Get(Settings.Key.PhoneNumber).ToString()
-                    });
-
             InitSettings();
-
-            ReloadSettings += () => { InitSettings(); };
         }
 
         private void InitSettings()
         {
-            SettingsList = new List<SettingsModel>
+            SettingsList = new ObservableCollection<SettingsModel>
                                {
                                    new SettingsModel { Title = "Notification", Icon = "notification.png", IsVisible = true,  Toggled = Notification, ToggledCommand = NotificationCommand },
                                    new SettingsModel { Title = "Lock App", Icon = "notification.png", IsVisible = true,  Toggled = LockApp, ToggledCommand = LockAppCommand },
@@ -67,17 +58,30 @@ namespace Guap.ViewModels
         public ICommand NotificationCommand => new Command(async () =>
             {
                 this.Notification = !this.Notification;
-                Settings.Set(Settings.Key.IsNotification, Notification);
-
                 try
                 {
-                    await _requestProvider.PostAsync<NotificationModel, string>(GlobalSetting.Instance.NotificationsEnabledEndpoint,
+                    var notification = await _requestProvider.PostAsync<NotificationModel, string>(GlobalSetting.Instance.NotificationsEnabledEndpoint,
                         new NotificationModel
                             {
-                                NotificationsEnabled = Notification,
+                                NotificationsEnabled = !Notification,
                                 PhoneNumber = Settings.Get(Settings.Key.PhoneNumber).ToString()
                             });
-                    
+                    if (!string.IsNullOrWhiteSpace(notification))
+                    {
+                        
+                        Settings.Set(Settings.Key.IsNotification, Notification);
+                    }
+                    else
+                    {
+                        this.Notification = !Notification;
+
+                        await Task.Delay(1000).ContinueWith(_ =>
+                            {
+                                SettingsList[0].Toggled = Notification;
+                                OnPropertyChanged(nameof(SettingsList));
+                            });
+                        
+                    }
                 }
                 catch (Exception e)
                 {
@@ -86,31 +90,32 @@ namespace Guap.ViewModels
                 
             });
 
-        public ICommand LockAppCommand => new Command(() =>
-            {
-                var setting = new CommonPageSettings
-                                  {
-                                      Title = "Unlock Wallet",
-                                      HeaderText = "Enter your 4 digit pin",
-                                      HasNavigation = true
-                                  };
-                
-                this._context.Navigation.PushAsync(
-                    new PinAuthPage(
-                        (sender, args) =>
-                            {
-                                this.LockApp = !this.LockApp;
-                                Settings.Set(Settings.Key.IsLockApp, LockApp);
-                                LockAppSuccess();
-                                ReloadSettings();
-                                this._context.Navigation.PopAsync();
-                            },
-                        valid => Equals(valid, Settings.Get(Settings.Key.Pin)),
-                        "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
-                        setting
-                    ));
-                ReloadSettings();
-            });
+        public ICommand LockAppCommand => new Command(
+            () =>
+                {
+                    var setting = new CommonPageSettings
+                                      {
+                                          Title = "Unlock Wallet",
+                                          HeaderText = "Enter your 4 digit pin",
+                                          HasNavigation = true
+                                      };
+
+                    this._context.Navigation.PushAsync(
+                        new PinAuthPage(
+                            (sender, args) =>
+                                {
+                                    this.LockApp = !this.LockApp;
+                                    Settings.Set(Settings.Key.IsLockApp, LockApp);
+                                    LockAppSuccess();
+                                    SettingsList[1].Toggled = LockApp;
+                                    this._context.Navigation.PopAsync();
+                                },
+                            valid => Equals(valid, Settings.Get(Settings.Key.Pin)),
+                            "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
+                            setting));
+
+                    SettingsList[1].Toggled = LockApp;
+                });
 
         public bool Notification
         {
@@ -144,7 +149,7 @@ namespace Guap.ViewModels
                 new CommonPageSettings
                     {
                         HasNavigation = true,
-                        //HasBack = true,
+                        HasBack = true,
                         Title = "Backup Wallet",
                         HeaderText = "Mnemonic Phrase"
                     });
@@ -248,7 +253,7 @@ namespace Guap.ViewModels
 
         }
 
-        public List<SettingsModel> SettingsList
+        public ObservableCollection<SettingsModel> SettingsList
         {
             get
             {

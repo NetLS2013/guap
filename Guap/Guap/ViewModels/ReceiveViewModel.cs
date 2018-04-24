@@ -12,6 +12,8 @@
     using Nethereum.Web3;
     using Nethereum.Web3.Accounts;
 
+    using Plugin.Connectivity;
+
     using SQLite;
 
     using Xamarin.Forms;
@@ -119,8 +121,10 @@
             RequestString = _account.Address;
 
             _ethereumService = new EthereumService(new Web3(_account, GlobalSetting.Instance.EthereumNetwork));
-            OnRefreshBalance();
-
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                OnRefreshBalance();
+            }
             GlobalSetting.Instance.AccountUpdate += () => { InitializeAccount(); };
         }
 

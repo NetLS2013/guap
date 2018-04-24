@@ -7,6 +7,14 @@ using Newtonsoft.Json.Serialization;
 
 namespace Guap.Service
 {
+    using System;
+
+    using Guap.Contracts;
+
+    using Plugin.Connectivity;
+
+    using Xamarin.Forms;
+
     public class RequestProvider
     {
         private readonly JsonSerializerSettings _serializerSettings;
@@ -25,16 +33,42 @@ namespace Guap.Service
         
         public async Task<TResult> GetAsync<TResult>(string uri)
         {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("No internet connection! Cannot load data from server.");
+                return default(TResult);
+            }
+
             var httpClient = CreateHttpClient();
-            var response = await httpClient.GetAsync(uri);
-            
-            await HandleResponse(response);
-            
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync(uri);
+
+                await HandleResponse(response);
+            }
+            catch (HttpRequestException e)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Server error. Try again later.");
+                return default(TResult);
+            }
+            catch (Exception e)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Something wrong. Try reload application.");
+                return default(TResult);
+            }
+           
             return await DeserializeObject<TResult>(response);
         }
         
         public async Task<TResult> PostAsync<TData, TResult>(string uri, TData data)
         {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("No internet connection! Cannot load data from server.");
+                return default(TResult);
+            }
+
             var httpClient = CreateHttpClient();
             var content = new StringContent(JsonConvert.SerializeObject(data))
             {
@@ -42,11 +76,26 @@ namespace Guap.Service
                     ContentType = new MediaTypeHeaderValue("application/json")
                 }
             };
-            
-            var response = await httpClient.PostAsync(uri, content);
-            
-            await HandleResponse(response);
-            
+
+            HttpResponseMessage response;
+
+            try
+            {
+                response = await httpClient.PostAsync(uri, content);
+
+                await HandleResponse(response);
+            }
+            catch (HttpRequestException e)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Server error. Try again later.");
+                return default(TResult);
+            }
+            catch (Exception e)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Something wrong. Try reload application.");
+                return default(TResult);
+            }
+
             return await DeserializeObject<TResult>(response);
         }
 

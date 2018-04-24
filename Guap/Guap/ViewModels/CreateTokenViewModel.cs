@@ -30,6 +30,8 @@
 
         private bool _isValid;
 
+        private string _decimals;
+
         private bool _isEdit;
 
         private readonly Page _context;
@@ -46,6 +48,7 @@
             if (token != null)
             {
                 Token = token;
+                Decimals = token.Decimals.ToString();
                 this.IsEdit = true;
                 this.IsValid = true;
                 this._context.Title = "Edit Token";
@@ -70,47 +73,64 @@
             }
             set
             {
-                this._token.Address = value;
+                this._token.Address = value.Trim();
                 OnPropertyChanged(nameof(ContractAddress));
                
                 if (!IsEdit)
                 {
-                    if (!this.ValidateTokenAddress())
-                    {
-                        ClearFields();
-
-                        IsValid = false;
-                        return;
-                    }
-
-                    IsBusy = true;
-                    try
-                    {
-                        Token = this._tokenService.GetTokenInfo(ContractAddress).Result;
-                    }
-                    catch (Exception e)
-                    {
-                        ClearFields();
-
-                        IsValid = false;
-                        return;
-                    }
-
-                    this.ValidateToken();
-
-                    if (this._token == null || !IsValid)
-                    {
-                        ClearFields();
-
-                        IsValid = false;
-                        return;
-                    }
-
-                    IsValid = true;
-                    IsBusy = false;
+                    Task.Run(() => LoadToken());
                 }
                
             }
+        }
+
+        public async void LoadToken()
+        {
+            if (!this.ValidateTokenAddress())
+            {
+                ClearFields();
+
+                IsValid = false;
+                return;
+            }
+
+            IsBusy = true;
+            try
+            {
+                var tempAddress = Token.Address;
+                Token = await this._tokenService.GetTokenInfo(ContractAddress);
+                
+                if (Token != null)
+                {
+                    this._decimals = this._token.Decimals.ToString();
+                    OnPropertyChanged(nameof(Decimals));
+                }
+                else
+                {
+                    Token = new Token(){Address = tempAddress };
+                }
+                
+            }
+            catch (Exception e)
+            {
+                ClearFields();
+
+                IsValid = false;
+                return;
+            }
+
+            this.ValidateToken();
+
+            if (this._token == null || !IsValid)
+            {
+                ClearFields();
+
+                IsValid = false;
+                return;
+            }
+
+            IsValid = true;
+            IsBusy = false;
         }
 
         public Token Token
@@ -122,11 +142,12 @@
             set
             {
                 this._token = value;
+
                 OnPropertyChanged(nameof(Token));
                 OnPropertyChanged(nameof(ContractAddress));
                 OnPropertyChanged(nameof(TokenSymbol));
                 OnPropertyChanged(nameof(TokenName));
-                OnPropertyChanged(nameof(Decimals));
+                
             }
         }
 
@@ -158,16 +179,21 @@
             }
         }
 
-        public int Decimals
+        public string Decimals
         {
             get
             {
-                return this._token.Decimals;
+                return this._decimals;
             }
             set
             {
-                this._token.Decimals = value;
+                this._decimals = value;
                 OnPropertyChanged(nameof(Decimals));
+                if (!string.IsNullOrWhiteSpace(value) && int.TryParse(value, out int temp))
+                {
+                    Token.Decimals = temp;
+                }
+                
                 IsValid = true;
             }
         }
@@ -304,7 +330,15 @@
             
             validator.AddRequiredRule(() => TokenName, "Token name is required.");
             validator.AddRequiredRule(() => TokenSymbol, "Token symbol is required.");
-            validator.AddRequiredRule(() => TokenSymbol, "Token symbol is required.");
+            validator.AddRequiredRule(() => Decimals, "Token decimals is required.");
+
+            if (!string.IsNullOrWhiteSpace(Decimals))
+            {
+                var isValid = int.TryParse(Decimals, out int temp);
+                validator.AddRule(ContractAddress, () => RuleResult.Assert(temp >= 0, "Decimals must be greater than zero."));
+                validator.AddRule(ContractAddress, () => RuleResult.Assert(isValid, "Decimals must be valid number."));
+            }
+            
 
             var result = validator.ValidateAll();
 
@@ -317,7 +351,7 @@
         {
             this.TokenName = string.Empty;
             this.TokenSymbol = string.Empty;
-            this.Decimals = 0;
+            this.Decimals = null;
         }
     }
 }

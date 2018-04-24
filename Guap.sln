@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guap.Droid", "Guap\Guap.Dro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guap.iOS", "Guap\Guap.iOS\Guap.iOS.csproj", "{2DD274AF-6D73-4A8C-BA20-DA21C51DB4E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guap.Server", "Guap\Guap.Server\Guap.Server.csproj", "{3AD68231-01D7-48E7-8EB5-38A7FC82F26F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guap.Server", "Guap\Guap.Server\Guap.Server.csproj", "{3AD68231-01D7-48E7-8EB5-38A7FC82F26F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
