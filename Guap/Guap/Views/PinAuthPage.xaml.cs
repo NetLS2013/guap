@@ -18,7 +18,7 @@ namespace Guap.Views
     {
         private PinAuthViewModel viewModel;
 
-        public PinAuthPage(EventHandler<PinEventArgs> successHandler, Func<string, bool> validatorFunc, string errorMessage, CommonPageSettings pageSettings)
+        public PinAuthPage(EventHandler<PinEventArgs> successHandler, Func<string, bool> validatorFunc, string errorMessage, CommonPageSettings pageSettings, bool isReset = false)
         {
             this.Title = pageSettings.Title;
             
@@ -26,7 +26,7 @@ namespace Guap.Views
             NavigationPage.SetHasBackButton(this, pageSettings.HasBack);
             InitializeComponent();
             
-            viewModel = new PinAuthViewModel();
+            viewModel = new PinAuthViewModel(pageSettings, isReset);
             
             viewModel.PinViewModel.Success += successHandler;
             viewModel.PinViewModel.ValidatorFunc += validatorFunc;

@@ -11,6 +11,7 @@ namespace Guap.Views.Profile
 {
     using System.Text.RegularExpressions;
 
+    using Guap.Contracts;
     using Guap.ViewModels;
 
     using ZXing;
@@ -20,6 +21,8 @@ namespace Guap.Views.Profile
     public partial class ScanPage : ContentPage
     {
         public event Action<string, string> ScanEvent; ZXingScannerView zxing;
+
+        private IMessage _message;
         ZXingDefaultOverlay overlay;
 
         public ScanPage()
@@ -57,7 +60,7 @@ namespace Guap.Views.Profile
             grid.Children.Add(overlay);
 
             Content = grid;
-           
+            _message = DependencyService.Get<IMessage>();
         }
 
         private void OnScan(Result result)
@@ -84,7 +87,7 @@ namespace Guap.Views.Profile
             }
             catch (Exception e)
             {
-               
+                Device.BeginInvokeOnMainThread(() => _message.ShortAlert("Scan valid QR Code."));
             }
         }
 

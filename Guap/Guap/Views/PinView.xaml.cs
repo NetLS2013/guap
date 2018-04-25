@@ -49,8 +49,8 @@ namespace Guap.Views
                             Source = _emptyCircle,
                             HeightRequest = 14,
                             WidthRequest = 14,
-                            MinimumWidthRequest = 14,
-                            MinimumHeightRequest = 14,
+                            MinimumWidthRequest = 8,
+                            MinimumHeightRequest = 8,
                             VerticalOptions = LayoutOptions.Center
                         }, i, 0);
                     }

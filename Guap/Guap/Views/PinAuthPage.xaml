@@ -2,18 +2,43 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:Guap.Views;assembly=Guap"
+             xmlns:shared="clr-namespace:Guap.Views.Shared;assembly=Guap"
              x:Class="Guap.Views.PinAuthPage">
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
-            <StackLayout Margin="30">
-                <Label FontSize="16" FontAttributes="Bold" Text="{Binding Header}" TextColor="#4a4a4a" Margin="0,10,0,10" HorizontalOptions="Center"/>
-                <views:PinView
-                Margin="0,0,0,10"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="FillAndExpand"
-                BindingContext="{Binding PinViewModel}" />
-                <Label Text="{Binding Error}" IsVisible="{Binding IsInvalid}" FontSize="14" TextColor="#be1209" HorizontalOptions="Center"></Label>
-            </StackLayout>
+            <shared:NavigationTitle
+                TitleText="Guapcoin"
+                HasIcon="True"
+                TitleFontSize="24"
+                IsVisible="{Binding IsCustomHeader}"/>
+            <Grid Margin="30,0,30,0" VerticalOptions="CenterAndExpand">
+               <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="64"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Column="0" Grid.Row="0" FontSize="16" FontAttributes="Bold" VerticalOptions="Start" Text="{Binding Header}" TextColor="#4a4a4a" HorizontalOptions="Center"/>
+                <views:PinView Grid.Column="0" Grid.Row="1" 
+                    
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Center"
+                    BindingContext="{Binding PinViewModel}" />
+                <StackLayout Grid.Column="0" Grid.Row="2" >
+                    <Label TextColor="#e0bc0c" Text="Reset" FontSize="18" HorizontalOptions="Center" VerticalOptions="Start" IsVisible="{Binding IsReset}">
+                        <Label.GestureRecognizers >
+                            <TapGestureRecognizer Command="{Binding ResetCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label  Text="{Binding Error}" IsVisible="{Binding IsInvalid}"  FontSize="14" TextColor="#be1209" Margin="0" VerticalOptions="End" HorizontalOptions="Center"></Label>
+                </StackLayout>
+               
+            </Grid>
+            <!--<StackLayout Margin="30,0,30,0" VerticalOptions="FillAndExpand">
+               
+            </StackLayout>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

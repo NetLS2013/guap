@@ -11,6 +11,7 @@ using System;
 namespace Guap.Droid.Renderer
 {
     using Android.Graphics;
+    using Android.Util;
 
     using Guap.Droid;
 
@@ -37,7 +38,23 @@ namespace Guap.Droid.Renderer
             {
                 if (Control == null)
                 {
-                    var sideSize = (int)ConvertDpToPixel(66);
+                    int sideSize;
+
+                    switch (this.Context.Resources.DisplayMetrics.DensityDpi)
+                    {
+                        case DisplayMetricsDensity.Xxxhigh:
+                        case DisplayMetricsDensity.Xxhigh:
+                        
+                            sideSize = (int)ConvertDpToPixel(100);
+                            break;
+                        case DisplayMetricsDensity.Xhigh:
+                            sideSize = (int)ConvertDpToPixel(80);
+                            break;
+                        case DisplayMetricsDensity.High:
+                        default:
+                            sideSize = (int)ConvertDpToPixel(60);
+                            break;
+                    }
 
                     _button = new RippleButton(Context);
                     _button.SetWidth(sideSize);

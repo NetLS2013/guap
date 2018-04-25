@@ -31,6 +31,30 @@ namespace Guap
                 Settings.Set(Settings.Key.IsNotification, true);
             }
 
+            if (Equals(Settings.Get(Settings.Key.IsLogged), true) && Equals(Settings.Get(Settings.Key.IsLockApp), true))
+            {
+                var setting = new CommonPageSettings
+                {
+                    HeaderText = "Enter your 4 digit pin",
+                    HasNavigation = false,
+
+                };
+
+                startPage = typeof(BottomTabbedPage);
+                var page = (Page)Activator.CreateInstance(startPage);
+
+                SetMainPage(
+                    new PinAuthPage(
+                        (sender, args) =>
+                            {
+                                SetMainPage(page);
+                            },
+                        valid => Equals(valid, Settings.Get(Settings.Key.Pin)),
+                        "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
+                        setting));
+                return;
+            }
+
             if (Equals(Settings.Get(Settings.Key.IsLogged), true))
             {
                 startPage = typeof(BottomTabbedPage);
@@ -39,14 +63,14 @@ namespace Guap
             {
                 startPage = typeof(CreateWalletPage);
             }
-            
+
             if (!Equals(Settings.Get(Settings.Key.PinSetupPage), true))
             {
                 var page = new PinAuthPage(
                     async (sender1, args) =>
                         {
                             var pin = args.EnteredPin;
-                            
+
                             await MainPage.Navigation.PushAsync(
                                 new PinAuthPage(
                                     (sender2, args2) =>
@@ -59,21 +83,20 @@ namespace Guap
                                     c => Equals(c, pin),
                                     "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
                                     new CommonPageSettings
-                                        {
-                                            HasNavigation = true,
-                                            Title = "Confirm Pin",
-                                            HeaderText = "Create your 4 digit pin",
-                                            HasBack = true
-                                        }));
+                                    {
+                                        HasNavigation = true,
+                                        Title = "Confirm Pin",
+                                        HeaderText = "Create your 4 digit pin",
+                                        HasBack = true
+                                    }));
                         },
                     c => true,
                     string.Empty,
                     new CommonPageSettings
-                        {
-                            HasNavigation = true,
-                            Title = "Create Pin",
-                            HeaderText = "Create your 4 digit pin"
-                        });
+                    {
+                        HasNavigation = false,
+                        HeaderText = "Create your 4 digit pin"
+                    });
 
                 SetMainPage(page);
             }

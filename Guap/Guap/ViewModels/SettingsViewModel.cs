@@ -97,7 +97,8 @@ namespace Guap.ViewModels
                                       {
                                           Title = "Unlock Wallet",
                                           HeaderText = "Enter your 4 digit pin",
-                                          HasNavigation = true
+                                          HasNavigation = true,
+                                          HasBack = true
                                       };
 
                     this._context.Navigation.PushAsync(

@@ -18,7 +18,8 @@ namespace Guap.Service
     public class RequestProvider
     {
         private readonly JsonSerializerSettings _serializerSettings;
-        
+        private IMessage _message;
+
         public RequestProvider()
         {
             _serializerSettings = new JsonSerializerSettings
@@ -29,13 +30,14 @@ namespace Guap.Service
             };
             
             _serializerSettings.Converters.Add(new StringEnumConverter());
+            _message = DependencyService.Get<IMessage>();
         }
         
         public async Task<TResult> GetAsync<TResult>(string uri)
         {
             if (!CrossConnectivity.Current.IsConnected)
             {
-                DependencyService.Get<IMessage>().ShortAlert("No internet connection! Cannot load data from server.");
+                _message.ShortAlert("No internet connection! Cannot load data from server.");
                 return default(TResult);
             }
 
@@ -49,12 +51,12 @@ namespace Guap.Service
             }
             catch (HttpRequestException e)
             {
-                DependencyService.Get<IMessage>().ShortAlert("Server error. Try again later.");
+                _message.ShortAlert("Server error. Try again later.");
                 return default(TResult);
             }
             catch (Exception e)
             {
-                DependencyService.Get<IMessage>().ShortAlert("Something wrong. Try reload application.");
+                _message.ShortAlert("Something wrong. Try reload application.");
                 return default(TResult);
             }
            
@@ -65,7 +67,7 @@ namespace Guap.Service
         {
             if (!CrossConnectivity.Current.IsConnected)
             {
-                DependencyService.Get<IMessage>().ShortAlert("No internet connection! Cannot load data from server.");
+                _message.ShortAlert("No internet connection! Cannot load data from server.");
                 return default(TResult);
             }
 
@@ -87,12 +89,12 @@ namespace Guap.Service
             }
             catch (HttpRequestException e)
             {
-                DependencyService.Get<IMessage>().ShortAlert("Server error. Try again later.");
+                _message.ShortAlert("Server error. Try again later.");
                 return default(TResult);
             }
             catch (Exception e)
             {
-                DependencyService.Get<IMessage>().ShortAlert("Something wrong. Try reload application.");
+                _message.ShortAlert("Something wrong. Try reload application.");
                 return default(TResult);
             }
 

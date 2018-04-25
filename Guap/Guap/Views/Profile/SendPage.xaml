@@ -24,7 +24,7 @@
                     HorizontalOptions="FillAndExpand"
                     Orientation="Vertical"
                     >
-                    <Label Text="To"
+                    <Label Text="Receiver address"
                            HorizontalOptions="Start"
                            TextColor="#000"
                            FontSize="16"/>
@@ -32,7 +32,6 @@
                     <StackLayout Orientation="Horizontal">
                         <customRender:BottomBorderEntryWhite
                                 TextColor="#000"
-                                Placeholder="Receiver address"
                                 HorizontalTextAlignment="Start"
                                 HorizontalOptions="FillAndExpand"
                                 Text="{Binding ReceiverAddress, Mode=TwoWay}"
@@ -76,7 +75,6 @@
                                    FontSize="16"/>
                             <customRender:BottomBorderEntryWhite
                                 TextColor="#000"
-                                Placeholder="Amount to send"
                                 Keyboard="Numeric"
                                 HorizontalTextAlignment="Start"
                                 Text="{Binding Amount, Mode=TwoWay}"
@@ -97,7 +95,7 @@
                                 ItemsSource="{Binding Tokens}"
                                 ItemDisplayBinding="{Binding Name}"
                                 TextColor="Black"
-                                Title="Token"
+                                Title=""
                             />
                         </StackLayout>
                     </Grid>

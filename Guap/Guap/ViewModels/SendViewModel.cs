@@ -20,6 +20,8 @@
     using Nethereum.Web3;
     using Nethereum.Web3.Accounts;
 
+    using Plugin.Connectivity;
+
     using Rg.Plugins.Popup.Extensions;
 
     using SQLite;
@@ -294,6 +296,12 @@
 
         private async Task OnRefreshBalance()
         {
+            if (this._token == null)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Select token.");
+                return;
+            }
+
             if (this._token.Id == -1)
             {
                 Token.Balance = await this._ethereumService.GetBalance(this._account.Address);
@@ -343,18 +351,6 @@
             validator.AddRule(ReceiverAddress, () => RuleResult.Assert(isValidAddress, "Receiver address is not valid Ethereum account address."));
             validator.AddRule(Amount, () => RuleResult.Assert(this._amount > new BigDecimal(0), "Amount is zero."));
             validator.AddRule(Amount, () => RuleResult.Assert(this._amount < Token.Balance, "You don't have enough funds."));
-
-            var result = validator.ValidateAll();
-
-            Errors = result.ErrorList;
-
-            IsValid = result.IsValid;
-        }
-
-        private void ValidateSend(string error)
-        {
-            var validator = new ValidationHelper();
-            validator.AddRule(ReceiverAddress, () => RuleResult.Assert(false, error));
 
             var result = validator.ValidateAll();
 

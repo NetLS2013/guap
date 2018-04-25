@@ -6,9 +6,13 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Runtime.CompilerServices;
+    using System.Windows.Input;
 
     using Guap.Annotations;
     using Guap.CustomRender.Pin;
+    using Guap.Helpers;
+
+    using Xamarin.Forms;
 
     public class PinAuthViewModel : INotifyPropertyChanged
     {
@@ -16,14 +20,21 @@
 
         private bool _isInvalid;
 
+        private bool _isCustomHeader;
+
+        private bool _isReset;
+
         private string _error;
 
         private string _header;
 
         public PinViewModel PinViewModel => _pinViewModel;
 
+        public ICommand ResetCommand => new Command(async () => { });
+
         public Func<IList<char>, bool> validatorFunc { get; set; }
-        public bool IsInvalid {
+        public bool IsInvalid
+        {
             get
             {
                 return _isInvalid;
@@ -32,6 +43,32 @@
             {
                 this._isInvalid = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInvalid)));
+            }
+        }
+
+        public bool IsCustomHeader
+        {
+            get
+            {
+                return _isCustomHeader;
+            }
+            set
+            {
+                _isCustomHeader = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCustomHeader)));
+            }
+        }
+
+        public bool IsReset
+        {
+            get
+            {
+                return _isReset;
+            }
+            set
+            {
+                _isReset = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsReset)));
             }
         }
 
@@ -61,10 +98,10 @@
             }
         }
 
-        public PinAuthViewModel()
+        public PinAuthViewModel(CommonPageSettings pageSettings, bool isReset)
         {
             _pinViewModel = new PinViewModel();
-
+            this.IsCustomHeader = pageSettings.IsShowCustomHeader;
             _pinViewModel.Error += (object sender, EventArgs e) => { IsInvalid = true; };
             _pinViewModel.Success += (object sender, PinEventArgs e) => { IsInvalid = false; };
         }
