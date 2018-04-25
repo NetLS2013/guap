@@ -31,6 +31,7 @@
             
             <StackLayout
                 x:Name="QrWrapper"
+                MinimumHeightRequest="180"
                 HeightRequest="300">
                 <forms:ZXingBarcodeImageView
                     x:Name="QrResult"
@@ -57,7 +58,7 @@
             
             <StackLayout
                 Orientation="Horizontal"
-                Padding="24,4">
+                Padding="20,4">
                 <StackLayout
                     Orientation="Vertical"
                     VerticalOptions="Center"
@@ -83,24 +84,24 @@
                         Text="{Binding Token.BalanceString}"
                         FontAttributes="Bold"
                         VerticalOptions="Center"
-                        FontSize="18"
+                        FontSize="14"
                         TextColor="#9b9b9b"/>
                     <Label
                         Text=" "
                         FontAttributes="Bold"
                         VerticalOptions="Center"
-                        FontSize="18"
+                        FontSize="14"
                         TextColor="#9b9b9b"/>
                     <Label
                         Text="{Binding Token.Symbol}"
                         FontAttributes="Bold"
                         VerticalOptions="Center"
-                        FontSize="18"
+                        FontSize="14"
                         TextColor="#9b9b9b"/>
 
                     <Button
                         Command="{Binding RefreshBalanceCommand}"
-                        WidthRequest="40"
+                        WidthRequest="36"
                         BackgroundColor="Transparent"
                         Text="up"
                         VerticalOptions="Center"

@@ -11,7 +11,7 @@
                 HasIcon="True"
                 TitleFontSize="24"
                 IsVisible="{Binding IsCustomHeader}"/>
-            <Grid Margin="30,0,30,0" VerticalOptions="CenterAndExpand">
+            <Grid Margin="30,16,16,0" VerticalOptions="CenterAndExpand">
                <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -27,7 +27,7 @@
                     VerticalOptions="Center"
                     BindingContext="{Binding PinViewModel}" />
                 <StackLayout Grid.Column="0" Grid.Row="2" >
-                    <Label TextColor="#e0bc0c" Text="Reset" FontSize="18" HorizontalOptions="Center" VerticalOptions="Start" IsVisible="{Binding IsReset}">
+                    <Label TextColor="#e0bc0c" Text="Reset" FontSize="18" HorizontalOptions="Center" VerticalOptions="Start" >
                         <Label.GestureRecognizers >
                             <TapGestureRecognizer Command="{Binding ResetCommand}"/>
                         </Label.GestureRecognizers>

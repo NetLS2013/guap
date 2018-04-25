@@ -37,21 +37,20 @@
                                 Text="{Binding ReceiverAddress, Mode=TwoWay}"
                                 IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"
                             />
-                        <StackLayout Margin="-20" Padding="20" VerticalOptions="Center" HorizontalOptions="End">
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer   Command="{Binding ScanCommand}"/>
-                            </StackLayout.GestureRecognizers>
-                            <Image Source="create.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
+                        <StackLayout HorizontalOptions="End" Orientation="Horizontal">
+                            <StackLayout Margin="-20,-20,0,-20" Padding="20,20,0,20"  VerticalOptions="Center" HorizontalOptions="Start">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer   Command="{Binding ScanCommand}"/>
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="create.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
+                            </StackLayout>
+                            <StackLayout Margin="0,-20,-20,-20" VerticalOptions="Center" Padding="0,20,20,20" HorizontalOptions="End">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer   Command="{Binding ContactCommand}"/>
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="create.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
+                            </StackLayout>
                         </StackLayout>
-
-                    </StackLayout>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                        <Button
-                            TextColor="#e0bc0c"
-                            BackgroundColor="Transparent"
-                            Text="Contact"
-                            FontSize="16"
-                            Command="{Binding ContactCommand}"/>
                     </StackLayout>
                 </StackLayout>
 
@@ -115,11 +114,11 @@
                     ItemsSource="{Binding Errors}"
                     SeparatorVisibility="None"
                     IsEnabled="false"
-                    Margin="8,18,0,0">
+                    Margin="8,8,8,8">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Label Text="{Binding .}" TextColor="#db0029" FontSize="14"/>
+                                <Label Text="{Binding .}" TextColor="#db0029" FontSize="12"/>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -163,19 +162,19 @@
                             Text="{Binding Token.BalanceString}"
                             FontAttributes="Bold"
                             VerticalOptions="Center"
-                            FontSize="18"
+                            FontSize="14"
                             TextColor="#9b9b9b"/>
                         <Label
                             Text=" "
                             FontAttributes="Bold"
                             VerticalOptions="Center"
-                            FontSize="18"
+                            FontSize="14"
                             TextColor="#9b9b9b"/>
                         <Label
                             Text="{Binding Token.Symbol}"
                             FontAttributes="Bold"
                             VerticalOptions="Center"
-                            FontSize="18"
+                            FontSize="14"
                             TextColor="#9b9b9b"/>
 
                         <Button

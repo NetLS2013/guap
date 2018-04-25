@@ -44,15 +44,19 @@ namespace Guap.Droid.Renderer
                     {
                         case DisplayMetricsDensity.Xxxhigh:
                         case DisplayMetricsDensity.Xxhigh:
-                        
+                       
                             sideSize = (int)ConvertDpToPixel(100);
                             break;
+                        case DisplayMetricsDensity.D560:
+                        case DisplayMetricsDensity.D420:
+                        case DisplayMetricsDensity.D400:
+                        case DisplayMetricsDensity.D360:
                         case DisplayMetricsDensity.Xhigh:
                             sideSize = (int)ConvertDpToPixel(80);
                             break;
                         case DisplayMetricsDensity.High:
                         default:
-                            sideSize = (int)ConvertDpToPixel(60);
+                            sideSize = (int)ConvertDpToPixel(56);
                             break;
                     }
 

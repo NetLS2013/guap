@@ -2,6 +2,8 @@
 
 namespace Guap.Views.Profile
 {
+    using System.Threading.Tasks;
+
     using Guap.Views.Dashboard;
     using Guap.Views.Setting;
 
@@ -50,7 +52,51 @@ namespace Guap.Views.Profile
                             this.CurrentPage = this.Children[0];
                         });
                 };
+            this.CurrentPageChanged += (sender, e) =>
+                {
+                    var currentPage = CurrentPage as PermissionPage;
+                    if (currentPage != null)
+                    {
+                        if (Device.RuntimePlatform == Device.iOS)
+                        {
+                            var status = CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera).Result;
 
+                            if (status != PermissionStatus.Granted)
+                            {
+                                var result = CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera).Result;
+                                if (result.ContainsKey(Permission.Camera))
+                                {
+                                    status = result[Permission.Camera];
+                                    if (status == PermissionStatus.Granted)
+                                    {
+                                        var page = new ScanPage();
+                                        
+                                        if (page != null)
+                                        {
+                                            page.ScanEvent += (address, amount) =>
+                                                {
+                                                    Device.BeginInvokeOnMainThread(() => this.CurrentPage = this.Children[3]);
+                                                    send.SendViewModel.SetReceiverInfo(address, amount);
+                                                };
+                                        }
+
+                                        Device.BeginInvokeOnMainThread(
+                                            () =>
+                                                {
+                                                    Children.Insert(2, page);
+                                                    Children[2].Title = "Scan";
+                                                    CurrentPage = Children[2];
+                                                    Children.RemoveAt(3);
+                                                });
+                                    }
+                                }
+
+                            }
+
+                        }
+                    }
+
+                };
             if (scan != null)
             {
                 scan.ScanEvent += (address, amount) =>
@@ -59,7 +105,6 @@ namespace Guap.Views.Profile
                         send.SendViewModel.SetReceiverInfo(address, amount);
                     };
             }
-
 
             BarTheme = BarThemeTypes.DarkWithoutAlpha;
             FixedMode = true;

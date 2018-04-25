@@ -11,24 +11,24 @@
 					Height="30" />
                 <!-- 1 2 3 -->
                 <RowDefinition
-					Height="100*"/>
+					Height="80*"/>
                 <!-- 4 5 6 -->
                 <RowDefinition
-					Height="100*" />
+					Height="80*" />
                 <!-- 7 8 9 -->
                 <RowDefinition
-					Height="100*" />
+					Height="80*" />
                 <!--   0 <- -->
                 <RowDefinition
-					Height="100*" />
+					Height="80*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
-					Width="110*" />
+					Width="86*" />
                 <ColumnDefinition
-					Width="110*" />
+					Width="86*" />
                 <ColumnDefinition
-					Width="110*" />
+					Width="86*" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0" x:Name="circlesStackLayout"
                   Grid.ColumnSpan="3"

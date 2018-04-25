@@ -22,17 +22,13 @@ namespace Guap.Droid.Renderer
             {
                 ViewGroup.SetBackgroundResource(Resource.Drawable.FrameShadow);
 
-                double dAndroidVersion;
-                if (double.TryParse(Build.VERSION.Release, out dAndroidVersion))
+                if (Build.VERSION.SdkInt < BuildVersionCodes.Lollipop)
                 {
-                    if (dAndroidVersion < 21)
-                    {
-                        ViewCompat.SetElevation(ViewGroup, 6.0f);
-                    }
-                    else
-                    {
-                        Elevation = 6;
-                    }
+                    ViewCompat.SetElevation(ViewGroup, 6.0f);
+                }
+                else
+                {
+                    Elevation = 6;
                 }
             }
         }
