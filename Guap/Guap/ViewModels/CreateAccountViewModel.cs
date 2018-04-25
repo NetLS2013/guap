@@ -80,52 +80,10 @@ namespace Guap.ViewModels
         private async Task OnCreateAccount()
         {
             var words = EthereumService.MnenonicPhraseGenerate();
-
-            var inputMnemonic = new InputMnemonicPhrasePage(
-                new CommonPageSettings
-                    {
-                        HasNavigation = false,
-                        HeaderText = "Mnemonic Phrase",
-                        Text = "Enter your mnenonic phrase below to create your wallet.",
-                        LeftButtonText = "Back"
-                    });
-
-            inputMnemonic.ViewModel.Validators.Add(
-                new KeyValuePair<string, Func<string, bool>>(
-                    "The mnemonic phrase you entered is incorrect." + Environment.NewLine + "Typos can cause this."
-                    + Environment.NewLine + "Please review your phrase and try again.",
-                    s => string.Join(" ", words) == s));
-
-
-            inputMnemonic.ViewModel.SuccessAction = async s =>
-            {
-                var result = await UpdateAddress(string.Join(" ", words));
-
-                if (result)
-                {
-                    // save mnenonic phrase 
-                    Settings.Set(Settings.Key.MnemonicPhrase, s);
-                    Settings.Set(Settings.Key.IsLogged, true);
-
-                    await _context.Navigation.PushAsync(
-                        new SuccessSignup(
-                            new CommonPageSettings
-                            {
-                                HasNavigation = false,
-                                HeaderText =
-                                    "The mnenonic phrase was an exatact match."
-                                    + Environment.NewLine + "Your wallet has been created."
-                                    + Environment.NewLine + "Check out the dashboard."
-                            },
-                            () =>
-                                {
-                                    GlobalSetting.Instance.UpdateAccount();
-                                    App.SetMainPage(new BottomTabbedPage());
-                                }));
-
-                   
-                }
-            };
+            var inputMnemonic = await BuildInputMnemonicPhrasePage(
+                "Enter your mnenonic phrase below to create your wallet.",
+                "The mnenonic phrase was an exatact match.\nYour wallet has been created.\nCheck out the dashboard.",
+                s => string.Join(" ", words) == s);
 
             var mnemonicPage = new MnemonicPhrasePage(
                 new CommonPageSettings
@@ -134,7 +92,7 @@ namespace Guap.ViewModels
                     HeaderText = "Mnemonic Phrase"
                 });
         
-            mnemonicPage.viewModel.Action = () => _context.Navigation.PushAsync(inputMnemonic);
+            mnemonicPage.viewModel.Action = async () => await _context.Navigation.PushAsync(inputMnemonic);
             mnemonicPage.viewModel.Words = words;
 
             await _context.Navigation.PushAsync(mnemonicPage);
@@ -142,12 +100,22 @@ namespace Guap.ViewModels
 
         private async Task OpenRestoreWallet()
         {
+            var inputMnemonic = await BuildInputMnemonicPhrasePage(
+                "Enter your mnenonic phrase below to restore your wallet.",
+                "The mnenonic phrase was an exatact match.\nYour wallet has been restored.\nCheck out the dashboard.",
+                EthereumService.MnenonicPhraseValidate);
+            
+            await _context.Navigation.PushAsync(inputMnemonic);
+        }
+
+        private async Task<Page> BuildInputMnemonicPhrasePage(string commonText1, string commonText2, Func<string, bool> valid)
+        {
             var inputMnemonic = new InputMnemonicPhrasePage(
                 new CommonPageSettings
                     {
                         HasNavigation = false,
                         HeaderText = "Mnemonic Phrase",
-                        Text = "Enter your mnenonic phrase below to restore your wallet.",
+                        Text = commonText1,
                         LeftButtonText = "Back"
                     });
 
@@ -156,7 +124,7 @@ namespace Guap.ViewModels
                 new KeyValuePair<string, Func<string, bool>>(
                     "The mnemonic phrase you entered is incorrect." + Environment.NewLine + "Typos can cause this."
                     + Environment.NewLine + "Please review your phrase and try again.",
-                    s => EthereumService.MnenonicPhraseValidate(s)));
+                    valid));
 
             inputMnemonic.ViewModel.SuccessAction = async s =>
             {
@@ -164,7 +132,6 @@ namespace Guap.ViewModels
 
                 if (result)
                 {
-                    // save mnenonic phrase 
                     Settings.Set(Settings.Key.MnemonicPhrase, s);
                     Settings.Set(Settings.Key.IsLogged, true);
                     
@@ -173,21 +140,15 @@ namespace Guap.ViewModels
                             new CommonPageSettings
                             {
                                 HasNavigation = false,
-                                HeaderText =
-                                    "The mnenonic phrase was an exatact match."
-                                    + Environment.NewLine + "Your wallet has been created."
-                                    + Environment.NewLine + "Check out the dashboard."
+                                HeaderText = commonText2
                             },
-                            () =>
-                                {
-                                    App.SetMainPage(new BottomTabbedPage());
-                                }));
+                            () => { App.SetMainPage(new BottomTabbedPage()); }));
                 }
             };
-
-            await _context.Navigation.PushAsync(inputMnemonic);
+            
+            return inputMnemonic;
         }
-        
+
         private async Task ForgotPin()
         {
             var validator = new ValidationHelper();
@@ -272,7 +233,8 @@ namespace Guap.ViewModels
                         new UserModel
                         {
                             Address = address,
-                            PhoneNumber = (string) Settings.Get(Settings.Key.PhoneNumber)
+                            PhoneNumber = (string) Settings.Get(Settings.Key.PhoneNumber),
+                            VerificationCode = (string) Settings.Get(Settings.Key.VerificationCode)
                         });
             }
             catch (Exception e)

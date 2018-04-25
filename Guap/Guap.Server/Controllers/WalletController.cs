@@ -39,6 +39,13 @@ namespace Guap.Server.Controllers
             {
                 return BadRequest();
             }
+            
+            var result = await _userRepository.CheckVerificationCode(model);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
 
             try
             {

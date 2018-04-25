@@ -42,17 +42,17 @@ namespace Guap.ViewModels
         private void InitSettings()
         {
             SettingsList = new ObservableCollection<SettingsModel>
-                               {
-                                   new SettingsModel { Title = "Notification", Icon = "notification.png", IsVisible = true,  Toggled = Notification, ToggledCommand = NotificationCommand },
-                                   new SettingsModel { Title = "Lock App", Icon = "notification.png", IsVisible = true,  Toggled = LockApp, ToggledCommand = LockAppCommand },
-                                   new SettingsModel { Title = "Restore Wallet", Method = RestoreWallet, Icon = "notification.png", },
-                                   new SettingsModel { Title = "Backup Wallet", Method = BackupWallet, Icon = "notification.png" },
-                                   new SettingsModel { Title = "Reset Pin", Method = ResetPin, Icon = "notification.png" },
-                                   new SettingsModel { Title = "Help & Support", Method = HelpAndSupport, Icon = "notification.png" },
-                                   new SettingsModel { Title = "Send Feedback", Method = SendFeedBack, Icon = "notification.png" },
-                                   new SettingsModel { Title = "About $Guapcoin", Method = AboutGuap, Icon = "notification.png" ,},
-                                   new SettingsModel { Title = "Logout", Method = Logout, Icon = "notification.png" }
-                               };
+                {
+                   new SettingsModel { Title = "Notification", Icon = "notification.png", IsVisible = true,  Toggled = Notification, ToggledCommand = NotificationCommand },
+                   new SettingsModel { Title = "Lock App", Icon = "notification.png", IsVisible = true,  Toggled = LockApp, ToggledCommand = LockAppCommand },
+                   new SettingsModel { Title = "Restore Wallet", Method = RestoreWallet, Icon = "notification.png", },
+                   new SettingsModel { Title = "Backup Wallet", Method = BackupWallet, Icon = "notification.png" },
+                   new SettingsModel { Title = "Reset Pin", Method = ResetPin, Icon = "notification.png" },
+                   new SettingsModel { Title = "Help & Support", Method = HelpAndSupport, Icon = "notification.png" },
+                   new SettingsModel { Title = "Send Feedback", Method = SendFeedBack, Icon = "notification.png" },
+                   new SettingsModel { Title = "About $Guapcoin", Method = AboutGuap, Icon = "notification.png" ,},
+                   new SettingsModel { Title = "Logout", Method = Logout, Icon = "notification.png" }
+                };
         }
 
         public ICommand NotificationCommand => new Command(async () =>
@@ -178,7 +178,7 @@ namespace Guap.ViewModels
                 new KeyValuePair<string, Func<string, bool>>(
                     "The mnemonic phrase you entered is incorrect." + Environment.NewLine + "Typos can cause this."
                     + Environment.NewLine + "Please review your phrase and try again.",
-                    s => EthereumService.MnenonicPhraseValidate(s)));
+                    EthereumService.MnenonicPhraseValidate));
 
             inputMnemonic.ViewModel.SuccessAction = async s =>
                 {
