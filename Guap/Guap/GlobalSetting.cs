@@ -1,15 +1,11 @@
-﻿using NBitcoin;
+﻿using Guap.Helpers;
+using NBitcoin;
+using Guap.Models;
+using Guap.Service;
+using Nethereum.Web3.Accounts;
 
 namespace Guap
 {
-    using System;
-
-    using Guap.Helpers;
-    using Guap.Models;
-    using Guap.Service;
-
-    using Nethereum.Web3.Accounts;
-
     public class GlobalSetting
     {
         private class Nested
@@ -29,36 +25,27 @@ namespace Guap
             DbName = "guap.db";
             BlockExplorer = "https://ropsten.etherscan.io";
 
-            Guap = new Token()
-                       {
-                           Address = "0x9B333Edb02150abC217B746921499650dd3e448E",
-                           Decimals = 18,
-                           Id = 0,
-                           Name = "Guap",
-                           Symbol = "Guap"
+            Guap = 
+                new Token
+                {
+                   Address = "0x9B333Edb02150abC217B746921499650dd3e448E",
+                   Decimals = 18,
+                   Id = 0,
+                   Name = "Guap",
+                   Symbol = "Guap"
+                };
 
-            };
-
-            Ethereum = new Token()
-                           {
-                               Name = "Ethereum",
-                               Symbol = "ETH",
-                               Id = -1,
-                           };
-
-            if (!string.IsNullOrWhiteSpace((string)Settings.Get(Settings.Key.MnemonicPhrase)))
-            {
-                Account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
-            }
-            else
-            {
-                Account = null;
-            }
+            Ethereum =
+                new Token
+                {
+                   Name = "Ethereum",
+                   Symbol = "ETH",
+                   Id = -1
+                };
         }
 
+        
         public static GlobalSetting Instance => Nested.Instance;
-
-        public event Action AccountUpdate;
 
         public WordCount WordCount { get; }
 
@@ -74,38 +61,22 @@ namespace Guap
 
         public Token Ethereum { get; set; }
 
-        public Account Account { get; private set; }
-
-        public void UpdateAccount()
-        {
-            var c = (string)Settings.Get(Settings.Key.MnemonicPhrase);
-            if (!string.IsNullOrWhiteSpace((string)Settings.Get(Settings.Key.MnemonicPhrase)))
+        public Account Account {
+            get
             {
-                Account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
-            }
-            else
-            {
-                Account = null;
-            }
-            AccountUpdate();
-        }
-
-        public void UpdateAccountWithOutEvent()
-        {
-
-            if (!string.IsNullOrWhiteSpace((string)Settings.Get(Settings.Key.MnemonicPhrase)))
-            {
-                Account = EthereumService.GetAccount((string)Settings.Get(Settings.Key.MnemonicPhrase));
-            }
-            else
-            {
-                Account = null;
+                return EthereumService.GetAccount((string) Settings.Get(Settings.Key.MnemonicPhrase));
             }
         }
+        
         
         private string BaseEndpoint
         {
             set => UpdateEndpoint(value);
+        }
+
+        private string BlockExplorer
+        {
+            set => UpdateBlockExplorerEndpoint(value);
         }
 
         private void UpdateEndpoint(string baseEndpoint)
@@ -121,13 +92,10 @@ namespace Guap
             // === external api ===
             FiatEndpoint = "https://api.coinmarketcap.com/v1/ticker/ethereum";
         }
-
-        private string BlockExplorer
+        
+        private void UpdateBlockExplorerEndpoint(string baseEndpoint)
         {
-            set
-            {
-                UpdateBlockExplorerEndpoint(value);
-            }
+            ExplorerTransactionEndpoint = $"{baseEndpoint}/tx/";
         }
         
 
@@ -148,10 +116,5 @@ namespace Guap
         public string ForgotPinEndpoint { get; set; }
 
         public string FiatEndpoint { get; set; }
-
-        private void UpdateBlockExplorerEndpoint(string baseEndpoint)
-        {
-            ExplorerTransactionEndpoint = $"{baseEndpoint}/tx/";
-        }
     }
 }

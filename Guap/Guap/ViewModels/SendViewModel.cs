@@ -31,39 +31,22 @@
     public class SendViewModel : BaseViewModel
     {
         private Page _context;
-
         private TokenService _tokenService;
-
         private EthereumService _ethereumService;
-
         private IRepository<Token> _repository;
-
         private List<Token> _tokens;
-
         private Token _token;
-
         private int _tokenIndex;
-
         private ValidationErrorCollection _errors;
-
         private bool _isValid;
-
         private string _receiverAddress;
-
         private BigDecimal? _amount;
-
         private string _amountString;
-
-        private Account _account;
-
         public event Action ScanEvent;
 
         public ICommand SendCommand => new Command(async () => await OnSend());
-
         public ICommand ContactCommand => new Command(async () => await OnContact());
-
         public ICommand ScanCommand => new Command(async () => await OnScan());
-
         public ICommand RefreshBalanceCommand => new Command(async () => await OnRefreshBalance());
 
         public List<Token> Tokens
@@ -76,20 +59,6 @@
             {
                 this._tokens = value;
                 OnPropertyChanged(nameof(Tokens));
-            }
-        }
-
-        public Account Account
-        {
-            get
-            {
-                return _account;
-            }
-            set
-            {
-                _account = value;
-
-                OnPropertyChanged(nameof(Account));
             }
         }
 
@@ -183,27 +152,14 @@
         public SendViewModel(Page context)
         {
             this._context = context;
-            Account = GlobalSetting.Instance.Account;
-
             this._token = null;
 
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
-            _tokenService = new TokenService(new Web3(_account, GlobalSetting.Instance.EthereumNetwork));
-            _ethereumService = new EthereumService(new Web3(_account, GlobalSetting.Instance.EthereumNetwork));
+            _tokenService = new TokenService(new Web3(GlobalSetting.Instance.Account, GlobalSetting.Instance.EthereumNetwork));
+            _ethereumService = new EthereumService(new Web3(GlobalSetting.Instance.Account, GlobalSetting.Instance.EthereumNetwork));
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
 
-            GlobalSetting.Instance.AccountUpdate += () => { InitializeAccount(); };
-
             InitializeTokens();
-        }
-
-        private async void InitializeAccount()
-        {
-            Account = GlobalSetting.Instance.Account;
-            _tokenService = new TokenService(new Web3(Account, GlobalSetting.Instance.EthereumNetwork));
-            _ethereumService = new EthereumService(new Web3(Account, GlobalSetting.Instance.EthereumNetwork));
-
-            this.OnRefreshBalance();
         }
 
         public async void InitializeTokens()
@@ -304,11 +260,11 @@
 
             if (this._token.Id == -1)
             {
-                Token.Balance = await this._ethereumService.GetBalance(this._account.Address);
+                Token.Balance = await this._ethereumService.GetBalance(GlobalSetting.Instance.Account.Address);
             }
             else
             {
-                Token.Balance = await this._tokenService.GetBalance(Token, this._account.Address);
+                Token.Balance = await this._tokenService.GetBalance(Token, GlobalSetting.Instance.Account.Address);
             }
             
             OnPropertyChanged(nameof(Token));

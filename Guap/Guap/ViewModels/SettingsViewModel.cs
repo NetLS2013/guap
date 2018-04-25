@@ -196,7 +196,6 @@ namespace Guap.ViewModels
 
                     // save mnenonic phrase 
                     Settings.Set(Settings.Key.MnemonicPhrase, s);
-                    GlobalSetting.Instance.UpdateAccount();
                     this._context.Navigation.RemovePage(this._context.Navigation.NavigationStack[this._context.Navigation.NavigationStack.Count - 2]);
                 };
 

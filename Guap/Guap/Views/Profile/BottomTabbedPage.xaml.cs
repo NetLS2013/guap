@@ -16,10 +16,9 @@ namespace Guap.Views.Profile
     {
         public BottomTabbedPage()
         {
-            GlobalSetting.Instance.UpdateAccountWithOutEvent();
             InitializeComponent();
-
-            this.InitCamera();
+            InitCamera();
+            
             var dashboard = Children[0] as Dashboard;
             var scan = Children[2] as ScanPage;
             var send = Children[3] as SendPage;
