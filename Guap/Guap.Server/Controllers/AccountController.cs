@@ -2,10 +2,12 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Guap.Server.Data.Entities;
 using Guap.Server.Data.Repositories;
 using Guap.Server.Models;
 using Guap.Server.Service;
 using Microsoft.AspNetCore.Mvc;
+using Nethereum.Hex.HexTypes;
 
 namespace Guap.Server.Controllers
 {
@@ -15,15 +17,19 @@ namespace Guap.Server.Controllers
         private readonly IUserRepository _userRepository;
         private readonly ITokenProvider _tokenProvider;
         private readonly IEmailSender _emailSender;
+        private readonly INotification _notificationService;
 
         public AccountController(
             IUserRepository userRepository,
             ITokenProvider tokenProvider,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            INotification notificationService)
         {
             _tokenProvider = tokenProvider;
             _emailSender = emailSender;
-            
+            _notificationService = notificationService;
+
+
             _userRepository = userRepository;
         }
         
@@ -169,18 +175,40 @@ namespace Guap.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> NotificationsEnabled([FromBody] NotificationModel model)
+        public async Task<IActionResult> NotificationsEnabled([FromBody] UserModel model)
         {
-            if (!ModelState.IsValid)
+            if (string.IsNullOrWhiteSpace(model.VerificationCode))
             {
                 return BadRequest();
             }
 
-            var user = new UserModel { PhoneNumber = model.PhoneNumber };
+            if (!await _userRepository.CheckVerificationCode(model))
+            {
+                return BadRequest();
+            }
+            
+            var user = await _userRepository.FindUser(model.PhoneNumber);
+            
+            try
+            {
+                await _userRepository.NotificationEnabled(model);
 
-            await _userRepository.NotificationEnabled(user, model);
+                var hexAddress = new HexBigInteger(user.Address);
+                var notifData = new NotificationModel
+                {
+                    Email = user.Email,
+                    NotificationsEnabled = user.NotificationsEnabled
+                };
+                
+                _notificationService.Addresses.AddOrUpdate(hexAddress, notifData,
+                    (address, notificationData) => notificationData);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
+            }
 
-            return Ok();
+            return Ok(true);
         }
     }
 }

@@ -159,8 +159,9 @@
             this._token = null;
 
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
-            _tokenService = new TokenService(new Web3(GlobalSetting.Instance.Account, GlobalSetting.Instance.EthereumNetwork));
-            _ethereumService = new EthereumService(new Web3(GlobalSetting.Instance.Account, GlobalSetting.Instance.EthereumNetwork));
+            
+            _tokenService = new TokenService(new Web3(GlobalSetting.Account, GlobalSetting.Instance.EthereumNetwork));
+            _ethereumService = new EthereumService(new Web3(GlobalSetting.Account, GlobalSetting.Instance.EthereumNetwork));
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
 
             InitializeTokens();
@@ -291,11 +292,11 @@
 
             if (this._token.Id == -1)
             {
-                Token.Balance = await this._ethereumService.GetBalance(GlobalSetting.Instance.Account.Address);
+                Token.Balance = await this._ethereumService.GetBalance(GlobalSetting.Account.Address);
             }
             else
             {
-                Token.Balance = await this._tokenService.GetBalance(Token, GlobalSetting.Instance.Account.Address);
+                Token.Balance = await this._tokenService.GetBalance(Token, GlobalSetting.Account.Address);
             }
             
             OnPropertyChanged(nameof(Token));

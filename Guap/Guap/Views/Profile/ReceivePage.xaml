@@ -23,7 +23,7 @@
                     FontSize="13"/>
             
                 <Label
-                    Text="{Binding Account.Address}"
+                    Text="{Binding Address}"
                     HorizontalOptions="Center"
                     TextColor="#4a4a4a"
                     FontSize="13"/>

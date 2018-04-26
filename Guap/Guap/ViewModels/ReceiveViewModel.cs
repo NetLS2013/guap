@@ -43,6 +43,14 @@
                 OnPropertyChanged(nameof(Token));
             }
         }
+        
+        public string Address
+        {
+            get
+            {
+                return GlobalSetting.Account.Address;
+            }
+        }
 
         public decimal Amount
         {
@@ -55,7 +63,7 @@
                 _amount = value;
                 if (this._amount > decimal.Zero)
                 {
-                    RequestString = string.Format("ethereum:{0}?value={1}", GlobalSetting.Instance.Account.Address, this._amount);
+                    RequestString = string.Format("ethereum:{0}?value={1}", GlobalSetting.Account.Address, this._amount);
                 }
                 OnPropertyChanged(nameof(Amount));
             }
@@ -79,11 +87,11 @@
         {
             if (this._token.Id == -1)
             {
-                Token.Balance = await this._ethereumService.GetBalance(GlobalSetting.Instance.Account.Address);
+                Token.Balance = await this._ethereumService.GetBalance(GlobalSetting.Account.Address);
             }
             else
             {
-                Token.Balance = await this._tokenService.GetBalance(Token, GlobalSetting.Instance.Account.Address);
+                Token.Balance = await this._tokenService.GetBalance(Token, GlobalSetting.Account.Address);
             }
 
             OnPropertyChanged(nameof(Token));
@@ -94,9 +102,9 @@
             this._context = context;
 
             this._token = GlobalSetting.Instance.Ethereum;
-            RequestString = GlobalSetting.Instance.Account.Address;
+            RequestString = GlobalSetting.Account.Address;
 
-            _ethereumService = new EthereumService(new Web3(GlobalSetting.Instance.Account, GlobalSetting.Instance.EthereumNetwork));
+            _ethereumService = new EthereumService(new Web3(GlobalSetting.Account, GlobalSetting.Instance.EthereumNetwork));
             
             if (CrossConnectivity.Current.IsConnected)
             {

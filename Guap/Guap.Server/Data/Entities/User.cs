@@ -17,11 +17,11 @@ namespace Guap.Server.Data.Entities
 
         public string VerificationCode { get; set; }
         
+        [StringLength(253)]
         public string Email { get; set; }
         
-        [StringLength(253)]
         public bool EmailConfirmed { get; set; }
 
-        public bool NotificationsEnabled { get; set; }
+        public bool NotificationsEnabled { get; set; } = true;
     }
 }

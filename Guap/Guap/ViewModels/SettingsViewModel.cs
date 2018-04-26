@@ -55,40 +55,42 @@ namespace Guap.ViewModels
                 };
         }
 
-        public ICommand NotificationCommand => new Command(async () =>
+        public ICommand NotificationCommand => new Command(async () => { await OnToggleNotification(); });
+
+        private async Task OnToggleNotification()
+        {
+            var notifToggle = SettingsList[0].Toggled;
+            
+            try
             {
-                this.Notification = !this.Notification;
-                try
-                {
-                    var notification = await _requestProvider.PostAsync<NotificationModel, string>(GlobalSetting.Instance.NotificationsEnabledEndpoint,
-                        new NotificationModel
-                            {
-                                NotificationsEnabled = !Notification,
-                                PhoneNumber = Settings.Get(Settings.Key.PhoneNumber).ToString()
-                            });
-                    if (!string.IsNullOrWhiteSpace(notification))
+                var notification = await _requestProvider.PostAsync<UserModel, bool>(
+                    GlobalSetting.Instance.NotificationsEnabledEndpoint,
+                    new UserModel
                     {
-                        
-                        Settings.Set(Settings.Key.IsNotification, Notification);
-                    }
-                    else
-                    {
-                        this.Notification = !Notification;
+                        NotificationsEnabled = notifToggle,
+                        PhoneNumber = Settings.Get(Settings.Key.PhoneNumber).ToString(),
+                        VerificationCode = Settings.Get(Settings.Key.VerificationCode).ToString()
+                    });
 
-                        await Task.Delay(1000).ContinueWith(_ =>
-                            {
-                                SettingsList[0].Toggled = Notification;
-                                OnPropertyChanged(nameof(SettingsList));
-                            });
-                        
-                    }
-                }
-                catch (Exception e)
+                if (notification)
                 {
-
+                    Settings.Set(Settings.Key.IsNotification, notifToggle);
                 }
-                
-            });
+                else
+                {
+                    await Task.Delay(2000).ContinueWith(_ =>
+                    {
+                        SettingsList[0].Toggled = !notifToggle;
+
+                        OnPropertyChanged(nameof(SettingsList));
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
+            }
+        }
 
         public ICommand LockAppCommand => new Command(
             () =>

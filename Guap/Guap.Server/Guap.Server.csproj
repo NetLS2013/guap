@@ -23,6 +23,8 @@
     <Compile Include="Migrations\20180410110535_User_AddressMaxLength.Designer.cs" />
     <Compile Include="Migrations\20180416094033_User_Email.cs" />
     <Compile Include="Migrations\20180416094033_User_Email.Designer.cs" />
+    <Compile Include="Migrations\20180426103016_User_NotifDefaultValue.cs" />
+    <Compile Include="Migrations\20180426103016_User_NotifDefaultValue.Designer.cs" />
     <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
     <Compile Include="Data\Repositories\GenericRepository.cs" />
     <Compile Include="Data\Repositories\UserRepository.cs" />

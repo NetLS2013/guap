@@ -8,8 +8,8 @@ using Nethereum.Hex.HexTypes;
 using Nethereum.Web3;
 using System.Numerics;
 using Guap.Server.Data.Entities;
+using Guap.Server.Models;
 using Guap.Server.Utils;
-using Nethereum.Contracts;
 using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Util;
 
@@ -17,6 +17,7 @@ namespace Guap.Server.Service
 {
     public interface INotification
     {
+        ConcurrentDictionary<BigInteger, NotificationModel> Addresses { get; set; }
         Task WatchChain();
     }
 
@@ -31,7 +32,7 @@ namespace Guap.Server.Service
         private UnitConversion _unitConversion;
         private TokenSignature _tokenSignature;
 
-        public ConcurrentDictionary<BigInteger, User> Addresses { get; set; }
+        public ConcurrentDictionary<BigInteger, NotificationModel> Addresses { get; set; }
         
         public Notification(
             IUserRepository userRepository,
@@ -44,7 +45,7 @@ namespace Guap.Server.Service
             _unitConversion = new UnitConversion();
             _tokenSignature = new TokenSignature();;
             
-            Addresses = new ConcurrentDictionary<BigInteger, User>();
+            Addresses = new ConcurrentDictionary<BigInteger, NotificationModel>();
 
             Task.Run(async () => await FillAddress());
         }
@@ -57,7 +58,13 @@ namespace Guap.Server.Service
             {
                 if (!string.IsNullOrWhiteSpace(it.Address))
                 {
-                    Addresses.TryAdd(new HexBigInteger(it.Address).Value, it);
+                    Addresses.TryAdd(
+                        new HexBigInteger(it.Address).Value, 
+                        new NotificationModel
+                        {
+                            NotificationsEnabled = it.NotificationsEnabled,
+                            Email = it.Email
+                        });
                 }
             }
         }
@@ -119,15 +126,18 @@ namespace Guap.Server.Service
                         value = it.Value.Value;
                     }
 
-                    if (Addresses.TryGetValue(new HexBigInteger(to).Value, out var user))
+                    if (Addresses.TryGetValue(new HexBigInteger(to).Value, out var notifData))
                     {
-                        await NotifyEyEmail(it, user, to, value);
+                        if (notifData.NotificationsEnabled)
+                        {
+                            await NotifyEyEmail(it, notifData, to, value);
+                        }
                     }
                 }
             }
         }
 
-        private async Task NotifyEyEmail(Transaction transactions, User user, string to, BigInteger value)
+        private async Task NotifyEyEmail(Transaction transactions, NotificationModel user, string to, BigInteger value)
         {
             string tokenSymbol = "Ether";
 

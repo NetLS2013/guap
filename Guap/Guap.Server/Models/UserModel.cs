@@ -8,5 +8,6 @@ namespace Guap.Server.Models
         public string VerificationCode { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
+        public bool NotificationsEnabled { get; set; }
     }
 }

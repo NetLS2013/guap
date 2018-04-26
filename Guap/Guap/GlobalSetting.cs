@@ -46,6 +46,8 @@ namespace Guap
 
         
         public static GlobalSetting Instance => Nested.Instance;
+        
+        public static Account Account => EthereumService.GetAccount((string) Settings.Get(Settings.Key.MnemonicPhrase));
 
         public WordCount WordCount { get; }
 
@@ -60,13 +62,6 @@ namespace Guap
         public Token Guap { get; set; }
 
         public Token Ethereum { get; set; }
-
-        public Account Account {
-            get
-            {
-                return EthereumService.GetAccount((string) Settings.Get(Settings.Key.MnemonicPhrase));
-            }
-        }
         
         
         private string BaseEndpoint

@@ -87,7 +87,7 @@ namespace Guap.ViewModels
             
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
             _message = DependencyService.Get<IMessage>();
-            _tokenService = new TokenService(new Web3(GlobalSetting.Instance.Account, GlobalSetting.Instance.EthereumNetwork));
+            _tokenService = new TokenService(new Web3(GlobalSetting.Account, GlobalSetting.Instance.EthereumNetwork));
             
             ActionSelectModalPage = new ActionSelectModalPage();
 
@@ -123,13 +123,13 @@ namespace Guap.ViewModels
             }
             else
             {
-                guap.Balance = await this._tokenService.GetBalance(guap, GlobalSetting.Instance.Account.Address);
+                guap.Balance = await this._tokenService.GetBalance(guap, GlobalSetting.Account.Address);
 
                 foreach (var token in tokens)
                 {
                     try
                     {
-                        token.Balance = await _tokenService.GetBalance(token, GlobalSetting.Instance.Account.Address);
+                        token.Balance = await _tokenService.GetBalance(token, GlobalSetting.Account.Address);
                     }
                     catch (Exception e)
                     {
