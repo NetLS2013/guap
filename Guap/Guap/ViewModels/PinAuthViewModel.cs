@@ -104,6 +104,8 @@
             this.IsCustomHeader = pageSettings.IsShowCustomHeader;
             _pinViewModel.Error += (object sender, EventArgs e) => { IsInvalid = true; };
             _pinViewModel.Success += (object sender, PinEventArgs e) => { IsInvalid = false; };
+
+            IsReset = isReset;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

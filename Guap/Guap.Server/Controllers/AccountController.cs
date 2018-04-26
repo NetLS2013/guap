@@ -28,8 +28,6 @@ namespace Guap.Server.Controllers
             _tokenProvider = tokenProvider;
             _emailSender = emailSender;
             _notificationService = notificationService;
-
-
             _userRepository = userRepository;
         }
         
@@ -192,16 +190,13 @@ namespace Guap.Server.Controllers
             try
             {
                 await _userRepository.NotificationEnabled(model);
-
-                var hexAddress = new HexBigInteger(user.Address);
-                var notifData = new NotificationModel
-                {
-                    Email = user.Email,
-                    NotificationsEnabled = user.NotificationsEnabled
-                };
-                
-                _notificationService.Addresses.AddOrUpdate(hexAddress, notifData,
-                    (address, notificationData) => notificationData);
+                await _notificationService.Toggle(
+                    new NotificationModel
+                    {
+                        Address = user.Address,
+                        NotificationsEnabled = model.NotificationsEnabled,
+                        Email = user.Email
+                    });
             }
             catch (Exception e)
             {

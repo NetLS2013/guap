@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Guap.Server.Data.Repositories;
@@ -17,7 +18,7 @@ namespace Guap.Server.Service
 {
     public interface INotification
     {
-        ConcurrentDictionary<BigInteger, NotificationModel> Addresses { get; set; }
+        Task Toggle(NotificationModel notification);
         Task WatchChain();
     }
 
@@ -32,7 +33,7 @@ namespace Guap.Server.Service
         private UnitConversion _unitConversion;
         private TokenSignature _tokenSignature;
 
-        public ConcurrentDictionary<BigInteger, NotificationModel> Addresses { get; set; }
+        static ConcurrentDictionary<BigInteger, NotificationModel> Addresses { get; set; }
         
         public Notification(
             IUserRepository userRepository,
@@ -153,6 +154,13 @@ namespace Guap.Server.Service
                 + $"You received {_unitConversion.FromWei(value)} {tokenSymbol}, in your address {to}.\n\n"
                 + "For detailed information please open this link: "
                 + $"https://ropsten.etherscan.io/tx/{transactions.TransactionHash}\n\n");
+        }
+        
+        public async Task Toggle(NotificationModel notification)
+        {
+            var hexAddress = new HexBigInteger(notification.Address).Value;
+            
+            Addresses.AddOrUpdate(hexAddress, notification, (address, data) => notification);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Guap.Server.Data.Repositories;
 using Guap.Server.Models;
+using Guap.Server.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Guap.Server.Controllers
@@ -11,11 +12,14 @@ namespace Guap.Server.Controllers
     public class WalletController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly INotification _notificationService;
 
         public WalletController(
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            INotification notificationService)
         {
             _userRepository = userRepository;
+            _notificationService = notificationService;
         }
         
         [HttpPost]
@@ -47,6 +51,8 @@ namespace Guap.Server.Controllers
                 return BadRequest();
             }
 
+            var user = await _userRepository.FindUser(model.PhoneNumber);
+            
             try
             {
                 await _userRepository.UpdateAddress(
@@ -54,6 +60,14 @@ namespace Guap.Server.Controllers
                     {
                         PhoneNumber = model.PhoneNumber,
                         Address = model.Address
+                    });
+
+                await _notificationService.Toggle(
+                    new NotificationModel
+                    {
+                        Address = model.Address,
+                        Email = user.Email,
+                        NotificationsEnabled = user.NotificationsEnabled
                     });
             }
             catch (Exception e)

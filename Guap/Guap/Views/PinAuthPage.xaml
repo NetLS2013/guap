@@ -27,7 +27,7 @@
                     VerticalOptions="Center"
                     BindingContext="{Binding PinViewModel}" />
                 <StackLayout Grid.Column="0" Grid.Row="2" >
-                    <Label TextColor="#e0bc0c" Text="Reset" FontSize="18" HorizontalOptions="Center" VerticalOptions="Start" >
+                    <Label TextColor="#e0bc0c" Text="Reset" FontSize="18" HorizontalOptions="Center" VerticalOptions="Start" IsVisible="{Binding IsReset}">
                         <Label.GestureRecognizers >
                             <TapGestureRecognizer Command="{Binding ResetCommand}"/>
                         </Label.GestureRecognizers>
