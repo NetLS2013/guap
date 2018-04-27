@@ -3,9 +3,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:dashboard="clr-namespace:Guap.Views.Dashboard;assembly=Guap"
-    xmlns:profile="clr-namespace:Guap.Views.Profile;assembly=Guap"
     xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
-    xmlns:setting="clr-namespace:Guap.Views.Setting;assembly=Guap"
     x:Class="Guap.Views.Profile.BottomTabbedPage"
     BarBackgroundColor="#000"
     BarTextColor="#fff"
@@ -14,15 +12,17 @@
         Title="Home"
         Icon="home.png"/>
     
-    <profile:ReceivePage
+    <Page
         Title="Receive"
         Icon="receive.png"/>
     
-    <profile:ScanPage Title="Scan"/>
-
-    <profile:SendPage Title="Send" />
+    <Page
+        Title="Scan"/>
     
-    <setting:SettingsPage
+    <Page
+        Title="Send"/>
+    
+    <Page
         Title="Settings"
         Icon="settings.png"/>
 </customRender:BottomTabbed>

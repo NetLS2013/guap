@@ -14,52 +14,18 @@ namespace Guap.Views.Profile
 
     public partial class BottomTabbedPage : BottomTabbed
     {
+        private SendPage _sendPage;
+        
         public BottomTabbedPage()
         {
             InitializeComponent();
-            InitCamera();
             
-            var dashboard = Children[0] as Dashboard;
-            var receive = Children[1] as ReceivePage;
-            var scan = Children[2] as ScanPage;
-            var send = Children[3] as SendPage;
-            var settings = Children[4] as SettingsPage;
+            Task.Run(async () => await InitCamera());
+            Task.Run(async () => await InitBottomPages());
 
-            send.SendViewModel.ScanEvent += () =>
+            CurrentPageChanged += (sender, e) =>
                 {
-                    Device.BeginInvokeOnMainThread(() => CurrentPage = Children[2]);
-                };
-
-            dashboard.ViewModel.ActionSelectModalPage.Receive += () =>
-                {
-                    Device.BeginInvokeOnMainThread(() =>
-                        {
-                            this.CurrentPage = this.Children[1];
-                            if (receive != null)
-                            {
-                                receive.ViewModel.Token = GlobalSetting.Instance.Guap;
-                            }
-                        });
-                };
-            dashboard.ViewModel.ActionSelectModalPage.Send += () =>
-                {
-                    Device.BeginInvokeOnMainThread(() =>
-                        {
-                            this.CurrentPage = this.Children[3];
-                            send.SendViewModel.TokenSelectedIndex = 0;
-                        });
-                };
-            settings.ViewModel.LockAppSuccess += () =>
-                {
-                    Device.BeginInvokeOnMainThread(() =>
-                        {
-                            this.CurrentPage = this.Children[0];
-                        });
-                };
-            this.CurrentPageChanged += (sender, e) =>
-                {
-                    var currentPage = CurrentPage as PermissionPage;
-                    if (currentPage != null)
+                    if (CurrentPage is PermissionPage)
                     {
                         if (Device.RuntimePlatform == Device.iOS)
                         {
@@ -74,28 +40,21 @@ namespace Guap.Views.Profile
                                     if (status == PermissionStatus.Granted)
                                     {
                                         var page = new ScanPage();
-                                        
-                                        if (page != null)
-                                        {
-                                            page.ScanEvent += (address, amount) =>
-                                                {
-                                                    Device.BeginInvokeOnMainThread(() =>
-                                                        {
-                                                            this.CurrentPage = this.Children[3];
-                                                            send.SendViewModel.SetReceiverInfo(address, amount);
-                                                        });
-                                                    
-                                                };
-                                            page.ScanTokenEvent += (addressContract, addressReceiver, amount) =>
-                                                {
-                                                    Device.BeginInvokeOnMainThread(() =>
-                                                        {
-                                                            this.CurrentPage = this.Children[3];
-                                                            send.SendViewModel.SetReceiverTokenInfo(addressContract, addressReceiver, amount);
-                                                        });
 
-                                                };
-                                        }
+                                        page.ScanEvent += (address, amount) =>
+                                        {
+                                            Device.BeginInvokeOnMainThread(() => this.CurrentPage = this.Children[3]);
+                                            _sendPage.SendViewModel.SetReceiverInfo(address, amount);
+                                        };
+                                        page.ScanTokenEvent += (addressContract, addressReceiver, amount) =>
+                                        {
+                                            Device.BeginInvokeOnMainThread(() =>
+                                            {
+                                                this.CurrentPage = this.Children[3];
+                                                _sendPage.SendViewModel.SetReceiverTokenInfo(addressContract, addressReceiver, amount);
+                                            });
+
+                                        };
 
                                         Device.BeginInvokeOnMainThread(
                                             () =>
@@ -112,36 +71,58 @@ namespace Guap.Views.Profile
 
                         }
                     }
-
                 };
-            if (scan != null)
-            {
-                scan.ScanEvent += (address, amount) =>
-                    {
-                        Device.BeginInvokeOnMainThread(() =>
-                            {
-                                this.CurrentPage = this.Children[3];
-                                send.SendViewModel.SetReceiverInfo(address, amount);
-                            });    
-                    };
-
-                scan.ScanTokenEvent += (addressContract, addressReceiver, amount) =>
-                    {
-                        Device.BeginInvokeOnMainThread(() =>
-                            {
-                                this.CurrentPage = this.Children[3];
-                                send.SendViewModel.SetReceiverTokenInfo(addressContract, addressReceiver, amount);
-                            });
-                        
-                    };
-            }
 
             BarTheme = BarThemeTypes.DarkWithoutAlpha;
             FixedMode = true;
             IconActiveColor = "#e0bc0c";
         }
 
-        public async void InitCamera()
+        private async Task InitBottomPages()
+        {
+            var dashboard = Children[0] as Dashboard;
+            var receive = (ReceivePage) (Children[1] = new ReceivePage());
+            var scan = (ScanPage) (Children[2] = new ScanPage());
+            _sendPage = (SendPage) (Children[3] = new SendPage());
+            var settings = (SettingsPage) (Children[4] = new SettingsPage());
+
+            dashboard.ViewModel.ActionSelectModalPage.Receive += () =>
+            {
+                Device.BeginInvokeOnMainThread(() => { this.CurrentPage = this.Children[1]; });
+            };
+            dashboard.ViewModel.ActionSelectModalPage.Send += () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    this.CurrentPage = this.Children[3];
+                    _sendPage.SendViewModel.TokenSelectedIndex = 0;
+                });
+            };
+
+            _sendPage.SendViewModel.ScanEvent += () => { Device.BeginInvokeOnMainThread(() => CurrentPage = Children[2]); };
+
+            scan.ScanEvent += (address, amount) =>
+            {
+                Device.BeginInvokeOnMainThread(() => this.CurrentPage = this.Children[3]);
+                _sendPage.SendViewModel.SetReceiverInfo(address, amount);
+            };
+
+            scan.ScanTokenEvent += (addressContract, addressReceiver, amount) =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    this.CurrentPage = this.Children[3];
+                    _sendPage.SendViewModel.SetReceiverTokenInfo(addressContract, addressReceiver, amount);
+                });
+            };
+
+            settings.ViewModel.LockAppSuccess += () =>
+            {
+                Device.BeginInvokeOnMainThread(() => { this.CurrentPage = this.Children[0]; });
+            };
+        }
+
+        public async Task InitCamera()
         {
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
 

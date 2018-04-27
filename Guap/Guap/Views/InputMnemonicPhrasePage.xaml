@@ -25,7 +25,14 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <customRender:BorderEditor Grid.Column="0" Grid.Row="0"  VerticalOptions="FillAndExpand" TextColor="#4a4a4a" Text="{Binding InputMnemonic, Mode=TwoWay}"/>
+                    
+                    <customRender:BorderEditor
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        VerticalOptions="FillAndExpand"
+                        TextColor="#4a4a4a"
+                        Text="{Binding InputMnemonic, Mode=TwoWay}"/>
+                    
                     <Label Grid.Column="0" Grid.Row="1" Text="{Binding Error}" FontSize="14" TextColor="#db0029" Margin="0,10,0,10" IsVisible="{Binding IsInvalid}"></Label>
                 </Grid>
                 

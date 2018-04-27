@@ -25,7 +25,7 @@
                         <FormattedString>
                             <Span Text="We're holding your place to protect your backup phrase."/>
                             <Span Text="&#x0a;&#x0a;"/>
-                            <Span Text="When you're ready to create your accoun, click &quot;Resume&quot;."/>
+                            <Span Text="When you're ready to create your account, click &quot;Resume&quot;."/>
                         </FormattedString>
                     </customRender:LineHeightLabel.FormattedText>
                 </customRender:LineHeightLabel>

@@ -5,7 +5,8 @@
     xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
     xmlns:shared="clr-namespace:Guap.Views.Shared;assembly=Guap"
     x:Class="Guap.Views.Profile.ReceivePage"
-    Title="Receive">
+    Title="Receive"
+    Icon="receive.png">
     <StackLayout
         BackgroundColor="White">
         <shared:NavigationTitle

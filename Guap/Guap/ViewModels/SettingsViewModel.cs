@@ -31,6 +31,12 @@ namespace Guap.ViewModels
         public SettingsViewModel(Page context)
         {
             _context = context;
+            
+            Task.Run(async () => await InitConstructor());
+        }
+
+        private async Task InitConstructor()
+        {
             _requestProvider = new RequestProvider();
 
             LockApp = (bool)Settings.Get(Settings.Key.IsLockApp);

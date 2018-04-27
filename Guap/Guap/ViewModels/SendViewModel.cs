@@ -144,20 +144,23 @@
             }
             set
             {
-
                 _tokenIndex = value;
-
                 OnPropertyChanged(nameof(TokenSelectedIndex));
                 Token = Tokens[_tokenIndex];
-
             }
         }
 
         public SendViewModel(Page context)
         {
-            this._context = context;
-            this._token = null;
+            _context = context;
+            
+            Task.Run(async () => await InitConstructor());
+        }
 
+        private async Task InitConstructor()
+        {
+            _token = null;
+            
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
             
             _tokenService = new TokenService(new Web3(GlobalSetting.Account, GlobalSetting.Instance.EthereumNetwork));

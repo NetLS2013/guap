@@ -83,6 +83,11 @@ namespace Guap.ViewModels
         {
             _context = context;
             
+            Task.Run(async () => await InitConstructor());
+        }
+
+        private async Task InitConstructor()
+        {
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
             
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
@@ -91,7 +96,7 @@ namespace Guap.ViewModels
             
             ActionSelectModalPage = new ActionSelectModalPage();
 
-            Task.Run(() => { InitializeTokens(); }).Wait();
+           InitializeTokens();
         }
 
         public List<Token> Tokens

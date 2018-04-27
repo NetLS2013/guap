@@ -104,15 +104,19 @@
 
         public ReceiveViewModel(Page context)
         {
-            this._context = context;
+            _context = context;
 
-            this._token = GlobalSetting.Instance.Ethereum;
+            Task.Run(async () => await InitConstructor());
+        }
+
+        private async Task InitConstructor()
+        {
+            _token = GlobalSetting.Instance.Ethereum;
             RequestString = GlobalSetting.Account.Address;
-
-            _ethereumService =
-                new EthereumService(new Web3(GlobalSetting.Account, GlobalSetting.Instance.EthereumNetwork));
+            
+            _ethereumService = new EthereumService(new Web3(GlobalSetting.Account, GlobalSetting.Instance.EthereumNetwork));
             _tokenService = new TokenService(new Web3(GlobalSetting.Account, GlobalSetting.Instance.EthereumNetwork));
-
+            
             if (CrossConnectivity.Current.IsConnected)
             {
                 OnRefreshBalance();

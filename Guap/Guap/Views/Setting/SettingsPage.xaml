@@ -5,7 +5,8 @@
     xmlns:shared="clr-namespace:Guap.Views.Shared;assembly=Guap"
     xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
     x:Class="Guap.Views.Setting.SettingsPage"
-    Title="Contacts">
+    Title="Settings"
+    Icon="settings.png">
     <StackLayout
         BackgroundColor="White" Spacing="0">
         <shared:NavigationTitle
