@@ -9,8 +9,8 @@ namespace Guap.Server.Service
 {
     public interface ITokenProvider
     {
-        Task<string> GenerateAsync(UserModel user);
-        Task<bool> ValidateAsync(string phone, string token);
+        Task<string> GenerateAsync(string phoneNumber);
+        Task<bool> ValidateAsync(string phoneNumber, string token);
     }
     
     public class TokenProvider : ITokenProvider
@@ -22,7 +22,7 @@ namespace Guap.Server.Service
             _userRepository = userRepository;
         }
         
-        public async Task<string> GenerateAsync(UserModel user)
+        public async Task<string> GenerateAsync(string phoneNumber)
         {
             var ms = new MemoryStream();
 
@@ -37,7 +37,7 @@ namespace Guap.Server.Service
                         writer.WritePropertyName("DateTimeOffset");
                         writer.WriteValue(DateTimeOffset.UtcNow);
                         writer.WritePropertyName("PhoneNumber");
-                        writer.WriteValue(user.PhoneNumber);
+                        writer.WriteValue(phoneNumber);
                     }
                     writer.WriteEndObject();
                 }
@@ -46,7 +46,7 @@ namespace Guap.Server.Service
             return Convert.ToBase64String(ms.ToArray());
         }
         
-        public async Task<bool> ValidateAsync(string phone, string token)
+        public async Task<bool> ValidateAsync(string phoneNumber, string token)
         {
             var ms = new MemoryStream(Convert.FromBase64String(token));
             
@@ -62,17 +62,14 @@ namespace Guap.Server.Service
                     throw new Exception("Token time expired.");
                 }
 
-                var user = await _userRepository.FindUser(phone);
+                var user = await _userRepository.FindUser(phoneNumber);
 
                 if (user == null || user.PhoneNumber != deserializeToken.PhoneNumber)
                 {
                     throw new Exception("Wrong phone number.");
                 }
                 
-                await _userRepository.ConfirmEmail(new UserModel
-                {
-                    PhoneNumber = phone
-                });
+                await _userRepository.ConfirmEmail(user);
             }
 
             return true;

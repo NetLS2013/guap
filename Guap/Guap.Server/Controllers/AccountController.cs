@@ -45,32 +45,30 @@ namespace Guap.Server.Controllers
             {
                 return Ok(new { code = "1001", result = false });
             }
-
-            var user = new UserModel
-            {
-                PhoneNumber = model.PhoneNumber
-            };
             
-            await _userRepository.RegisterNumber(user);
+            var user = await _userRepository.FindUser(model.PhoneNumber);
+            
+            await _userRepository.RegisterNumber(model.PhoneNumber, user);
 
             return Ok(new { result = true });
         }
         
         [HttpPost]
-        public async Task<IActionResult> VerificationCode([FromBody]UserModel model)
+        public async Task<IActionResult> VerificationCode([FromBody] VerificationCodeModel model)
         {
-            if (string.IsNullOrWhiteSpace(model.VerificationCode))
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            
+            var user = await _userRepository.FindUser(model.PhoneNumber);
+
+            if (user == null)
             {
                 return BadRequest();
             }
 
-            var user = new UserModel
-            {
-                PhoneNumber = model.PhoneNumber,
-                VerificationCode = model.VerificationCode
-            };
-            
-            var result =  await _userRepository.CheckVerificationCode(user);
+            var result = user.VerificationCode.Equals(model.VerificationCode);
 
             if (result)
             {
@@ -95,28 +93,26 @@ namespace Guap.Server.Controllers
                 return Ok(new { code = "1002", result = false });
             }
 
-            var user = new UserModel
-            {
-                PhoneNumber = model.PhoneNumber,
-                Email = model.Email,
-                VerificationCode = model.VerificationCode
-            };
-
             try
             {
-                var result =  await _userRepository.CheckVerificationCode(user);
+                var user = await _userRepository.FindUser(model.PhoneNumber);
 
-                if (!result)
+                if (user == null)
                 {
                     return BadRequest();
                 }
                 
-                await _userRepository.RegisterEmail(user);
+                if (!user.VerificationCode.Equals(model.VerificationCode))
+                {
+                    return BadRequest();
+                }
+                
+                await _userRepository.RegisterEmail(model.Email, user);
 
-                var token = await _tokenProvider.GenerateAsync(user);
-                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { phone = user.PhoneNumber, token }, HttpContext.Request.Scheme);
+                var token = await _tokenProvider.GenerateAsync(model.PhoneNumber);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { phone = model.PhoneNumber, token }, HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(user.Email, "Guapcoin Support Service",
+                await _emailSender.SendEmailAsync(model.Email, "Guapcoin Support Service",
                     "Please confirm your account by clicking this link: "
                     + callbackUrl);
             }
@@ -179,17 +175,23 @@ namespace Guap.Server.Controllers
             {
                 return BadRequest();
             }
-
-            if (!await _userRepository.CheckVerificationCode(model))
+            
+            var user = await _userRepository.FindUser(model.PhoneNumber);
+            
+            if (user == null)
             {
                 return BadRequest();
             }
             
-            var user = await _userRepository.FindUser(model.PhoneNumber);
+            if (!user.VerificationCode.Equals(model.VerificationCode))
+            {
+                return BadRequest();
+            }
             
             try
             {
-                await _userRepository.NotificationEnabled(model);
+                await _userRepository.NotificationEnabled(model.NotificationsEnabled, user);
+                
                 await _notificationService.Toggle(
                     new NotificationModel
                     {

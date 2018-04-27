@@ -31,6 +31,7 @@
     <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\VerificationEmailModel.cs" />
+    <Compile Include="Models\VerificationCodeModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Service\EmailSender.cs" />
     <Compile Include="Service\TokenProvider.cs" />

@@ -24,14 +24,15 @@ namespace Guap.Server.Service
 
     public class Notification : INotification
     {
+        private BigInteger _currentBlock;
+        private BigInteger _lastBlock;
+        
         private readonly IUserRepository _userRepository;
         private readonly IEmailSender _emailSender;
         
-        private Web3 _web3;
-        private BigInteger _currentBlock;
-        private BigInteger _lastBlock;
-        private UnitConversion _unitConversion;
-        private TokenSignature _tokenSignature;
+        private readonly Web3 _web3;
+        private readonly UnitConversion _unitConversion;
+        private readonly TokenSignature _tokenSignature;
 
         static ConcurrentDictionary<BigInteger, NotificationModel> Addresses { get; set; }
         
@@ -44,7 +45,7 @@ namespace Guap.Server.Service
             
             _web3 = new Web3("https://ropsten.infura.io/E8XftGiqmaErL2KN5Cp3");
             _unitConversion = new UnitConversion();
-            _tokenSignature = new TokenSignature();;
+            _tokenSignature = new TokenSignature();
             
             Addresses = new ConcurrentDictionary<BigInteger, NotificationModel>();
 
@@ -53,7 +54,7 @@ namespace Guap.Server.Service
 
         private async Task FillAddress()
         {
-            var users = _userRepository.GetAllUsers();
+            var users = await _userRepository.GetAllUsers();
             
             foreach (var it in users)
             {

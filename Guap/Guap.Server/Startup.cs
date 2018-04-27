@@ -21,14 +21,12 @@ namespace Guap.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
             services.AddTransient<IEmailSender, EmailSender>(provider => new EmailSender(Configuration));
             services.AddTransient<ITokenProvider, TokenProvider>();
-            services.AddTransient<INotification, Notification>();
             
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            
+            services.AddSingleton<INotification, Notification>();
             
             services.AddMvc();
             

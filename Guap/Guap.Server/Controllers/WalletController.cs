@@ -44,23 +44,21 @@ namespace Guap.Server.Controllers
                 return BadRequest();
             }
             
-            var result = await _userRepository.CheckVerificationCode(model);
+            var user = await _userRepository.FindUser(model.PhoneNumber);
 
-            if (!result)
+            if (user == null)
             {
                 return BadRequest();
             }
 
-            var user = await _userRepository.FindUser(model.PhoneNumber);
-            
+            if (!user.VerificationCode.Equals(model.VerificationCode))
+            {
+                return BadRequest();
+            }
+
             try
             {
-                await _userRepository.UpdateAddress(
-                    new UserModel
-                    {
-                        PhoneNumber = model.PhoneNumber,
-                        Address = model.Address
-                    });
+                await _userRepository.UpdateAddress(model.Address, user);
 
                 await _notificationService.Toggle(
                     new NotificationModel

@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Guap.Server.Data.Entities;
-using Guap.Server.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Guap.Server.Data.Repositories
 {
     public interface IUserRepository
     {
-        Task RegisterNumber(UserModel model);
-        Task<bool> CheckVerificationCode(UserModel model);
-        Task ConfirmPhone(UserModel model);
+        Task RegisterNumber(string phoneNumber, User updateOrCreate);
+        Task ConfirmPhone(User update);
         Task<User> FindUser(string phoneNumber);
-        Task UpdateAddress(UserModel modelPhoneNumber);
-        Task RegisterEmail(UserModel userModel);
-        Task ConfirmEmail(UserModel userModel);
-        Task NotificationEnabled(UserModel model);
-        List<User> GetAllUsers();
+        Task UpdateAddress(string address, User update);
+        Task RegisterEmail(string email, User update);
+        Task ConfirmEmail(User update);
+        Task NotificationEnabled(bool notificationsEnabled, User update);
+        Task<List<User>> GetAllUsers();
         Task<User> FindByEmail(string email);
     }
     
     public class UserRepository : GenericRepository<User>, IUserRepository
     {
-        public UserRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public UserRepository(IConfiguration configuration) : base(configuration)
         {
         }
 
@@ -39,79 +39,60 @@ namespace Guap.Server.Data.Repositories
             return await Get(m => m.Email.Contains(email));
         }
 
-        public async Task UpdateAddress(UserModel model)
+        public async Task UpdateAddress(string address, User update)
         {
-            var user = await FindUser(model.PhoneNumber);
-
-            user.Address = model.Address;
-
-            await Update(user);
+            update.Address = address;
+            
+            await Update(update);
         }
 
-        public async Task RegisterEmail(UserModel model)
+        public async Task RegisterEmail(string email, User update)
         {
-            var user = await FindUser(model.PhoneNumber);
+            update.Email = email;
+            update.EmailConfirmed = false;
 
-            user.Email = model.Email;
-            user.EmailConfirmed = false;
-
-            await Update(user);
+            await Update(update);
         }
 
-        public async Task ConfirmEmail(UserModel model)
+        public async Task ConfirmEmail(User update)
         {
-            var user = await FindUser(model.PhoneNumber);
+            update.EmailConfirmed = true;
 
-            user.EmailConfirmed = true;
-
-            await Update(user);
+            await Update(update);
         }
 
-        public async Task NotificationEnabled(UserModel model)
+        public async Task NotificationEnabled(bool notificationsEnabled, User update)
         {
-            var user = await FindUser(model.PhoneNumber);
+            update.NotificationsEnabled = notificationsEnabled;
 
-            user.NotificationsEnabled = model.NotificationsEnabled;
-
-            await Update(user);
+            await Update(update);
         }
 
-        public List<User> GetAllUsers()
+        public async Task<List<User>> GetAllUsers()
         {
-            return GetAll().ToList();
+            return await GetAll().ToListAsync();
         }
 
-        public async Task RegisterNumber(UserModel model)
+        public async Task RegisterNumber(string phoneNumber, User updateOrCreate)
         {
-            var user = await FindUser(model.PhoneNumber);
-
-            if (user == null)
+            if (updateOrCreate == null)
             {
-                user = new User
+                updateOrCreate = new User
                 {
-                    PhoneNumber = model.PhoneNumber
+                    PhoneNumber = phoneNumber
                 };
             }
 
-            user.VerificationCode = new Random().Next(0, 999999).ToString("D6");
+            updateOrCreate.VerificationCode = new Random().Next(0, 999999).ToString("D6");
 
-            await Update(user);
+            await Update(updateOrCreate);
         }
 
-        public async Task<bool> CheckVerificationCode(UserModel model)
+        public async Task ConfirmPhone(User update)
         {
-            var user = await FindUser(model.PhoneNumber);
+            update.PhoneNumberConfirmed = true;
 
-            return string.Equals(user.VerificationCode, model.VerificationCode);
-        }
-
-        public async Task ConfirmPhone(UserModel model)
-        {
-            var user = await FindUser(model.PhoneNumber);
-
-            user.PhoneNumberConfirmed = true;
-
-            await Update(user);
+            await Update(update);
         }
     }
 }

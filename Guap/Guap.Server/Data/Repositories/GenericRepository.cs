@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Guap.Server.Data.Repositories
 {
@@ -10,10 +11,10 @@ namespace Guap.Server.Data.Repositories
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly DbSet<TEntity> _dbSet;
-        
-        public GenericRepository(ApplicationDbContext dbContext)
+
+        public GenericRepository(IConfiguration configuration)
         {
-            _dbContext = dbContext;
+            _dbContext = new ApplicationDbContext(configuration);
             _dbSet = _dbContext.Set<TEntity>();
         }
         
