@@ -2,6 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Numerics;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Windows.Input;
@@ -16,6 +19,7 @@
     using MvvmValidation;
 
     using Nethereum.HdWallet;
+    using Nethereum.Hex.HexTypes;
     using Nethereum.Util;
     using Nethereum.Web3;
     using Nethereum.Web3.Accounts;
@@ -34,7 +38,7 @@
         private TokenService _tokenService;
         private EthereumService _ethereumService;
         private IRepository<Token> _repository;
-        private List<Token> _tokens;
+        private ObservableCollection<Token> _tokens;
         private Token _token;
         private int _tokenIndex;
         private ValidationErrorCollection _errors;
@@ -49,7 +53,7 @@
         public ICommand ScanCommand => new Command(async () => await OnScan());
         public ICommand RefreshBalanceCommand => new Command(async () => await OnRefreshBalance());
 
-        public List<Token> Tokens
+        public ObservableCollection<Token> Tokens
         {
             get
             {
@@ -164,19 +168,46 @@
 
         public async void InitializeTokens()
         {
-            Tokens = new List<Token>();
+            Tokens = new ObservableCollection<Token>();
            
             var tokens = await _repository.Get();
             tokens.Insert(0, GlobalSetting.Instance.Guap);
             tokens.Insert(1, GlobalSetting.Instance.Ethereum);
 
-            Tokens = new List<Token>(tokens);
+            Tokens = new ObservableCollection<Token>(tokens);
         }
 
         public void SetReceiverInfo(string address, string amount)
         {
+            CleanFields();
+
             ReceiverAddress = address;
             Amount = amount;
+        }
+
+        public async void SetReceiverTokenInfo(string addressContract, string addressReceiver, string amount)
+        {
+            CleanFields();
+
+            try
+            {
+                var tokenSend = Tokens.First(token => token.Address == addressContract);
+                Token = tokenSend;
+            }
+            catch (Exception e)
+            {
+                var tempToken = await _tokenService.GetTokenInfo(addressContract);
+                _repository.Insert(tempToken);
+
+                Tokens.Add(tempToken);
+                OnPropertyChanged(nameof(Tokens));
+
+                Token = tempToken;
+            }
+            
+            ReceiverAddress = addressReceiver;
+            BigInteger.TryParse(amount, out BigInteger realAmount);
+            Amount = TokenService.ConvertToBigDecimal(realAmount, Token.Decimals).ToString();
         }
 
         private async Task OnSend()
@@ -319,6 +350,8 @@
         {
             ReceiverAddress = null;
             Amount = null;
+            _token = null;
+            OnPropertyChanged(nameof(Token));
         }
     }
 }

@@ -77,6 +77,15 @@ namespace Guap.Views.Profile
                                                     Device.BeginInvokeOnMainThread(() => this.CurrentPage = this.Children[3]);
                                                     send.SendViewModel.SetReceiverInfo(address, amount);
                                                 };
+                                            page.ScanTokenEvent += (addressContract, addressReceiver, amount) =>
+                                                {
+                                                    Device.BeginInvokeOnMainThread(() =>
+                                                        {
+                                                            this.CurrentPage = this.Children[3];
+                                                            send.SendViewModel.SetReceiverTokenInfo(addressContract, addressReceiver, amount);
+                                                        });
+
+                                                };
                                         }
 
                                         Device.BeginInvokeOnMainThread(
@@ -102,6 +111,16 @@ namespace Guap.Views.Profile
                     {
                         Device.BeginInvokeOnMainThread(() => this.CurrentPage = this.Children[3]);
                         send.SendViewModel.SetReceiverInfo(address, amount);
+                    };
+
+                scan.ScanTokenEvent += (addressContract, addressReceiver, amount) =>
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                            {
+                                this.CurrentPage = this.Children[3];
+                                send.SendViewModel.SetReceiverTokenInfo(addressContract, addressReceiver, amount);
+                            });
+                        
                     };
             }
 

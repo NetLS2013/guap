@@ -14,13 +14,19 @@ namespace Guap.Views.Profile
     using Guap.Contracts;
     using Guap.ViewModels;
 
+    using Nethereum.Hex.HexConvertors;
+    using Nethereum.Hex.HexConvertors.Extensions;
+    using Nethereum.Hex.HexTypes;
+
     using ZXing;
     using ZXing.Net.Mobile.Forms;
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ScanPage : ContentPage
     {
-        public event Action<string, string> ScanEvent; ZXingScannerView zxing;
+        public event Action<string, string> ScanEvent;
+        public event Action<string, string, string> ScanTokenEvent;
+        ZXingScannerView zxing;
 
         private IMessage _message;
         ZXingDefaultOverlay overlay;
@@ -81,9 +87,36 @@ namespace Guap.Views.Profile
                 }
 
                 var paramsQuery = ParseQueryString(uri);
-                paramsQuery.TryGetValue("value", out string amount);
+                if (paramsQuery.TryGetValue("value", out string amount))
+                {
+                    ScanEvent(uri.AbsolutePath, amount);
+                    return;
+                }
 
-                ScanEvent(uri.AbsolutePath, amount);
+                if (paramsQuery.TryGetValue("function", out string function))
+                {
+                    if (function.Contains("transfer"))
+                    {
+                        var address = new Regex("(?<=address ).{42}").Match(result.Text).Value;
+                        var amountToken = new Regex("(?<=uint )[0-9]*").Match(result.Text).Value;
+                        ScanTokenEvent(uri.AbsolutePath, address, amountToken);
+                        return;
+                    }
+                }
+
+                if (paramsQuery.TryGetValue("data", out string data))
+                {
+                    if (data.StartsWith("0xa9059cbb"))
+                    {
+                        data = data.Replace("0xa9059cbb", string.Empty);
+                        var address = new HexBigInteger(data.Substring(data.Length - 104, 40)).HexValue;
+                        var amountToken = new HexBigInteger(data.Substring(data.Length - 64)).Value.ToString();
+                        ScanTokenEvent(uri.AbsolutePath, address, amountToken);
+                        return;
+                    }
+                }
+
+                ScanEvent(uri.AbsolutePath, null);
             }
             catch (Exception e)
             {

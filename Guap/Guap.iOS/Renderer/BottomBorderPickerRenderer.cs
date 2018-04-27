@@ -32,8 +32,10 @@ namespace Guap.iOS.Renderer
                 Control.TextColor = UIColor.Black;
 
                 var downarrow = UIImage.FromBundle("dropdown.png");
+                var imageView = new UIImageView(downarrow);
+                imageView.Frame = new CGRect(0, 0, 28, 28);
                 Control.RightViewMode = UITextFieldViewMode.Always;
-                Control.RightView = new UIImageView(downarrow);
+                Control.RightView = imageView;
             }
         }
     }

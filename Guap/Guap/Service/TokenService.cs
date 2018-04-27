@@ -29,6 +29,16 @@
             _message = DependencyService.Get<IMessage>();
         }
 
+        public static BigDecimal ConvertToBigDecimal(BigInteger integer, int decimals)
+        {
+            return new BigDecimal(integer, decimals) / new BigDecimal(BigInteger.Pow(new BigInteger(10), decimals), decimals);
+        }
+
+        public static BigInteger ConvertToBigInteger(BigDecimal number, int decimals)
+        {
+            return BigInteger.Parse((number * new BigDecimal(BigInteger.Pow(new BigInteger(10), decimals), 0)).ToString());
+        }
+
         public async Task<Token> GetTokenInfo(string contactAddress)
         {
             if (!CrossConnectivity.Current.IsConnected)
@@ -69,7 +79,7 @@
                 var contract = this._web3.Eth.GetContract(this.TokenStandartABI, token.Address);
                 var balanceContract = await contract.GetFunction("balanceOf").CallAsync<BigInteger>(walletAddress);
 
-                var balance = new BigDecimal(balanceContract, token.Decimals) / new BigDecimal(BigInteger.Pow(new BigInteger(10), token.Decimals), token.Decimals);
+                var balance = ConvertToBigDecimal(balanceContract, token.Decimals);
 
                 return balance;
             }
@@ -91,7 +101,7 @@
 
             try
             {
-                var realAmount = BigInteger.Parse((amount * new BigDecimal(BigInteger.Pow(new BigInteger(10), token.Decimals), 0)).ToString());
+                var realAmount = ConvertToBigInteger(amount, token.Decimals);
 
                 var contract = _web3.Eth.GetContract(this.TokenStandartABI, token.Address);
                 var gas = await contract.GetFunction("transfer").EstimateGasAsync(account.Address, null, null, toAddress, realAmount);
