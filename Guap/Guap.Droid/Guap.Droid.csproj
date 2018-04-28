@@ -322,7 +322,6 @@
     <AndroidResource Include="Resources\drawable-hdpi\dropdown.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\dropdown.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\dropdown.png" />
-    <AndroidResource Include="Resources\drawable\splashscreen.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\contact.png" />
