@@ -2,13 +2,12 @@
 <customRender:BottomTabbed
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:dashboard="clr-namespace:Guap.Views.Dashboard;assembly=Guap"
     xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
     x:Class="Guap.Views.Profile.BottomTabbedPage"
     BarBackgroundColor="#000"
     BarTextColor="#fff"
     NavigationPage.HasNavigationBar="False">
-    <dashboard:Dashboard
+    <Page
         Title="Home"
         Icon="home.png"/>
     

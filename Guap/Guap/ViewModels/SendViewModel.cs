@@ -35,6 +35,7 @@
     public class SendViewModel : BaseViewModel
     {
         private Page _context;
+        private readonly BottomTabbedPage _tabbedContext;
         private TokenService _tokenService;
         private EthereumService _ethereumService;
         private IRepository<Token> _repository;
@@ -46,11 +47,10 @@
         private string _receiverAddress;
         private BigDecimal? _amount;
         private string _amountString;
-        public event Action ScanEvent;
 
         public ICommand SendCommand => new Command(async () => await OnSend());
         public ICommand ContactCommand => new Command(async () => await OnContact());
-        public ICommand ScanCommand => new Command(async () => await OnScan());
+        public ICommand ScanCommand => new Command(OnScan);
         public ICommand RefreshBalanceCommand => new Command(async () => await OnRefreshBalance());
 
         public ObservableCollection<Token> Tokens
@@ -150,10 +150,11 @@
             }
         }
 
-        public SendViewModel(Page context)
+        public SendViewModel(Page context, BottomTabbedPage tabbedContext)
         {
             _context = context;
-            
+            _tabbedContext = tabbedContext;
+
             Task.Run(async () => await InitConstructor());
         }
 
@@ -172,9 +173,8 @@
 
         public async void InitializeTokens()
         {
-            Tokens = new ObservableCollection<Token>();
-           
             var tokens = await _repository.Get();
+            
             tokens.Insert(0, GlobalSetting.Instance.Guap);
             tokens.Insert(1, GlobalSetting.Instance.Ethereum);
 
@@ -201,7 +201,7 @@
             catch (Exception e)
             {
                 var tempToken = await _tokenService.GetTokenInfo(addressContract);
-                _repository.Insert(tempToken);
+                await _repository.Insert(tempToken);
 
                 Tokens.Add(tempToken);
                 OnPropertyChanged(nameof(Tokens));
@@ -269,9 +269,9 @@
             }
         }
 
-        private async Task OnScan()
+        private void OnScan()
         {
-            ScanEvent();
+            _tabbedContext.CurrentPage = _tabbedContext.Children[2];
         }
 
         private async Task OnContact()

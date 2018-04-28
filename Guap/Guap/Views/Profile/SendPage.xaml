@@ -4,7 +4,8 @@
              xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
              xmlns:helpers="clr-namespace:Guap.Helpers;assembly=Guap"
              xmlns:shared="clr-namespace:Guap.Views.Shared;assembly=Guap"
-             x:Class="Guap.Views.Profile.SendPage">
+             x:Class="Guap.Views.Profile.SendPage"
+             Title="Send">
     <ContentPage.Resources>
         <ResourceDictionary>
             <helpers:BooleanConverter x:Key="BooleanConverter"/>

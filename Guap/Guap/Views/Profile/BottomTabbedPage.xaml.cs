@@ -1,135 +1,91 @@
-﻿using Guap.CustomRender;
+﻿using System;
+using System.Threading.Tasks;
+using Guap.CustomRender;
+using Guap.Views.Setting;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using Xamarin.Forms;
 
 namespace Guap.Views.Profile
 {
-    using System.Threading.Tasks;
-
-    using Guap.Views.Dashboard;
-    using Guap.Views.Setting;
-
-    using Plugin.Permissions;
-    using Plugin.Permissions.Abstractions;
-
-    using Xamarin.Forms;
-
+    using Dashboard;
+    
     public partial class BottomTabbedPage : BottomTabbed
     {
-        private SendPage _sendPage;
-        
+        public Dashboard Dasboard { get; set; }
+        public ReceivePage ReceivePage { get; set; }
+        public ScanPage ScanPage { get; set; }
+        public SendPage SendPage { get; set; }
+        public SettingsPage SettingsPage { get; set; }
+
         public BottomTabbedPage()
         {
             InitializeComponent();
             
-            Task.Run(async () => await InitCamera());
-            Task.Run(async () => await InitBottomPages());
-
-            CurrentPageChanged += (sender, e) =>
-                {
-                    if (CurrentPage is PermissionPage)
-                    {
-                        if (Device.RuntimePlatform == Device.iOS)
-                        {
-                            var status = CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera).Result;
-
-                            if (status != PermissionStatus.Granted)
-                            {
-                                var result = CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera).Result;
-                                if (result.ContainsKey(Permission.Camera))
-                                {
-                                    status = result[Permission.Camera];
-                                    if (status == PermissionStatus.Granted)
-                                    {
-                                        var page = new ScanPage();
-
-                                        page.ScanEvent += (address, amount) =>
-                                        {
-                                            Device.BeginInvokeOnMainThread(() => this.CurrentPage = this.Children[3]);
-                                            _sendPage.SendViewModel.SetReceiverInfo(address, amount);
-                                        };
-                                        page.ScanTokenEvent += (addressContract, addressReceiver, amount) =>
-                                        {
-                                            Device.BeginInvokeOnMainThread(() =>
-                                            {
-                                                this.CurrentPage = this.Children[3];
-                                                _sendPage.SendViewModel.SetReceiverTokenInfo(addressContract, addressReceiver, amount);
-                                            });
-
-                                        };
-
-                                        Device.BeginInvokeOnMainThread(
-                                            () =>
-                                                {
-                                                    Children.Insert(2, page);
-                                                    Children[2].Title = "Scan";
-                                                    CurrentPage = Children[2];
-                                                    Children.RemoveAt(3);
-                                                });
-                                    }
-                                }
-
-                            }
-
-                        }
-                    }
-                };
-
             BarTheme = BarThemeTypes.DarkWithoutAlpha;
             FixedMode = true;
             IconActiveColor = "#e0bc0c";
+            
+            Dasboard = (Dashboard) (Children[0] = new Dashboard(this));
+            
+            Task.Run(async () => await InitBottomPages());
         }
 
         private async Task InitBottomPages()
         {
-            var dashboard = Children[0] as Dashboard;
-            var receive = (ReceivePage) (Children[1] = new ReceivePage());
-            var scan = (ScanPage) (Children[2] = new ScanPage());
-            _sendPage = (SendPage) (Children[3] = new SendPage());
-            var settings = (SettingsPage) (Children[4] = new SettingsPage());
-
-            dashboard.ViewModel.ActionSelectModalPage.Receive += () =>
-            {
-                Device.BeginInvokeOnMainThread(() => { this.CurrentPage = this.Children[1]; });
-            };
-            dashboard.ViewModel.ActionSelectModalPage.Send += () =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    this.CurrentPage = this.Children[3];
-                    _sendPage.SendViewModel.TokenSelectedIndex = 0;
-                });
-            };
-
-            _sendPage.SendViewModel.ScanEvent += () => { Device.BeginInvokeOnMainThread(() => CurrentPage = Children[2]); };
-
-            scan.ScanEvent += (address, amount) =>
-            {
-                Device.BeginInvokeOnMainThread(() => this.CurrentPage = this.Children[3]);
-                _sendPage.SendViewModel.SetReceiverInfo(address, amount);
-            };
-
-            scan.ScanTokenEvent += (addressContract, addressReceiver, amount) =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    this.CurrentPage = this.Children[3];
-                    _sendPage.SendViewModel.SetReceiverTokenInfo(addressContract, addressReceiver, amount);
-                });
-            };
-
-            settings.ViewModel.LockAppSuccess += () =>
-            {
-                Device.BeginInvokeOnMainThread(() => { this.CurrentPage = this.Children[0]; });
-            };
-        }
-
-        public async Task InitCamera()
-        {
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
 
-            if (status != PermissionStatus.Granted || status == PermissionStatus.Unknown)
+            var scan = status == PermissionStatus.Granted
+                ? (Page) new ScanPage(this)
+                : (Page) new PermissionPage();
+            
+            var receive = new ReceivePage(this);
+            var send = new SendPage(this);
+            var setting = new SettingsPage(this);
+            
+            Device.BeginInvokeOnMainThread(() =>
             {
-                Children[2] = new PermissionPage(Permission.Camera);
-                Children[2].Title = "Scan";
+                Children.RemoveAt(1);
+                Children.Insert(1, ReceivePage = receive);
+                
+                Children.RemoveAt(2);
+                Children.Insert(2, scan);
+                ScanPage = scan as ScanPage;
+                
+                Children.RemoveAt(3);
+                Children.Insert(3, SendPage = send);
+                
+                Children.RemoveAt(4);
+                Children.Insert(4, SettingsPage = setting);
+            });
+
+            CurrentPageChanged += OnCurrentPageChanged;
+        }
+
+        private async void OnCurrentPageChanged(object sender, EventArgs eventArgs)
+        {
+            if (CurrentPage is PermissionPage)
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
+
+                if (status != PermissionStatus.Granted)
+                {
+                    var result = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+
+                    if (result[Permission.Camera] == PermissionStatus.Granted)
+                    {
+                        var page = new ScanPage(this);
+
+                        Device.BeginInvokeOnMainThread(
+                            () =>
+                            {
+                                Children.RemoveAt(2);
+                                Children.Insert(2, page);
+                                
+                                CurrentPage = Children[2];
+                            });
+                    }
+                }
             }
         }
     }

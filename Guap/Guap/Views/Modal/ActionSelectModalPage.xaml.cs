@@ -1,37 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+using Guap.Views.Profile;
+using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 
 namespace Guap.Views.Modal
 {
-    using Rg.Plugins.Popup.Pages;
-    using Rg.Plugins.Popup.Services;
-
     public partial class ActionSelectModalPage : PopupPage
 	{
-	    public event Action Send;
+	    private readonly BottomTabbedPage _tabbedContext;
 
-	    public event Action Receive;
-
-		public ActionSelectModalPage()
+		public ActionSelectModalPage(BottomTabbedPage tabbedContext)
 		{
-			InitializeComponent ();
+		    InitializeComponent ();
+		    
+		    _tabbedContext = tabbedContext;
 		}
 
         private async void ReceiveClick(object sender, EventArgs e)
         {
-            Receive();
+            _tabbedContext.CurrentPage = _tabbedContext.Children[1];
+            
             await PopupNavigation.PopAsync();
         }
 
         private async void SendClick(object sender, EventArgs e)
         {
-            Send();
+            _tabbedContext.CurrentPage = _tabbedContext.Children[3];
+            _tabbedContext.SendPage.SendViewModel.TokenSelectedIndex = 0;
+            
             await PopupNavigation.PopAsync();
         }
 

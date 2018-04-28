@@ -24,17 +24,18 @@ namespace Guap.Views.Profile
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ScanPage : ContentPage
     {
-        public event Action<string, string> ScanEvent;
-        public event Action<string, string, string> ScanTokenEvent;
+        private readonly BottomTabbedPage _tabbedContext;
         ZXingScannerView zxing;
 
         private IMessage _message;
         ZXingDefaultOverlay overlay;
 
-        public ScanPage()
+        public ScanPage(BottomTabbedPage tabbedContext)
         {
             InitializeComponent();
 
+            _tabbedContext = tabbedContext;
+            
             zxing = new ZXingScannerView
                         {
                             HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -99,7 +100,9 @@ namespace Guap.Views.Profile
                     {
                         var address = new Regex("(?<=address ).{42}").Match(result.Text).Value;
                         var amountToken = new Regex("(?<=uint )[0-9]*").Match(result.Text).Value;
-                        ScanTokenEvent(uri.AbsolutePath, address, amountToken);
+                        
+                        ScanEvent(uri.AbsolutePath, address, amountToken);
+                        
                         return;
                     }
                 }
@@ -109,9 +112,12 @@ namespace Guap.Views.Profile
                     if (data.StartsWith("0xa9059cbb"))
                     {
                         data = data.Replace("0xa9059cbb", string.Empty);
+                        
                         var address = new HexBigInteger(data.Substring(data.Length - 104, 40)).HexValue;
                         var amountToken = new HexBigInteger(data.Substring(data.Length - 64)).Value.ToString();
-                        ScanTokenEvent(uri.AbsolutePath, address, amountToken);
+                        
+                        ScanEvent(uri.AbsolutePath, address, amountToken);
+                        
                         return;
                     }
                 }
@@ -122,6 +128,18 @@ namespace Guap.Views.Profile
             {
                 Device.BeginInvokeOnMainThread(() => _message.ShortAlert("Scan valid QR Code."));
             }
+        }
+
+        void ScanEvent(string address, string amount)
+        {
+            _tabbedContext.CurrentPage = _tabbedContext.Children[3];
+            _tabbedContext.SendPage.SendViewModel.SetReceiverInfo(address, amount);
+        }
+
+        void ScanEvent(string addressContract, string addressReceiver, string amount)
+        {
+            _tabbedContext.CurrentPage = _tabbedContext.Children[3];
+            _tabbedContext.SendPage.SendViewModel.SetReceiverTokenInfo(addressContract, addressReceiver, amount);
         }
 
         private Dictionary<string, string> ParseQueryString(Uri uri)

@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Guap.Helpers;
 using Guap.Models;
+using Guap.Service;
+using Guap.Views;
+using Guap.Views.Profile;
 using Guap.Views.Setting;
 using Xamarin.Forms;
 
 namespace Guap.ViewModels
-{
-    using System.Collections.ObjectModel;
-    using System.Threading.Tasks;
-    using System.Windows.Input;
-
-    using Guap.Helpers;
-    using Guap.Service;
-    using Guap.Views;
-    using Guap.Views.Profile;
-
+{ 
     public class SettingsViewModel : BaseViewModel
     {
         private readonly Page _context;
+        private readonly BottomTabbedPage _tabbedContext;
         private ObservableCollection<SettingsModel> _settingsList;
 
         private RequestProvider _requestProvider;
@@ -26,12 +25,11 @@ namespace Guap.ViewModels
         private bool _isNotification;
         private bool _isLockApp;
 
-        public event Action LockAppSuccess;
-
-        public SettingsViewModel(Page context)
+        public SettingsViewModel(Page context, BottomTabbedPage tabbedContext)
         {
             _context = context;
-            
+            _tabbedContext = tabbedContext;
+
             Task.Run(async () => await InitConstructor());
         }
 
@@ -115,7 +113,9 @@ namespace Guap.ViewModels
                                 {
                                     this.LockApp = !this.LockApp;
                                     Settings.Set(Settings.Key.IsLockApp, LockApp);
-                                    LockAppSuccess();
+
+                                    _tabbedContext.CurrentPage = _tabbedContext.Children[0];
+                                    
                                     SettingsList[1].Toggled = LockApp;
                                     this._context.Navigation.PopAsync();
                                 },

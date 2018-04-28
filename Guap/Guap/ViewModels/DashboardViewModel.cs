@@ -7,6 +7,7 @@ using Guap.Models;
 using Guap.Service;
 using Guap.Views.Dashboard;
 using Guap.Views.Modal;
+using Guap.Views.Profile;
 using Nethereum.Web3;
 using Plugin.Connectivity;
 using Rg.Plugins.Popup.Extensions;
@@ -17,9 +18,8 @@ namespace Guap.ViewModels
 {
     public class DashboardViewModel : BaseViewModel
     {
-        public ActionSelectModalPage ActionSelectModalPage { get; set; }
-
         private Page _context;
+        private readonly BottomTabbedPage _tabbedContext;
         private bool _isRefreshing;
         private IRepository<Token> _repository;
         private TokenService _tokenService;
@@ -28,8 +28,8 @@ namespace Guap.ViewModels
         private Token _guap;
         private IMessage _message;
 
-        public ICommand CreateTokenCommand => new Command( async () => await this._context.Navigation.PushAsync(new CreateTokenPage(this)));
-        public ICommand SelectActionCommand => new Command( async () => Device.BeginInvokeOnMainThread(async () => await this._context.Navigation.PushPopupAsync(ActionSelectModalPage)));
+        public ICommand CreateTokenCommand => new Command( async () => await _context.Navigation.PushAsync(new CreateTokenPage(this)));
+        public ICommand SelectActionCommand => new Command( async () => await _context.Navigation.PushPopupAsync(new ActionSelectModalPage(_tabbedContext)));
         public ICommand RefreshTokensListCommand => new Command( async () => InitializeTokens());
 
         public Token Token
@@ -79,26 +79,6 @@ namespace Guap.ViewModels
             }
         }
 
-        public DashboardViewModel(Page context)
-        {
-            _context = context;
-            
-            Task.Run(async () => await InitConstructor());
-        }
-
-        private async Task InitConstructor()
-        {
-            string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
-            
-            _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
-            _message = DependencyService.Get<IMessage>();
-            _tokenService = new TokenService(new Web3(GlobalSetting.Account, GlobalSetting.Instance.EthereumNetwork));
-            
-            ActionSelectModalPage = new ActionSelectModalPage();
-
-           InitializeTokens();
-        }
-
         public List<Token> Tokens
         {
             get
@@ -111,15 +91,32 @@ namespace Guap.ViewModels
                 OnPropertyChanged(nameof(Tokens));
             }
         }
+
+        public DashboardViewModel(Page context, BottomTabbedPage tabbedContext)
+        {
+            _context = context;
+            _tabbedContext = tabbedContext;
+
+            Task.Run(async () => await InitConstructor());
+        }
+
+        private async Task InitConstructor()
+        {
+            string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
+            
+            _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
+            _message = DependencyService.Get<IMessage>();
+            _tokenService = new TokenService(new Web3(GlobalSetting.Account, GlobalSetting.Instance.EthereumNetwork));
+
+           InitializeTokens();
+        }
         
         public async void InitializeTokens()
         {
             IsRefreshing = true;
 
             var guap = GlobalSetting.Instance.Guap;
-            var tokens = new List<Token>();
-            
-            tokens = await _repository.Get();
+            var tokens = await _repository.Get();
 
             if (!CrossConnectivity.Current.IsConnected)
             {

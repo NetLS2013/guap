@@ -49,6 +49,11 @@ namespace Guap.iOS.Renderer
                     item.SelectedImage = item.SelectedImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
 
                     item.SelectedImage.AccessibilityIdentifier = icon;
+                    
+                    item.SetTitleTextAttributes(new UITextAttributes
+                    {
+                        TextColor = UIColor.White
+                    }, UIControlState.Normal);
                 }
                 catch (Exception e)
                 {
