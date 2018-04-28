@@ -29,7 +29,6 @@ namespace Guap.Droid.Renderer
 
             if (Control != null)
             {
-                //Control.SetBackgroundResource(Resource.Drawable.EntryBorderBottomWhite);
                 Control.SetSingleLine(true);
                 Control.Ellipsize = TextUtils.TruncateAt.End;
 
@@ -42,10 +41,10 @@ namespace Guap.Droid.Renderer
             var layer = Context.Resources.GetDrawable(Resource.Drawable.EntryBorderBottomWhite);
             var layer1 = Context.Resources.GetDrawable(Resource.Drawable.PickerPadding);
             
-            Drawable[] layers = {  layer,   GetDrawable(imagePath), layer1 };
+            Drawable[] layers = {  layer, GetDrawable(imagePath), layer1 };
             LayerDrawable layerDrawable = new LayerDrawable(layers);
             layerDrawable.SetLayerInset(0, 0, 0, 0, 0);
-            //layerDrawable.SetPadding(0, 0,0,0);
+
             return layerDrawable;
         }
 

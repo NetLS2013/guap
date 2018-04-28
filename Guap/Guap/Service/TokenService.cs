@@ -7,6 +7,8 @@
     using Guap.Contracts;
     using Guap.Models;
 
+    using Nethereum.Hex.HexConvertors.Extensions;
+    using Nethereum.Hex.HexTypes;
     using Nethereum.Util;
     using Nethereum.Web3;
     using Nethereum.Web3.Accounts;
@@ -37,6 +39,11 @@
         public static BigInteger ConvertToBigInteger(BigDecimal number, int decimals)
         {
             return BigInteger.Parse((number * new BigDecimal(BigInteger.Pow(new BigInteger(10), decimals), 0)).ToString());
+        }
+
+        public static string Convert64Hex(HexBigInteger number)
+        {
+            return number.HexValue.RemoveHexPrefix().PadLeft(64, '0');
         }
 
         public async Task<Token> GetTokenInfo(string contactAddress)

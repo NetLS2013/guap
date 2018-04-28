@@ -7,10 +7,12 @@ namespace Guap.Views.Profile
 
     public partial class ReceivePage : ContentPage
     {
+        public ReceiveViewModel ViewModel;
+
         public ReceivePage()
         {
             InitializeComponent();
-            BindingContext = new ReceiveViewModel(this);
+            BindingContext = ViewModel = new ReceiveViewModel(this);
 
             var qrHeight = (int) (App.ScreenHeight * 0.45);
             

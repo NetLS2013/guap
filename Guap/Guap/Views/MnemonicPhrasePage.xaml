@@ -11,24 +11,25 @@
                 HasIcon="True"
                 TitleFontSize="24"
                 IsVisible="{Binding IsCustomHeader}"/>
-            
-            <StackLayout Margin="30" VerticalOptions="Start">
-                <Label Text="{Binding HeaderText}" FontSize="24" FontAttributes="Bold" TextColor="#4a4a4a" Margin="0,0,0,10"></Label>
+            <StackLayout VerticalOptions="FillAndExpand">
+                <StackLayout Margin="30" VerticalOptions="FillAndExpand">
+                    <Label Text="{Binding HeaderText}" FontSize="24" FontAttributes="Bold" TextColor="#4a4a4a" Margin="0,0,0,10"></Label>
 
-                <controls:FlowListView VerticalOptions="Start" BackgroundColor="Black" FlowColumnCount="3" RowHeight="50" HeightRequest="200" SeparatorVisibility="None" HasUnevenRows="true" FlowItemsSource="{Binding Words}" Margin="0,0,0,10">
-                    
-                    <controls:FlowListView.FlowColumnTemplate>
-                        <DataTemplate>
-                            <Label Margin="10" TextColor="White" FontAttributes="Bold" FontSize="18" 
+                    <controls:FlowListView VerticalOptions="Start" BackgroundColor="Black" FlowColumnCount="3" RowHeight="50" HeightRequest="200" SeparatorVisibility="None" HasUnevenRows="true" FlowItemsSource="{Binding Words}" Margin="0,0,0,10">
+
+                        <controls:FlowListView.FlowColumnTemplate>
+                            <DataTemplate>
+                                <Label Margin="10" TextColor="White" FontAttributes="Bold" FontSize="18" 
                                    XAlign="Center" YAlign="Center" Text="{Binding}"/>
-                        </DataTemplate>
-                    </controls:FlowListView.FlowColumnTemplate>
-                </controls:FlowListView>
+                            </DataTemplate>
+                        </controls:FlowListView.FlowColumnTemplate>
+                    </controls:FlowListView>
 
-                <Label Text="This mnemonic phrase is lorem ipsum dolor asit" TextColor="#4a4a4a"></Label>
-            </StackLayout>
-            <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="EndAndExpand" Padding="16,0,16,0">
-                <Button Text="Continue" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20" Command="{Binding NextCommand}"></Button>
+                    <Label Text="This mnemonic phrase is lorem ipsum dolor asit" TextColor="#4a4a4a"></Label>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" BackgroundColor="#e0bc0c" VerticalOptions="End" Padding="16,0,16,0">
+                    <Button Text="Continue" BackgroundColor="#e0bc0c" TextColor="#ffffff" HorizontalOptions="EndAndExpand" FontSize="20" Command="{Binding NextCommand}"></Button>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

@@ -29,30 +29,38 @@
                            HorizontalOptions="Start"
                            TextColor="#000"
                            FontSize="16"/>
-
-                    <StackLayout Orientation="Horizontal">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
                         <customRender:BottomBorderEntryWhite
-                                TextColor="#000"
-                                HorizontalTextAlignment="Start"
-                                HorizontalOptions="FillAndExpand"
-                                Text="{Binding ReceiverAddress, Mode=TwoWay}"
-                                IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"
-                            />
-                        <StackLayout HorizontalOptions="End" Orientation="Horizontal">
+                            Grid.Column="0" Grid.Row="0"
+                            TextColor="#000"
+                            VerticalOptions="EndAndExpand"
+                            HorizontalTextAlignment="Start"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding ReceiverAddress, Mode=TwoWay}"
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"
+                        />
+                        <StackLayout Grid.Column="1" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
                             <StackLayout Margin="-20,-20,0,-20" Padding="20,20,0,20"  VerticalOptions="Center" HorizontalOptions="Start">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer   Command="{Binding ScanCommand}"/>
                                 </StackLayout.GestureRecognizers>
-                                <Image Source="create.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
+                                <Image Source="qrcode.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
                             </StackLayout>
                             <StackLayout Margin="0,-20,-20,-20" VerticalOptions="Center" Padding="0,20,20,20" HorizontalOptions="End">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer   Command="{Binding ContactCommand}"/>
                                 </StackLayout.GestureRecognizers>
-                                <Image Source="create.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
+                                <Image Source="contact.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
                             </StackLayout>
                         </StackLayout>
-                    </StackLayout>
+                    </Grid>
                 </StackLayout>
 
 
@@ -167,7 +175,6 @@
                             VerticalOptions="Center"
                             FontSize="14"
                             TextColor="#9b9b9b"
-                            LineBreakMode="TailTruncation"
                            />
                         <Label
                             Text=" "

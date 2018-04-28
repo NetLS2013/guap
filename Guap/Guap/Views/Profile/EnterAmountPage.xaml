@@ -2,6 +2,7 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
     x:Class="Guap.Views.Profile.EnterAmountPage"
     Title="Enter Amount">
     <RelativeLayout
@@ -10,8 +11,8 @@
             x:Name="InputAmount"
             Text="{Binding InputAmmount, Mode=TwoWay}"
             Keyboard="Numeric"/>
-        
-        <StackLayout
+
+        <StackLayout 
             RelativeLayout.WidthConstraint=
             "{ ConstraintExpression Type = RelativeToParent, Property = Width, Factor = 1 }"
             RelativeLayout.HeightConstraint=
@@ -19,30 +20,34 @@
             Orientation="Vertical"
             Padding="30"
             BackgroundColor="White">
-            
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="InpitTrigger"></TapGestureRecognizer>
+            </StackLayout.GestureRecognizers>
+
             <Label
                 FontSize="18"
                 Text="Amount"
+                Margin="0,50,0,0"
                 FontAttributes="Bold"
                 TextColor="#9b9b9b"/>
-            
-            <Label
-                Margin="0,50,0,0"
-                TextColor="#9b9b9b"
-                FormattedText="{Binding AmountTrigger}"/>
-            
+            <StackLayout Orientation="Horizontal">
+                <Label
+                    TextColor="#9b9b9b"
+                    FormattedText="{Binding AmountTrigger}"/>
+                <customRender:BottomBorderPicker 
+                    VerticalOptions="Center" 
+                    SelectedItem="{Binding Token, Mode=TwoWay}"
+                    ItemsSource="{Binding Tokens, Mode=TwoWay}"
+                    ItemDisplayBinding="{Binding Symbol}"
+                    TextColor="#9b9b9b"
+                    Title=""
+                />
+            </StackLayout>
+
             <Label
                 FormattedText="{Binding CurrencyConverter}"
                 FontSize="24"
                 TextColor="#9b9b9b"/>
         </StackLayout>
-        
-        <Button
-            RelativeLayout.WidthConstraint=
-                "{ ConstraintExpression Type = RelativeToParent, Property = Width, Factor = 1 }"
-            RelativeLayout.HeightConstraint=
-                "{ ConstraintExpression Type = RelativeToParent, Property = Height, Factor = 1 }"
-            Clicked="InpitTrigger"
-            BackgroundColor="Transparent"/>
     </RelativeLayout>
 </ContentPage>

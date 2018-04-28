@@ -41,7 +41,9 @@ namespace Guap
             var setting = new CommonPageSettings
             {
                 Title = "Unlock Wallet",
-                HeaderText = "Enter your 4 digit pin"
+                HeaderText = "Enter your 4 digit pin",
+                HasNavigation = true,
+                HasBack = true
             };
                 
             await Navigation.PushAsync(

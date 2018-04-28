@@ -20,6 +20,7 @@ namespace Guap.Views.Profile
             InitCamera();
             
             var dashboard = Children[0] as Dashboard;
+            var receive = Children[1] as ReceivePage;
             var scan = Children[2] as ScanPage;
             var send = Children[3] as SendPage;
             var settings = Children[4] as SettingsPage;
@@ -34,6 +35,10 @@ namespace Guap.Views.Profile
                     Device.BeginInvokeOnMainThread(() =>
                         {
                             this.CurrentPage = this.Children[1];
+                            if (receive != null)
+                            {
+                                receive.ViewModel.Token = GlobalSetting.Instance.Guap;
+                            }
                         });
                 };
             dashboard.ViewModel.ActionSelectModalPage.Send += () =>
@@ -74,8 +79,12 @@ namespace Guap.Views.Profile
                                         {
                                             page.ScanEvent += (address, amount) =>
                                                 {
-                                                    Device.BeginInvokeOnMainThread(() => this.CurrentPage = this.Children[3]);
-                                                    send.SendViewModel.SetReceiverInfo(address, amount);
+                                                    Device.BeginInvokeOnMainThread(() =>
+                                                        {
+                                                            this.CurrentPage = this.Children[3];
+                                                            send.SendViewModel.SetReceiverInfo(address, amount);
+                                                        });
+                                                    
                                                 };
                                             page.ScanTokenEvent += (addressContract, addressReceiver, amount) =>
                                                 {
@@ -109,8 +118,11 @@ namespace Guap.Views.Profile
             {
                 scan.ScanEvent += (address, amount) =>
                     {
-                        Device.BeginInvokeOnMainThread(() => this.CurrentPage = this.Children[3]);
-                        send.SendViewModel.SetReceiverInfo(address, amount);
+                        Device.BeginInvokeOnMainThread(() =>
+                            {
+                                this.CurrentPage = this.Children[3];
+                                send.SendViewModel.SetReceiverInfo(address, amount);
+                            });    
                     };
 
                 scan.ScanTokenEvent += (addressContract, addressReceiver, amount) =>

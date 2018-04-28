@@ -14,6 +14,7 @@
     using MvvmValidation;
 
     using Nethereum.HdWallet;
+    using Nethereum.Util;
     using Nethereum.Web3;
 
     using SQLite;
@@ -95,29 +96,24 @@
             }
 
             IsBusy = true;
-            try
+            var tempToken = new Token() { Address = ContractAddress };
+            Token = await this._tokenService.GetTokenInfo(ContractAddress);
+            
+            if (Token != null)
             {
-                var tempAddress = Token.Address;
-                Token = await this._tokenService.GetTokenInfo(ContractAddress);
-                
-                if (Token != null)
-                {
-                    this._decimals = this._token.Decimals.ToString();
-                    OnPropertyChanged(nameof(Decimals));
-                }
-                else
-                {
-                    Token = new Token(){Address = tempAddress };
-                }
-                
+                this._decimals = this._token.Decimals.ToString();
+                OnPropertyChanged(nameof(Decimals));
             }
-            catch (Exception e)
+            else
             {
+                Token = tempToken;
                 ClearFields();
 
                 IsValid = false;
+                IsBusy = false;
                 return;
             }
+
 
             this.ValidateToken();
 
@@ -126,6 +122,7 @@
                 ClearFields();
 
                 IsValid = false;
+                IsBusy = false;
                 return;
             }
 
@@ -309,7 +306,7 @@
             bool isValidAddress;
             try
             {
-                isValidAddress = new Regex("^(?=.{42}$)0x[a-zA-Z0-9]*").IsMatch(ContractAddress);
+                isValidAddress = new Regex("^(?=.{42}$)0x[a-fA-F0-9]*").IsMatch(ContractAddress);
             }
             catch (Exception e)
             {
