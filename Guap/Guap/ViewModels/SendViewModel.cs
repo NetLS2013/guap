@@ -266,7 +266,7 @@
 
         private void OnScan()
         {
-            _tabbedContext.CurrentPage = _tabbedContext.Children[2];
+            Device.BeginInvokeOnMainThread(() =>_tabbedContext.CurrentPage = _tabbedContext.Children[2]);
         }
 
         private async Task OnContact()

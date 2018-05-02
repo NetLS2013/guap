@@ -2,6 +2,7 @@
 using Guap.Views.Profile;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace Guap.Views.Modal
 {
@@ -18,14 +19,14 @@ namespace Guap.Views.Modal
 
         private async void ReceiveClick(object sender, EventArgs e)
         {
-            _tabbedContext.CurrentPage = _tabbedContext.Children[1];
+            Device.BeginInvokeOnMainThread(() => _tabbedContext.CurrentPage = _tabbedContext.Children[1]);
             
             await PopupNavigation.PopAsync();
         }
 
         private async void SendClick(object sender, EventArgs e)
         {
-            _tabbedContext.CurrentPage = _tabbedContext.Children[3];
+            Device.BeginInvokeOnMainThread(() =>_tabbedContext.CurrentPage = _tabbedContext.Children[3]);
             _tabbedContext.SendPage.SendViewModel.TokenSelectedIndex = 0;
             
             await PopupNavigation.PopAsync();

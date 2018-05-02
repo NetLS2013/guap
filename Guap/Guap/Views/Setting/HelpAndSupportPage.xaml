@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:customRender="clr-namespace:Guap.CustomRender;assembly=Guap"
-             x:Class="Guap.Views.Setting.HelpAndSupportPage">
+             x:Class="Guap.Views.Setting.HelpAndSupportPage"
+             Title="Help &amp; Support">
     <ContentPage.Content> 
         <StackLayout
             BackgroundColor="#fff">

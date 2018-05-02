@@ -132,13 +132,13 @@ namespace Guap.Views.Profile
 
         void ScanEvent(string address, string amount)
         {
-            _tabbedContext.CurrentPage = _tabbedContext.Children[3];
+            Device.BeginInvokeOnMainThread(() => _tabbedContext.CurrentPage = _tabbedContext.Children[3]);
             _tabbedContext.SendPage.SendViewModel.SetReceiverInfo(address, amount);
         }
 
         void ScanEvent(string addressContract, string addressReceiver, string amount)
         {
-            _tabbedContext.CurrentPage = _tabbedContext.Children[3];
+            Device.BeginInvokeOnMainThread(() =>_tabbedContext.CurrentPage = _tabbedContext.Children[3]);
             _tabbedContext.SendPage.SendViewModel.SetReceiverTokenInfo(addressContract, addressReceiver, amount);
         }
 

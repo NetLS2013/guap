@@ -224,7 +224,6 @@ namespace Guap.Droid.Renderer
 		        
 			        tabTitle.ScaleX = tabIcon.ScaleX = 1f;
 			        tabTitle.ScaleY = tabIcon.ScaleY = 1f;
-			        tabTitle.SetTextColor(Color.White);
 
 			        tabIcon.LayoutParameters = new FrameLayout.LayoutParams(
 			            bottomBarTab.Width / 2, bottomBarTab.Height / 2)
