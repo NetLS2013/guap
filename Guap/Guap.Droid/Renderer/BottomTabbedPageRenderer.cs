@@ -224,6 +224,7 @@ namespace Guap.Droid.Renderer
 		        
 			        tabTitle.ScaleX = tabIcon.ScaleX = 1f;
 			        tabTitle.ScaleY = tabIcon.ScaleY = 1f;
+			        tabTitle.SetTextColor(Color.White);
 
 			        tabIcon.LayoutParameters = new FrameLayout.LayoutParams(
 			            bottomBarTab.Width / 2, bottomBarTab.Height / 2)
@@ -238,7 +239,7 @@ namespace Guap.Droid.Renderer
                     {
                         if (i == _tabPosition)
                         {
-                            tabIcon.SetColorFilter(Color.ParseColor(Element.IconActiveColor), PorterDuff.Mode.SrcIn);
+                            tabIcon.SetColorFilter(Element.IconActiveColor.ToAndroid(), PorterDuff.Mode.SrcIn);
                         }
                     }
                     catch (Exception e)

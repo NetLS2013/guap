@@ -24,8 +24,9 @@ namespace Guap.Views.Profile
             
             BarTheme = BarThemeTypes.DarkWithoutAlpha;
             FixedMode = true;
-            IconActiveColor = "#e0bc0c";
-            
+            IconActiveColor = Color.FromHex("#e0bc0c");
+            BarBackgroundColor = Color.Black;
+                
             Dasboard = (Dashboard) (Children[0] = new Dashboard(this));
             
             Task.Run(async () => await InitBottomPages());
@@ -75,8 +76,7 @@ namespace Guap.Views.Profile
                     {
                         var page = new ScanPage(this);
 
-                        Device.BeginInvokeOnMainThread(
-                            () =>
+                        Device.BeginInvokeOnMainThread(() =>
                             {
                                 Children.RemoveAt(2);
                                 Children.Insert(2, ScanPage = page);
