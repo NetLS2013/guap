@@ -51,7 +51,8 @@ namespace Guap
                     succesHandler,
                     valid => Equals(valid, Settings.Get(Settings.Key.Pin)),
                     "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
-                    setting));
+                    setting,
+                    true));
         }
     }
 }

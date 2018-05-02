@@ -126,7 +126,7 @@ namespace Guap.Views.Profile
             }
             catch (Exception e)
             {
-                Device.BeginInvokeOnMainThread(() => _message.ShortAlert("Scan valid QR Code."));
+                Device.BeginInvokeOnMainThread(() => _message.ShortAlert("This QR code is invalid."));
             }
         }
 

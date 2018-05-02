@@ -26,7 +26,7 @@ namespace Guap.Views
             NavigationPage.SetHasBackButton(this, pageSettings.HasBack);
             InitializeComponent();
             
-            viewModel = new PinAuthViewModel(pageSettings, isReset);
+            viewModel = new PinAuthViewModel(this, pageSettings, isReset);
             
             viewModel.PinViewModel.Success += successHandler;
             viewModel.PinViewModel.ValidatorFunc += validatorFunc;

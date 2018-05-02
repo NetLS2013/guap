@@ -1,4 +1,6 @@
-﻿namespace Guap.ViewModels
+﻿using Guap.Views;
+
+namespace Guap.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -16,6 +18,7 @@
 
     public class PinAuthViewModel : INotifyPropertyChanged
     {
+        private readonly Page _context;
         private readonly PinViewModel _pinViewModel;
 
         private bool _isInvalid;
@@ -30,7 +33,10 @@
 
         public PinViewModel PinViewModel => _pinViewModel;
 
-        public ICommand ResetCommand => new Command(async () => { });
+        public ICommand ForgotCommand => new Command(async () =>
+        {
+            await _context.Navigation.PushAsync(new ForgotPinPage());
+        });
 
         public Func<IList<char>, bool> validatorFunc { get; set; }
         public bool IsInvalid
@@ -98,8 +104,9 @@
             }
         }
 
-        public PinAuthViewModel(CommonPageSettings pageSettings, bool isReset)
+        public PinAuthViewModel(Page context, CommonPageSettings pageSettings, bool isReset)
         {
+            _context = context;
             _pinViewModel = new PinViewModel();
             this.IsCustomHeader = pageSettings.IsShowCustomHeader;
             _pinViewModel.Error += (object sender, EventArgs e) => { IsInvalid = true; };

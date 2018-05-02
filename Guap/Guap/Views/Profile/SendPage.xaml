@@ -11,6 +11,7 @@
             <helpers:BooleanConverter x:Key="BooleanConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    
     <ContentPage.Content>
         <StackLayout
             BackgroundColor="#fff">
@@ -24,20 +25,22 @@
     
                 <StackLayout
                     HorizontalOptions="FillAndExpand"
-                    Orientation="Vertical"
-                    >
+                    Orientation="Vertical">
                     <Label Text="Receiver address"
                            HorizontalOptions="Start"
                            TextColor="#000"
                            FontSize="16"/>
+                    
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
+                        
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
+                        
                         <customRender:BottomBorderEntryWhite
                             Grid.Column="0" Grid.Row="0"
                             TextColor="#000"
@@ -45,25 +48,27 @@
                             HorizontalTextAlignment="Start"
                             HorizontalOptions="FillAndExpand"
                             Text="{Binding ReceiverAddress, Mode=TwoWay}"
-                            IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"
-                        />
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
+                        
                         <StackLayout Grid.Column="1" Grid.Row="0" HorizontalOptions="End" Orientation="Horizontal">
                             <StackLayout Margin="-20,-20,0,-20" Padding="20,20,0,20"  VerticalOptions="Center" HorizontalOptions="Start">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer   Command="{Binding ScanCommand}"/>
                                 </StackLayout.GestureRecognizers>
+                                
                                 <Image Source="qrcode.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
                             </StackLayout>
+                            
                             <StackLayout Margin="0,-20,-20,-20" VerticalOptions="Center" Padding="0,20,20,20" HorizontalOptions="End">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer   Command="{Binding ContactCommand}"/>
                                 </StackLayout.GestureRecognizers>
+                                
                                 <Image Source="contact.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
                             </StackLayout>
                         </StackLayout>
                     </Grid>
                 </StackLayout>
-
 
                 <StackLayout Orientation="Horizontal" Margin="0,20,0,0">
                     <Grid HorizontalOptions="FillAndExpand">
@@ -71,17 +76,21 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <StackLayout Grid.Column="0" Grid.Row="0"
+                        
+                        <StackLayout
+                            Grid.Column="0"
+                            Grid.Row="0"
                             HorizontalOptions="FillAndExpand"
                             Orientation="Vertical">
-
                             <Label Text="Amount"
                                    HorizontalOptions="Start"
                                    TextColor="#000"
                                    FontSize="16"/>
+                            
                             <customRender:BottomBorderEntryWhite
                                 TextColor="#000"
                                 Keyboard="Numeric"
@@ -90,43 +99,47 @@
                                 IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanConverter}}"/>
                         </StackLayout>
 
-                        <StackLayout Grid.Column="1" Grid.Row="0"
+                        <StackLayout
+                            Grid.Column="1"
+                            Grid.Row="0"
                             HorizontalOptions="FillAndExpand"
-                            Orientation="Vertical"
-                        >
+                            Orientation="Vertical">
 
                             <Label Text="Select token"
                                    HorizontalOptions="Start"
                                    TextColor="#000"
                                    FontSize="16"/>
-                            <customRender:BottomBorderPicker 
-                                
+                            
+                            <customRender:BottomBorderPicker
                                 SelectedItem="{Binding Token, Mode=TwoWay}"
                                 ItemsSource="{Binding Tokens, Mode=TwoWay}"
                                 ItemDisplayBinding="{Binding Name}"
                                 TextColor="Black"
-                                Title=""
-                            />
+                                Title=""/>
                         </StackLayout>
                     </Grid>
-                    
-
                 </StackLayout>
-                <Label TextColor="#e0bc0c" Margin="0,10,0,0" Text="Send" FontSize="18" HorizontalOptions="End">
+                
+                <Label
+                    TextColor="#e0bc0c"
+                    Margin="0,10,0,0"
+                    Text="Send"
+                    FontSize="18"
+                    HorizontalOptions="End">
                     <Label.GestureRecognizers >
-                        <TapGestureRecognizer Command="{Binding SendCommand}"/>
+                        <TapGestureRecognizer
+                            Command="{Binding SendCommand}"/>
                     </Label.GestureRecognizers>
                 </Label>
+                
                 <ListView
                     HasUnevenRows="True"
                     BackgroundColor="#fff"
                     ItemsSource="{Binding Errors}"
                     SeparatorVisibility="None"
-
                     Margin="8,8,8,8"
                     MinimumHeightRequest="20" 
-                    VerticalOptions="FillAndExpand"
-                    >
+                    VerticalOptions="FillAndExpand">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -135,8 +148,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
-
             </StackLayout>
 
             <StackLayout
@@ -175,14 +186,15 @@
                             FontAttributes="Bold"
                             VerticalOptions="Center"
                             FontSize="14"
-                            TextColor="#9b9b9b"
-                           />
+                            TextColor="#9b9b9b"/>
+                        
                         <Label
                             Text=" "
                             FontAttributes="Bold"
                             VerticalOptions="Center"
                             FontSize="14"
                             TextColor="#9b9b9b"/>
+                        
                         <Label
                             Text="{Binding Token.Symbol}"
                             FontAttributes="Bold"

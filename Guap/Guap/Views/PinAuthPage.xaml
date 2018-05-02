@@ -27,9 +27,9 @@
                     VerticalOptions="Center"
                     BindingContext="{Binding PinViewModel}" />
                 <StackLayout Grid.Column="0" Grid.Row="2" >
-                    <Label TextColor="#e0bc0c" Text="Reset" FontSize="18" HorizontalOptions="Center" VerticalOptions="Start" IsVisible="{Binding IsReset}">
+                    <Label TextColor="#e0bc0c" Text="Forgot PIN" FontSize="18" HorizontalOptions="Center" VerticalOptions="Start" IsVisible="{Binding IsReset}">
                         <Label.GestureRecognizers >
-                            <TapGestureRecognizer Command="{Binding ResetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding ForgotCommand}"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label  Text="{Binding Error}" IsVisible="{Binding IsInvalid}"  FontSize="14" TextColor="#be1209" Margin="0" VerticalOptions="End" HorizontalOptions="Center"></Label>
