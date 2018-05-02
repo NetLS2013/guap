@@ -23,6 +23,7 @@
     public class ReceiveViewModel : BaseViewModel
     {
         private Page _context;
+        private readonly BottomTabbedPage _tabbedContext;
 
         private TokenService _tokenService;
 
@@ -102,15 +103,11 @@
             OnPropertyChanged(nameof(Token));
         }
 
-        public ReceiveViewModel(Page context)
+        public ReceiveViewModel(Page context, BottomTabbedPage tabbedContext)
         {
             _context = context;
+            _tabbedContext = tabbedContext;
 
-            Task.Run(async () => await InitConstructor());
-        }
-
-        private async Task InitConstructor()
-        {
             _token = GlobalSetting.Instance.Ethereum;
             RequestString = GlobalSetting.Account.Address;
             

@@ -30,18 +30,19 @@
                 Margin="0,50,0,0"
                 FontAttributes="Bold"
                 TextColor="#9b9b9b"/>
+            
             <StackLayout Orientation="Horizontal">
                 <Label
                     TextColor="#9b9b9b"
                     FormattedText="{Binding AmountTrigger}"/>
+                
                 <customRender:BottomBorderPicker 
                     VerticalOptions="Center" 
                     SelectedItem="{Binding Token, Mode=TwoWay}"
                     ItemsSource="{Binding Tokens, Mode=TwoWay}"
                     ItemDisplayBinding="{Binding Symbol}"
                     TextColor="#9b9b9b"
-                    Title=""
-                />
+                    Title=""/>
             </StackLayout>
 
             <Label

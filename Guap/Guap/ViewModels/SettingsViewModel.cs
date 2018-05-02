@@ -29,12 +29,6 @@ namespace Guap.ViewModels
         {
             _context = context;
             _tabbedContext = tabbedContext;
-
-            Task.Run(async () => await InitConstructor());
-        }
-
-        private async Task InitConstructor()
-        {
             _requestProvider = new RequestProvider();
 
             LockApp = (bool)Settings.Get(Settings.Key.IsLockApp);
@@ -59,12 +53,10 @@ namespace Guap.ViewModels
                 };
         }
 
-        public ICommand NotificationCommand => new Command(async () => { await OnToggleNotification(); });
-
-        private async Task OnToggleNotification()
+        public ICommand NotificationCommand => new Command(async () =>
         {
             var notifToggle = SettingsList[0].Toggled;
-            
+
             try
             {
                 var notification = await _requestProvider.PostAsync<UserModel, bool>(
@@ -94,37 +86,34 @@ namespace Guap.ViewModels
             {
                 Debug.WriteLine($"--- Error: {e.StackTrace}");
             }
-        }
+        });
 
-        public ICommand LockAppCommand => new Command(
-            () =>
-                {
-                    var setting = new CommonPageSettings
-                                      {
-                                          Title = "Unlock Wallet",
-                                          HeaderText = "Enter your 4 digit pin",
-                                          HasNavigation = true,
-                                          HasBack = true
-                                      };
+        public ICommand LockAppCommand => new Command(() =>
+        {
+            var setting = new CommonPageSettings
+            {
+              Title = "Unlock Wallet",
+              HeaderText = "Enter your 4 digit pin",
+              HasNavigation = true,
+              HasBack = true
+            };
 
-                    this._context.Navigation.PushAsync(
-                        new PinAuthPage(
-                            (sender, args) =>
-                                {
-                                    this.LockApp = !this.LockApp;
-                                    Settings.Set(Settings.Key.IsLockApp, LockApp);
+            this._context.Navigation.PushAsync(
+                new PinAuthPage(
+                    (sender, args) =>
+                        {
+                            this.LockApp = !this.LockApp;
+                            Settings.Set(Settings.Key.IsLockApp, LockApp);
+                            
+                            SettingsList[1].Toggled = LockApp;
+                            this._context.Navigation.PopAsync();
+                        },
+                    valid => Equals(valid, Settings.Get(Settings.Key.Pin)),
+                    "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
+                    setting));
 
-                                    _tabbedContext.CurrentPage = _tabbedContext.Children[0];
-                                    
-                                    SettingsList[1].Toggled = LockApp;
-                                    this._context.Navigation.PopAsync();
-                                },
-                            valid => Equals(valid, Settings.Get(Settings.Key.Pin)),
-                            "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
-                            setting));
-
-                    SettingsList[1].Toggled = LockApp;
-                });
+            SettingsList[1].Toggled = LockApp;
+        });
 
         public bool Notification
         {
