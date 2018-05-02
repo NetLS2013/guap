@@ -50,7 +50,8 @@ namespace Guap.Views.Profile
                 Children.Insert(1, ReceivePage = receive);
                 
                 Children.RemoveAt(2);
-                Children.Insert(2, ScanPage = scan as ScanPage);
+                Children.Insert(2, scan);
+                ScanPage = scan as ScanPage;
                 
                 Children.RemoveAt(3);
                 Children.Insert(3, SendPage = send);
