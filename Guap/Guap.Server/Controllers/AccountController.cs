@@ -158,7 +158,7 @@ namespace Guap.Server.Controllers
             try
             {
                 await _emailSender.SendEmailAsync(user.Email, "Guapcoin Support Service",
-                    "Your PIN: " + user.VerificationCode);
+                    "Your PIN: " + model.Pin);
             }
             catch (Exception e)
             {

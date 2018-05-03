@@ -123,19 +123,23 @@
         private async Task OnRequestAmount()
         {
             var page = new EnterAmountPage();
+            
             page.ViewModel.AmountChanged += obj =>
             {
-                this.Amount = obj;
+                Amount = obj;
+                
                 GenerateQueryString();
             };
+            
             page.ViewModel.TokenChanged += obj =>
             {
                 _token = obj;
+                
                 OnPropertyChanged(nameof(Token));
                 GenerateQueryString();
             };
 
-            await this._context.Navigation.PushAsync(page);
+            await _context.Navigation.PushSingleAsync(page);
         }
 
         private void GenerateQueryString()

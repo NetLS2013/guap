@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Guap.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -26,7 +26,7 @@ namespace Guap.Views
 
         private async void OpenPageAcceptClick(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new PhoneNumberPage());
+            await Navigation.PushSingleAsync(new PhoneNumberPage());
         }
     }
 }

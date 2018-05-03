@@ -24,13 +24,16 @@ namespace Guap.ViewModels
 
         private bool _isNotification;
         private bool _isLockApp;
+        private EthereumService _ethereumService;
 
         public SettingsViewModel(Page context, BottomTabbedPage tabbedContext)
         {
             _context = context;
             _tabbedContext = tabbedContext;
+            
             _requestProvider = new RequestProvider();
-
+            _ethereumService = new EthereumService();
+            
             LockApp = (bool)Settings.Get(Settings.Key.IsLockApp);
             Notification = (bool)Settings.Get(Settings.Key.IsNotification);
 
@@ -88,7 +91,7 @@ namespace Guap.ViewModels
             }
         });
 
-        public ICommand LockAppCommand => new Command(() =>
+        public ICommand LockAppCommand => new Command(async () =>
         {
             var setting = new CommonPageSettings
             {
@@ -98,11 +101,11 @@ namespace Guap.ViewModels
               HasBack = true
             };
 
-            this._context.Navigation.PushAsync(
+            await _context.Navigation.PushSingleAsync(
                 new PinAuthPage(
                     (sender, args) =>
                         {
-                            this.LockApp = !this.LockApp;
+                            this.LockApp = !LockApp;
                             Settings.Set(Settings.Key.IsLockApp, LockApp);
                             
                             SettingsList[1].Toggled = LockApp;
@@ -141,7 +144,7 @@ namespace Guap.ViewModels
             }
         }
 
-        private void BackupWallet()
+        private async Task BackupWallet()
         {
             var mnemonicPage = new MnemonicPhrasePage(
                 new CommonPageSettings
@@ -155,10 +158,10 @@ namespace Guap.ViewModels
             mnemonicPage.viewModel.Action = () => _context.Navigation.PopAsync();
             mnemonicPage.viewModel.Words = Settings.Get(Settings.Key.MnemonicPhrase).ToString().Split(' '); 
 
-            _context.Navigation.PushAsync(mnemonicPage);
+            await _context.Navigation.PushSingleAsync(mnemonicPage);
         }
 
-        private void RestoreWallet()
+        private async Task RestoreWallet()
         {
             var inputMnemonic = new InputMnemonicPhrasePage(
                 new CommonPageSettings
@@ -178,54 +181,62 @@ namespace Guap.ViewModels
                     EthereumService.MnenonicPhraseValidate));
 
             inputMnemonic.ViewModel.SuccessAction = async s =>
+            {
+                var result = await UpdateAddress(s);
+
+                if (result)
                 {
-                    await _context.Navigation.PushAsync(
+                    await _context.Navigation.PushSingleAsync(
                         new SuccessSignup(
                             new CommonPageSettings
-                                {
-                                    HasNavigation = false,
-                                    HeaderText =
-                                        "The mnenonic phrase was an exatact match."
-                                        + Environment.NewLine + "Your wallet has been restored."
-                                        + Environment.NewLine + "Check out the dashboard."
-                                },
+                            {
+                                HasNavigation = false,
+                                HeaderText =
+                                    "The mnenonic phrase was an exatact match."
+                                    + Environment.NewLine + "Your wallet has been restored."
+                                    + Environment.NewLine + "Check out the dashboard."
+                            },
                             () => this._context.Navigation.PopAsync()));
-
-                    // save mnenonic phrase 
+                    
                     Settings.Set(Settings.Key.MnemonicPhrase, s);
-                    this._context.Navigation.RemovePage(this._context.Navigation.NavigationStack[this._context.Navigation.NavigationStack.Count - 2]);
-                };
+                    
+                    _context.Navigation.RemovePage(
+                        _context.Navigation.NavigationStack[_context.Navigation.NavigationStack.Count - 2]);
 
-            _context.Navigation.PushAsync(inputMnemonic);
+                }
+            };
+
+            await _context.Navigation.PushSingleAsync(inputMnemonic);
         }
 
-        private void ResetPin()
+        private async Task ResetPin()
         {
             Page page;
+            
             page = new PinAuthPage(
                 async (sender1, args) =>
                     {
                         var pin = args.EnteredPin;
 
-                        await this._context.Navigation.PushAsync(
+                        await _context.Navigation.PushAsync(
                             new PinAuthPage(
-                                (sender2, args2) =>
+                                async (sender2, args2) =>
                                     {
                                         Settings.Set(Settings.Key.Pin, pin);
 
-                                        this._context.Navigation.PushAsync(
-                                        new SuccessSignup(
-                                            new CommonPageSettings
-                                                {
-                                                    HasNavigation = false,
-                                                    HeaderText =
-                                                        "Your 4 Digit pin was an exact match and been saved."
-                                                },
-                                            () => this._context.Navigation.PopAsync()));
+                                        await _context.Navigation.PushSingleAsync(
+                                            new SuccessSignup(
+                                                new CommonPageSettings
+                                                    {
+                                                        HasNavigation = false,
+                                                        HeaderText =
+                                                            "Your 4 Digit pin was an exact match and been saved."
+                                                    },
+                                                async () => await _context.Navigation.PopAsync()));
 
                                         // remove pin setup pages
-                                        this._context.Navigation.RemovePage(this._context.Navigation.NavigationStack[this._context.Navigation.NavigationStack.Count - 3]);
-                                        this._context.Navigation.RemovePage(this._context.Navigation.NavigationStack[this._context.Navigation.NavigationStack.Count - 2]);
+                                        _context.Navigation.RemovePage(_context.Navigation.NavigationStack[_context.Navigation.NavigationStack.Count - 3]);
+                                        _context.Navigation.RemovePage(_context.Navigation.NavigationStack[_context.Navigation.NavigationStack.Count - 2]);
                                     },
                                 c => Equals(c, pin),
                                 "The 4 Digit pin you entered is incorrect.\nPlease review your pin and try again.",
@@ -246,8 +257,8 @@ namespace Guap.ViewModels
                         Title = "Reset Pin",
                         HeaderText = "Create new 4 digit pin"
                     });
-            this._context.Navigation.PushAsync(page);
-
+            
+            await _context.Navigation.PushSingleAsync(page);
         }
 
         public ObservableCollection<SettingsModel> SettingsList
@@ -282,17 +293,17 @@ namespace Guap.ViewModels
             settings.Method?.Invoke();
         }
 
-        private async void HelpAndSupport()
+        private async Task HelpAndSupport()
         {
-            await _context.Navigation.PushAsync(new HelpAndSupportPage());
+            await _context.Navigation.PushSingleAsync(new HelpAndSupportPage());
         }
         
-        private async void AboutGuap()
+        private async Task AboutGuap()
         {
-            await _context.Navigation.PushAsync(new AboutGuapPage());
+            await _context.Navigation.PushSingleAsync(new AboutGuapPage());
         }
 
-        private async void SendFeedBack()
+        private async Task SendFeedBack()
         {
             var url = string.Empty;
             var appId = string.Empty;
@@ -319,11 +330,35 @@ namespace Guap.ViewModels
             }
         }
 
-        private void Logout()
+        private async Task Logout()
         {
             Settings.Set(Settings.Key.IsLogged, false);
 
             App.SetMainPage(new GuapPage());
+        }
+        
+        private async Task<bool> UpdateAddress(string words)
+        {
+            var address = _ethereumService.GetAddress(words);
+            var result = false;
+            
+            try
+            {
+                result = await _requestProvider
+                    .PostAsync<UserModel, bool>(GlobalSetting.Instance.UpdateAddressEndpoint,
+                        new UserModel
+                        {
+                            Address = address,
+                            PhoneNumber = (string) Settings.Get(Settings.Key.PhoneNumber),
+                            VerificationCode = (string) Settings.Get(Settings.Key.VerificationCode)
+                        });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"--- Error: {e.StackTrace}");
+            }
+            
+            return result;
         }
     }
 }

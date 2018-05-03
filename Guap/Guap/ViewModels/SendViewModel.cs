@@ -260,7 +260,7 @@ namespace Guap.ViewModels
                 }
 
                 Device.BeginInvokeOnMainThread(
-                    async () => await this._context.Navigation.PushPopupAsync(
+                    async () => await this._context.Navigation.PushPopupSingleAsync(
                                     new TransactionModalPage(title, transactionHash)));
 
 
@@ -295,7 +295,7 @@ namespace Guap.ViewModels
                 _context.Navigation.PopAsync();
             };
             
-            await _context.Navigation.PushAsync(page);
+            await _context.Navigation.PushSingleAsync(page);
         }
 
         private async Task OnRefreshBalance()

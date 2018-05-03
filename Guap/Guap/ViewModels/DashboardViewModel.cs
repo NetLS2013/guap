@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Guap.Contracts;
+using Guap.Helpers;
 using Guap.Models;
 using Guap.Service;
 using Guap.Views.Dashboard;
@@ -28,8 +29,8 @@ namespace Guap.ViewModels
         private Token _guap;
         private IMessage _message;
 
-        public ICommand CreateTokenCommand => new Command( async () => await _context.Navigation.PushAsync(new CreateTokenPage(this)));
-        public ICommand SelectActionCommand => new Command( async () => await _context.Navigation.PushPopupAsync(new ActionSelectModalPage(_tabbedContext)));
+        public ICommand CreateTokenCommand => new Command( async () => await _context.Navigation.PushSingleAsync(new CreateTokenPage(this)));
+        public ICommand SelectActionCommand => new Command( async () => await _context.Navigation.PushPopupSingleAsync(new ActionSelectModalPage(_tabbedContext)));
         public ICommand RefreshTokensListCommand => new Command( async () => InitializeTokens());
 
         public Token Token
@@ -45,7 +46,7 @@ namespace Guap.ViewModels
                 if (_token == null)
                     return;
 
-                this._context.Navigation.PushAsync(new CreateTokenPage(this, this._token));
+                this._context.Navigation.PushSingleAsync(new CreateTokenPage(this, this._token));
                 this._token = null;
                 OnPropertyChanged(nameof(Token));
             }

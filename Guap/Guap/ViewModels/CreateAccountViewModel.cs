@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Guap.Contracts;
 using Guap.Helpers;
 using Guap.Models;
 using Guap.Service;
@@ -23,6 +24,7 @@ namespace Guap.ViewModels
         private readonly EthereumService _ethereumService;
         private string _emailInput;
         private ValidationErrorCollection _errors;
+        private IMessage _message;
 
         public ICommand CteateAccountCommand => new Command(async () => await OnCreateAccount());
         public ICommand RestoreWalletCommand => new Command(async () => await OpenRestoreWallet());
@@ -35,6 +37,8 @@ namespace Guap.ViewModels
             
             _requestProvider = new RequestProvider();
             _ethereumService = new EthereumService();
+            
+            _message = DependencyService.Get<IMessage>();
         }
         
         public string EmailInput
@@ -92,10 +96,10 @@ namespace Guap.ViewModels
                     HeaderText = "Mnemonic Phrase"
                 });
         
-            mnemonicPage.viewModel.Action = async () => await _context.Navigation.PushAsync(inputMnemonic);
+            mnemonicPage.viewModel.Action = async () => await _context.Navigation.PushSingleAsync(inputMnemonic);
             mnemonicPage.viewModel.Words = words;
 
-            await _context.Navigation.PushAsync(mnemonicPage);
+            await _context.Navigation.PushSingleAsync(mnemonicPage);
         }
 
         private async Task OpenRestoreWallet()
@@ -105,7 +109,7 @@ namespace Guap.ViewModels
                 "The mnenonic phrase was an exatact match.\nYour wallet has been restored.\nCheck out the dashboard.",
                 EthereumService.MnenonicPhraseValidate);
             
-            await _context.Navigation.PushAsync(inputMnemonic);
+            await _context.Navigation.PushSingleAsync(inputMnemonic);
         }
 
         private async Task<Page> BuildInputMnemonicPhrasePage(string commonText1, string commonText2, Func<string, bool> valid)
@@ -135,7 +139,7 @@ namespace Guap.ViewModels
                     Settings.Set(Settings.Key.MnemonicPhrase, s);
                     Settings.Set(Settings.Key.IsLogged, true);
                     
-                    await _context.Navigation.PushAsync(
+                    await _context.Navigation.PushSingleAsync(
                         new SuccessSignup(
                             new CommonPageSettings
                             {
@@ -166,12 +170,15 @@ namespace Guap.ViewModels
                     .PostAsync<UserModel, bool>(GlobalSetting.Instance.ForgotPinEndpoint, 
                         new UserModel
                         {
-                            Email = _emailInput
+                            Email = _emailInput,
+                            Pin = (string) Settings.Get(Settings.Key.Pin)
                         });
                 
                 if (result)
                 {
                     await _context.Navigation.PopAsync();
+                    
+                    _message.LongAlert("PIN has been sent to your email address.");
                 }
             }
             catch (Exception e)
@@ -212,7 +219,7 @@ namespace Guap.ViewModels
                 
                 if (result.Result)
                 {
-                    await _context.Navigation.PushAsync(new NewUserExistPage());
+                    await _context.Navigation.PushSingleAsync(new NewUserExistPage());
                 }
             }
             catch (Exception e)

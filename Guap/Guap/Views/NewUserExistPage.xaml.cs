@@ -1,4 +1,5 @@
 ﻿using System;
+using Guap.Helpers;
 using Xamarin.Forms;
 using Guap.ViewModels;
 
@@ -17,7 +18,7 @@ namespace Guap.Views
 
         private async void OpenPageCreateAccount(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CreateWalletPage());
+            await Navigation.PushSingleAsync(new CreateWalletPage());
         }
     }
 }

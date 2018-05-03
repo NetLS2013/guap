@@ -1,4 +1,6 @@
-﻿namespace Guap.Models
+﻿using System.Threading.Tasks;
+
+namespace Guap.Models
 {
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
@@ -11,7 +13,7 @@
     {
         private bool _toggled;
 
-        public delegate void MethodInvoke();
+        public delegate Task MethodInvoke();
         
         public string Title { get; set; }
 

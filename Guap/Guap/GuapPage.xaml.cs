@@ -26,7 +26,7 @@ namespace Guap
 
         private async void OpenPageTermsClick(object sender, EventArgs e)
         {    
-            await Navigation.PushAsync(new Terms());
+            await Navigation.PushSingleAsync(new Terms());
         }
 
         private async void OpenPageLoginClick(object sender, EventArgs e)
@@ -46,7 +46,7 @@ namespace Guap
                 HasBack = true
             };
                 
-            await Navigation.PushAsync(
+            await Navigation.PushSingleAsync(
                 new PinAuthPage(
                     succesHandler,
                     valid => Equals(valid, Settings.Get(Settings.Key.Pin)),

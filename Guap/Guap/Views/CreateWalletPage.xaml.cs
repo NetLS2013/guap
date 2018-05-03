@@ -19,13 +19,13 @@ namespace Guap.Views
             
             if (Equals(Settings.Get(Settings.Key.ResumePage), true))
             {
-                Device.BeginInvokeOnMainThread(async () => await Navigation.PushPopupAsync(new ResumeModalPage()));
+                Device.BeginInvokeOnMainThread(async () => await Navigation.PushPopupSingleAsync(new ResumeModalPage()));
             }
         }
 
         private async void OpenModalResumeClick(object sender, EventArgs e)
         {
-            await Navigation.PushPopupAsync(new ResumeModalPage());
+            await Navigation.PushPopupSingleAsync(new ResumeModalPage());
             
             Settings.Set(Settings.Key.ResumePage, true);
         }

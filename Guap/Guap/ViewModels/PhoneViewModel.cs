@@ -172,7 +172,7 @@ namespace Guap.ViewModels
                 
                 if (result.Result)
                 {
-                    await _context.Navigation.PushAsync(new PhoneVerificationPage(this));
+                    await _context.Navigation.PushSingleAsync(new PhoneVerificationPage(this));
                 }
             }
             catch (Exception e)
@@ -207,7 +207,7 @@ namespace Guap.ViewModels
                     return;
                 }
                 
-                await _context.Navigation.PushAsync(
+                await _context.Navigation.PushSingleAsync(
                     new SuccessSignup(
                         new CommonPageSettings
                         {
@@ -216,7 +216,7 @@ namespace Guap.ViewModels
                                 "Your identity has been verified." + Environment.NewLine
                                                                    + "You can create your wallet."
                         },
-                        () => this._context.Navigation.PushAsync(new EnterEmailPage())));
+                        () => this._context.Navigation.PushSingleAsync(new EnterEmailPage())));
                 
                 Settings.Set(Settings.Key.VerificationCode, _verificationCode);
                 Settings.Set(Settings.Key.PhoneNumber, phoneNumber);

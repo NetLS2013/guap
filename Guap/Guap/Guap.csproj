@@ -74,6 +74,7 @@
     <Compile Include="Helpers\BooleanConverter.cs" />
     <Compile Include="Helpers\BottomBarPageExtensions.cs" />
     <Compile Include="Helpers\CommonPageSettings.cs" />
+    <Compile Include="Helpers\NavigationExtensions.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\StatusResult.cs" />
     <Compile Include="Models\Fiat.cs" />

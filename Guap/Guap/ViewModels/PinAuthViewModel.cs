@@ -35,7 +35,7 @@ namespace Guap.ViewModels
 
         public ICommand ForgotCommand => new Command(async () =>
         {
-            await _context.Navigation.PushAsync(new ForgotPinPage());
+            await _context.Navigation.PushSingleAsync(new ForgotPinPage());
         });
 
         public Func<IList<char>, bool> validatorFunc { get; set; }

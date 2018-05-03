@@ -8,5 +8,6 @@
         public string Address { get; set; }
         public string Email { get; set; }
         public bool NotificationsEnabled { get; set; }
+        public string Pin { get; set; }
     }
 }

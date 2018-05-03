@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Guap.DependencyServcie;
+using Guap.Helpers;
 using Guap.Models;
 using Guap.Service;
 using Guap.Views.Modal;
@@ -65,7 +66,7 @@ namespace Guap.ViewModels
 
                 if (string.IsNullOrWhiteSpace(result))
                 {
-                    await _context.Navigation.PushPopupAsync(new InviteShareModalPage(contact));
+                    await _context.Navigation.PushPopupSingleAsync(new InviteShareModalPage(contact));
                 }
                 else
                 {
