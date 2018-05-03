@@ -20,7 +20,7 @@ namespace Guap.ViewModels
     public class DashboardViewModel : BaseViewModel
     {
         private Page _context;
-        private readonly BottomTabbedPage _tabbedContext;
+        public readonly BottomTabbedPage _tabbedContext;
         private bool _isRefreshing;
         private IRepository<Token> _repository;
         private TokenService _tokenService;
@@ -51,8 +51,8 @@ namespace Guap.ViewModels
                 OnPropertyChanged(nameof(Token));
             }
         }
-        
-        public Token Guap
+
+       public Token Guap
         {
             get
             {

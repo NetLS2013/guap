@@ -11,7 +11,7 @@ namespace Guap.Views.Dashboard
         public Dashboard(BottomTabbedPage tabbedContext)
         {
             InitializeComponent();
-            
+           
             BindingContext =
                 ViewModel =
                     new DashboardViewModel(this, tabbedContext);

@@ -16,12 +16,17 @@ using Xamarin.Forms;
 
 namespace Guap.ViewModels
 {
+    using Guap.Contracts;
+
+    using SQLite;
+
     public class CreateAccountViewModel : BaseViewModel
     {
         private readonly Page _context;
         private readonly RequestProvider _requestProvider;
 
         private readonly EthereumService _ethereumService;
+        private IRepository<Token> _repository;
         private string _emailInput;
         private ValidationErrorCollection _errors;
         private IMessage _message;
@@ -37,7 +42,10 @@ namespace Guap.ViewModels
             
             _requestProvider = new RequestProvider();
             _ethereumService = new EthereumService();
+
+            string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
             
+            _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
             _message = DependencyService.Get<IMessage>();
         }
         
@@ -146,7 +154,15 @@ namespace Guap.ViewModels
                                 HasNavigation = false,
                                 HeaderText = commonText2
                             },
-                            () => { App.SetMainPage(new BottomTabbedPage()); }));
+                            async () =>
+                                {
+                                    var tokens = await _repository.Get();
+                                    foreach (var token in tokens)
+                                    {
+                                        await _repository.Delete(token);
+                                    }
+                                    App.SetMainPage(new BottomTabbedPage());
+                                }));
                 }
             };
             

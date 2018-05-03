@@ -89,7 +89,7 @@
             }
         }
 
-        private async void OnRefreshBalance()
+        public async void OnRefreshBalance()
         {
             if (this._token.Id == -1)
             {

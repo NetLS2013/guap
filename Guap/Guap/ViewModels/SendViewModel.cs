@@ -263,7 +263,8 @@ namespace Guap.ViewModels
                     async () => await this._context.Navigation.PushPopupSingleAsync(
                                     new TransactionModalPage(title, transactionHash)));
 
-
+                this._tabbedContext.Dasboard.ViewModel.InitializeTokens();
+                this._tabbedContext.ReceivePage.ViewModel.OnRefreshBalance();
             }
         }
 

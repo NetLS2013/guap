@@ -262,6 +262,7 @@
             await _repository.Insert(this._token);
             await this._context.Navigation.PopAsync();
             _dashboardViewModel.InitializeTokens();
+            _dashboardViewModel._tabbedContext.SendPage.SendViewModel.InitializeTokens();
         }
 
         private async Task OnTokenEdit()
@@ -276,6 +277,7 @@
             await _repository.Update(this._token);
             await this._context.Navigation.PopAsync();
             _dashboardViewModel.InitializeTokens();
+            _dashboardViewModel._tabbedContext.SendPage.SendViewModel.InitializeTokens();
         }
 
         private async Task OnTokenDelete()
@@ -283,6 +285,7 @@
             await _repository.Delete(this._token);
             await this._context.Navigation.PopAsync();
             _dashboardViewModel.InitializeTokens();
+            _dashboardViewModel._tabbedContext.SendPage.SendViewModel.InitializeTokens();
         }
 
         private async Task OnBack()

@@ -6,6 +6,8 @@ using Plugin.Permissions;
 
 namespace Guap.Droid
 {
+    using Refractored.XamForms.PullToRefresh.Droid;
+
     [Activity(
         Theme = "@style/MyTheme",
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
@@ -18,7 +20,7 @@ namespace Guap.Droid
             ToolbarResource = Resource.Layout.Toolbar;
             
             base.OnCreate(bundle);
-            
+            PullToRefreshLayoutRenderer.Init();
             Xamarin.Forms.Forms.Init(this, bundle);
 
             App.ScreenHeight = (int) (Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
