@@ -21,7 +21,7 @@ namespace Guap
             Wordlist = Wordlist.English;
             EthereumNetwork = "https://ropsten.infura.io/E8XftGiqmaErL2KN5Cp3";
             WalletPath = "m/44'/60'/0'/0/x";
-            BaseEndpoint = "http://fe370952.ngrok.io";
+            BaseEndpoint = "http://a2aba990.ngrok.io";
             DbName = "guap.db";
             BlockExplorer = "https://ropsten.etherscan.io";
 

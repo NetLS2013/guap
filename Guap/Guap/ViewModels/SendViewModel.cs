@@ -125,7 +125,7 @@
         {
             get
             {
-                return this._amountString;
+                return this._amountString?.Replace(",", ".");
             }
             set
             {

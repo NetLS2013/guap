@@ -118,7 +118,7 @@ namespace Guap.ViewModels
             }
             set
             {
-                _inputAmmount = decimal.TryParse(value, out var amount) ? amount : 0;
+                _inputAmmount = decimal.TryParse(value.Replace(",", "."), out var amount) ? amount : 0;
 
                 OnPropertyChanged(nameof(AmountTrigger));
                 OnPropertyChanged(nameof(CurrencyConverter));

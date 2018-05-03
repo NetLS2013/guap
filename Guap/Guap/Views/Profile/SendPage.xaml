@@ -61,7 +61,7 @@
                             
                             <StackLayout Margin="0,-20,-20,-20" VerticalOptions="Center" Padding="0,20,20,20" HorizontalOptions="End">
                                 <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer   Command="{Binding ContactCommand}"/>
+                                    <TapGestureRecognizer Command="{Binding ContactCommand}"/>
                                 </StackLayout.GestureRecognizers>
                                 
                                 <Image Source="contact.png" VerticalOptions="End" HorizontalOptions="EndAndExpand"></Image>
@@ -104,7 +104,6 @@
                             Grid.Row="0"
                             HorizontalOptions="FillAndExpand"
                             Orientation="Vertical">
-
                             <Label Text="Select token"
                                    HorizontalOptions="Start"
                                    TextColor="#000"
@@ -126,7 +125,7 @@
                     Text="Send"
                     FontSize="18"
                     HorizontalOptions="End">
-                    <Label.GestureRecognizers >
+                    <Label.GestureRecognizers>
                         <TapGestureRecognizer
                             Command="{Binding SendCommand}"/>
                     </Label.GestureRecognizers>
@@ -139,7 +138,8 @@
                     SeparatorVisibility="None"
                     Margin="8,8,8,8"
                     MinimumHeightRequest="20" 
-                    VerticalOptions="FillAndExpand">
+                    VerticalOptions="FillAndExpand"
+                    IsEnabled="false">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
