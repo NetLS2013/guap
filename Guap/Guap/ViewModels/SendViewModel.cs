@@ -1,4 +1,7 @@
-﻿namespace Guap.ViewModels
+﻿using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+
+namespace Guap.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -271,12 +274,27 @@
 
         private async Task OnContact()
         {
-            var page = new ContactListPage();
-            page.ContactListViewModel.SelectHandler += address =>
+            var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Contacts);
+
+            if (status != PermissionStatus.Granted)
+            {
+                var result = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Contacts);
+
+                if (result[Permission.Contacts] != PermissionStatus.Granted)
                 {
-                    this.ReceiverAddress = address;
-                    this._context.Navigation.PopAsync();
-                };
+                    return;
+                }
+            }
+            
+            var page = new ContactListPage();
+            
+            page.ContactListViewModel.SelectHandler += address =>
+            {
+                ReceiverAddress = address;
+                
+                _context.Navigation.PopAsync();
+            };
+            
             await _context.Navigation.PushAsync(page);
         }
 
