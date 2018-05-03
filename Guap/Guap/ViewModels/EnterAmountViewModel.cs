@@ -41,14 +41,15 @@ namespace Guap.ViewModels
 
             _noneSymbolFormat = (NumberFormatInfo)CultureInfo.CurrentCulture.NumberFormat.Clone();
             _noneSymbolFormat.CurrencySymbol = "";
+            
+            Token = GlobalSetting.Instance.Ethereum;
 
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);
             _repository = new Repository<Token>(new SQLiteAsyncConnection(databasePath));
 
             Task.Run(async () => await Initialization());
+            
             InitializeTokens();
-
-
         }
 
         public async void InitializeTokens()
@@ -62,7 +63,6 @@ namespace Guap.ViewModels
 
 
             Tokens = new ObservableCollection<Token>(tokens);
-            Token = GlobalSetting.Instance.Ethereum;
         }
 
         private async Task Initialization()
@@ -88,7 +88,6 @@ namespace Guap.ViewModels
             }
             set
             {
-                this._token = value;
                 if (value != null)
                 {
                     TokenChanged?.Invoke(value);
