@@ -31,6 +31,11 @@ namespace Guap.ViewModels
             _context = context;
             _tabbedContext = tabbedContext;
             
+            Task.Run(async () => await InitConstructor());
+        }
+
+        private async Task InitConstructor()
+        {
             _requestProvider = new RequestProvider();
             _ethereumService = new EthereumService();
             

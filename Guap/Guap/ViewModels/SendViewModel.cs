@@ -158,6 +158,11 @@ namespace Guap.ViewModels
             _context = context;
             _tabbedContext = tabbedContext;
             
+            Task.Run(async () => await InitConstructor());
+        }
+
+        private async Task InitConstructor()
+        {
             _token = null;
             
             string databasePath = DependencyService.Get<ISQLite>().GetDatabasePath(GlobalSetting.Instance.DbName);

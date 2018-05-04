@@ -21,23 +21,18 @@
         <StackLayout Orientation="Horizontal" Margin="10">
             <Button
                 Clicked="ReceiveClick"
-                HorizontalOptions="StartAndExpand"
+                HorizontalOptions="CenterAndExpand"
                 FontSize="20"
                 TextColor="#e0bc0c"
                 Text="Receive"
                 FontAttributes="Bold"
                 BackgroundColor="#fff"
                 BorderRadius="0"/>
-            <Label
-                Text="OR"
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                />
+            
             <Button
                 Clicked="SendClick"
                 FontSize="20"
-                HorizontalOptions="EndAndExpand"
+                HorizontalOptions="CenterAndExpand"
                 TextColor="#e0bc0c"
                 Text="Send"
                 FontAttributes="Bold"

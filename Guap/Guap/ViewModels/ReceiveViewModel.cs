@@ -107,7 +107,12 @@
         {
             _context = context;
             _tabbedContext = tabbedContext;
+            
+            Task.Run(async () => await InitConstructor());
+        }
 
+        private async Task InitConstructor()
+        {
             _token = GlobalSetting.Instance.Ethereum;
             RequestString = GlobalSetting.Account.Address;
             

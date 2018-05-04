@@ -59,34 +59,37 @@ namespace Guap.Views.Profile
                 Children.RemoveAt(4);
                 Children.Insert(4, SettingsPage = setting);
             });
-
-            CurrentPageChanged += OnCurrentPageChanged;
         }
 
-        private async void OnCurrentPageChanged(object sender, EventArgs eventArgs)
+        protected override void OnCurrentPageChanged()
         {
-            if (CurrentPage is PermissionPage)
+            base.OnCurrentPageChanged();
+
+            Task.Run(async () =>
             {
-                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
-
-                if (status != PermissionStatus.Granted)
+                if (CurrentPage is PermissionPage)
                 {
-                    var result = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+                    var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
 
-                    if (result[Permission.Camera] == PermissionStatus.Granted)
+                    if (status != PermissionStatus.Granted)
                     {
-                        var page = new ScanPage(this);
+                        var result = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
 
-                        Device.BeginInvokeOnMainThread(() =>
+                        if (result[Permission.Camera] == PermissionStatus.Granted)
+                        {
+                            var page = new ScanPage(this);
+
+                            Device.BeginInvokeOnMainThread(() =>
                             {
                                 Children.RemoveAt(2);
                                 Children.Insert(2, ScanPage = page);
-                                
+
                                 CurrentPage = Children[2];
                             });
+                        }
                     }
                 }
-            }
+            });
         }
     }
 }
