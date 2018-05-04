@@ -23,5 +23,11 @@ namespace Guap.Views
 		    BindingContext = ViewModel;
 
 		}
+
+	    protected override void OnAppearing()
+	    {
+	        BorderEditor.Focus();
+            base.OnAppearing();
+	    }
 	}
 }
