@@ -90,8 +90,11 @@ namespace Guap.ViewModels
             {
                 if (value != null)
                 {
+                    _token = value;
+                    
                     TokenChanged?.Invoke(value);
                 }
+                
                 OnPropertyChanged(nameof(Token));
             }
         }
